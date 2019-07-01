@@ -1,0 +1,32 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace TaskScheduler
+{
+    class TimeSpanUtils
+    {
+        public static TimeSpan GenerateTimeSpan(int every, Interval interval)
+        {
+            if (interval == Interval.Week)
+            {
+                return TimeSpan.FromDays(7).Multiply(every);
+            }
+            else if (interval == Interval.Day)
+            {
+                return TimeSpan.FromDays(every);
+            }
+            else if (interval == Interval.Hour)
+            {
+                return TimeSpan.FromHours(every);
+            }
+            else
+            {
+                return TimeSpan.FromMinutes(every);
+            }
+        }
+    }
+}
