@@ -11,6 +11,11 @@ namespace TaskScheduler
     {
         public static TimeSpan GenerateTimeSpan(int every, Interval interval)
         {
+            return GenerateTimeSpan((float) every, interval);
+        }
+
+        public static TimeSpan GenerateTimeSpan(float every, Interval interval)
+        {
             if (interval == Interval.Week)
             {
                 return TimeSpan.FromDays(7).Multiply(every);

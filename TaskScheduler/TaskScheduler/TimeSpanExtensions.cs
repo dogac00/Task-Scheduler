@@ -13,6 +13,11 @@ namespace TaskScheduler
             return TimeSpan.FromTicks(multiplicand.Ticks * multiplier);
         }
 
+        public static TimeSpan Multiply(this TimeSpan multiplicand, float multiplier)
+        {
+            return TimeSpan.FromTicks((long)(multiplicand.Ticks * multiplier));
+        }
+
         public static TimeSpan Multiply(this TimeSpan multiplicand, double multiplier)
         {
             return TimeSpan.FromTicks((long)(multiplicand.Ticks * multiplier));

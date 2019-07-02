@@ -1,1 +1,1 @@
-[{"Name":"My Path","ExecutablePath":"My Exe","Period":{"Property":0,"StartDate":"2019-07-02T01:01:52.4876344+03:00","TimeBetween":"00:00:00"},"EmailInfo":null},{"Name":"","ExecutablePath":"","Period":{"Property":1,"StartDate":"2019-07-12T01:03:18","TimeBetween":"00:02:00"},"EmailInfo":null}]
+[{"Name":"ng-app","ExecutablePath":"http://google.com","IsRunning":true,"Period":{"Property":1,"StartDate":"2019-07-02T20:53:45.9872658+03:00","TimeBetween":"00:00:06"},"EmailInfo":null}]

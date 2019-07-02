@@ -30,303 +30,168 @@ namespace TaskScheduler
         /// </summary>
         private void InitializeComponent()
         {
-            this.TabControl1 = new System.Windows.Forms.TabControl();
-            this.TabPage1 = new System.Windows.Forms.TabPage();
-            this.TabPage2 = new System.Windows.Forms.TabPage();
-            this.TabPage3 = new System.Windows.Forms.TabPage();
-            this.RunsLongerThanMin = new System.Windows.Forms.RadioButton();
-            this.RunsLongerThanHour = new System.Windows.Forms.RadioButton();
-            this.RunsLongerThanDay = new System.Windows.Forms.RadioButton();
-            this.RunsLongerThanWeek = new System.Windows.Forms.RadioButton();
-            this.RunsLongerThanEvery = new System.Windows.Forms.ComboBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.startConsecutivelyMin = new System.Windows.Forms.RadioButton();
-            this.startConsecutivelyHour = new System.Windows.Forms.RadioButton();
-            this.startConsecutivelyDay = new System.Windows.Forms.RadioButton();
-            this.startConsecutivelyWeek = new System.Windows.Forms.RadioButton();
-            this.startConsecutivelyDelay = new System.Windows.Forms.ComboBox();
-            this.startConsecutivelyDelayText = new System.Windows.Forms.Label();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.notifyButton = new System.Windows.Forms.CheckBox();
+            this.startConsecutivelyPanel = new System.Windows.Forms.Panel();
+            this.startConsecutivelyDelay = new System.Windows.Forms.NumericUpDown();
+            this.panel5 = new System.Windows.Forms.Panel();
             this.startConsecutivelyNowButton = new System.Windows.Forms.RadioButton();
-            this.startConsecutivelyDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.startConsecutivelySelectDateButton = new System.Windows.Forms.RadioButton();
-            this.startPeriodicallyMin = new System.Windows.Forms.RadioButton();
-            this.startPeriodicallyHour = new System.Windows.Forms.RadioButton();
-            this.startPeriodicallyDay = new System.Windows.Forms.RadioButton();
-            this.startPeriodicallyWeek = new System.Windows.Forms.RadioButton();
-            this.startPeriodicallyEvery = new System.Windows.Forms.ComboBox();
-            this.startPeriodicallyEveryText = new System.Windows.Forms.Label();
-            this.startPeriodicallyTimeText = new System.Windows.Forms.Label();
+            this.startConsecutivelyDateTimePicker = new System.Windows.Forms.DateTimePicker();
+            this.startConsecutivelyIntervalPanel = new System.Windows.Forms.Panel();
+            this.startConsecutivelyWeek = new System.Windows.Forms.RadioButton();
+            this.startConsecutivelyDay = new System.Windows.Forms.RadioButton();
+            this.startConsecutivelyHour = new System.Windows.Forms.RadioButton();
+            this.startConsecutivelyMin = new System.Windows.Forms.RadioButton();
+            this.startConsecutivelyDelayText = new System.Windows.Forms.Label();
+            this.startPeriodicallyPanel = new System.Windows.Forms.Panel();
+            this.panel2 = new System.Windows.Forms.Panel();
             this.startPeriodicallyNowButton = new System.Windows.Forms.RadioButton();
-            this.startPeriodicallyDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.startPeriodicallySelectDateButton = new System.Windows.Forms.RadioButton();
+            this.startPeriodicallyDateTimePicker = new System.Windows.Forms.DateTimePicker();
+            this.startPeriodicallyIntervalPanel = new System.Windows.Forms.Panel();
+            this.startPeriodicallyWeek = new System.Windows.Forms.RadioButton();
+            this.startPeriodicallyDay = new System.Windows.Forms.RadioButton();
+            this.startPeriodicallyHour = new System.Windows.Forms.RadioButton();
+            this.startPeriodicallyMin = new System.Windows.Forms.RadioButton();
+            this.startPeriodicallyTimeText = new System.Windows.Forms.Label();
+            this.startPeriodicallyEveryText = new System.Windows.Forms.Label();
+            this.startOncePanel = new System.Windows.Forms.Panel();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.startOnceNowButton = new System.Windows.Forms.RadioButton();
-            this.startOnceDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.startOnceSelectDateButton = new System.Windows.Forms.RadioButton();
-            this.startConsecutivelyButton = new System.Windows.Forms.RadioButton();
-            this.startPeriodicallyButton = new System.Windows.Forms.RadioButton();
+            this.startOnceDateTimePicker = new System.Windows.Forms.DateTimePicker();
+            this.runsLongerThanPanel = new System.Windows.Forms.Panel();
+            this.runsLongerThanWeek = new System.Windows.Forms.RadioButton();
+            this.runsLongerThanDay = new System.Windows.Forms.RadioButton();
+            this.runsLongerThanHour = new System.Windows.Forms.RadioButton();
+            this.runsLongerThanMin = new System.Windows.Forms.RadioButton();
+            this.panel6 = new System.Windows.Forms.Panel();
             this.startOnceButton = new System.Windows.Forms.RadioButton();
+            this.startPeriodicallyButton = new System.Windows.Forms.RadioButton();
+            this.startConsecutivelyButton = new System.Windows.Forms.RadioButton();
+            this.emailAddressTextBox = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             this.taskExecutablePath = new System.Windows.Forms.TextBox();
             this.taskName = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.NotifyButton = new System.Windows.Forms.RadioButton();
-            this.label6 = new System.Windows.Forms.Label();
-            this.EmailAddressTextBox = new System.Windows.Forms.TextBox();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.startPeriodicallyIntervalPanel = new System.Windows.Forms.Panel();
-            this.startConsecutivelyIntervalPanel = new System.Windows.Forms.Panel();
-            this.panel5 = new System.Windows.Forms.Panel();
-            this.panel6 = new System.Windows.Forms.Panel();
-            this.runsLongerThanPanel = new System.Windows.Forms.Panel();
-            this.startOncePanel = new System.Windows.Forms.Panel();
-            this.startPeriodicallyPanel = new System.Windows.Forms.Panel();
-            this.startConsecutivelyPanel = new System.Windows.Forms.Panel();
-            this.TabControl1.SuspendLayout();
-            this.TabPage3.SuspendLayout();
-            this.panel1.SuspendLayout();
+            this.runsLongerThanEvery = new System.Windows.Forms.NumericUpDown();
+            this.startPeriodicallyEvery = new System.Windows.Forms.NumericUpDown();
+            this.tabControl1.SuspendLayout();
+            this.tabPage3.SuspendLayout();
+            this.startConsecutivelyPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.startConsecutivelyDelay)).BeginInit();
+            this.panel5.SuspendLayout();
+            this.startConsecutivelyIntervalPanel.SuspendLayout();
+            this.startPeriodicallyPanel.SuspendLayout();
             this.panel2.SuspendLayout();
             this.startPeriodicallyIntervalPanel.SuspendLayout();
-            this.startConsecutivelyIntervalPanel.SuspendLayout();
-            this.panel5.SuspendLayout();
-            this.panel6.SuspendLayout();
-            this.runsLongerThanPanel.SuspendLayout();
             this.startOncePanel.SuspendLayout();
-            this.startPeriodicallyPanel.SuspendLayout();
-            this.startConsecutivelyPanel.SuspendLayout();
+            this.panel1.SuspendLayout();
+            this.runsLongerThanPanel.SuspendLayout();
+            this.panel6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.runsLongerThanEvery)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.startPeriodicallyEvery)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
             // 
-            this.TabControl1.Controls.Add(this.TabPage1);
-            this.TabControl1.Controls.Add(this.TabPage2);
-            this.TabControl1.Controls.Add(this.TabPage3);
-            this.TabControl1.Location = new System.Drawing.Point(12, 12);
-            this.TabControl1.Name = "tabControl1";
-            this.TabControl1.SelectedIndex = 0;
-            this.TabControl1.Size = new System.Drawing.Size(799, 418);
-            this.TabControl1.TabIndex = 0;
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.Location = new System.Drawing.Point(12, 12);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(799, 418);
+            this.tabControl1.TabIndex = 0;
             // 
             // tabPage1
             // 
-            this.TabPage1.Location = new System.Drawing.Point(4, 22);
-            this.TabPage1.Name = "tabPage1";
-            this.TabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage1.Size = new System.Drawing.Size(710, 369);
-            this.TabPage1.TabIndex = 0;
-            this.TabPage1.Text = "Active Task Status";
-            this.TabPage1.UseVisualStyleBackColor = true;
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(791, 392);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "Active Task Status";
+            this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // tabPage2
             // 
-            this.TabPage2.Location = new System.Drawing.Point(4, 22);
-            this.TabPage2.Name = "tabPage2";
-            this.TabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage2.Size = new System.Drawing.Size(710, 369);
-            this.TabPage2.TabIndex = 1;
-            this.TabPage2.Text = "Tasks";
-            this.TabPage2.UseVisualStyleBackColor = true;
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(791, 392);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Tasks";
+            this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // tabPage3
             // 
-            this.TabPage3.Controls.Add(this.startConsecutivelyPanel);
-            this.TabPage3.Controls.Add(this.startPeriodicallyPanel);
-            this.TabPage3.Controls.Add(this.startOncePanel);
-            this.TabPage3.Controls.Add(this.runsLongerThanPanel);
-            this.TabPage3.Controls.Add(this.panel6);
-            this.TabPage3.Controls.Add(this.EmailAddressTextBox);
-            this.TabPage3.Controls.Add(this.label6);
-            this.TabPage3.Controls.Add(this.NotifyButton);
-            this.TabPage3.Controls.Add(this.RunsLongerThanEvery);
-            this.TabPage3.Controls.Add(this.button1);
-            this.TabPage3.Controls.Add(this.taskExecutablePath);
-            this.TabPage3.Controls.Add(this.taskName);
-            this.TabPage3.Controls.Add(this.label2);
-            this.TabPage3.Controls.Add(this.label1);
-            this.TabPage3.Location = new System.Drawing.Point(4, 22);
-            this.TabPage3.Name = "tabPage3";
-            this.TabPage3.Size = new System.Drawing.Size(791, 392);
-            this.TabPage3.TabIndex = 2;
-            this.TabPage3.Text = "Add Task";
-            this.TabPage3.UseVisualStyleBackColor = true;
+            this.tabPage3.Controls.Add(this.runsLongerThanEvery);
+            this.tabPage3.Controls.Add(this.notifyButton);
+            this.tabPage3.Controls.Add(this.startConsecutivelyPanel);
+            this.tabPage3.Controls.Add(this.startPeriodicallyPanel);
+            this.tabPage3.Controls.Add(this.startOncePanel);
+            this.tabPage3.Controls.Add(this.runsLongerThanPanel);
+            this.tabPage3.Controls.Add(this.panel6);
+            this.tabPage3.Controls.Add(this.emailAddressTextBox);
+            this.tabPage3.Controls.Add(this.label6);
+            this.tabPage3.Controls.Add(this.button1);
+            this.tabPage3.Controls.Add(this.taskExecutablePath);
+            this.tabPage3.Controls.Add(this.taskName);
+            this.tabPage3.Controls.Add(this.label2);
+            this.tabPage3.Controls.Add(this.label1);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Size = new System.Drawing.Size(791, 392);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "Add Task";
+            this.tabPage3.UseVisualStyleBackColor = true;
             // 
-            // runsLongerThanMin
+            // notifyButton
             // 
-            this.RunsLongerThanMin.AutoSize = true;
-            this.RunsLongerThanMin.Location = new System.Drawing.Point(175, 10);
-            this.RunsLongerThanMin.Name = "runsLongerThanMin";
-            this.RunsLongerThanMin.Size = new System.Drawing.Size(42, 17);
-            this.RunsLongerThanMin.TabIndex = 36;
-            this.RunsLongerThanMin.Text = "Min";
-            this.RunsLongerThanMin.UseVisualStyleBackColor = true;
+            this.notifyButton.AutoSize = true;
+            this.notifyButton.Location = new System.Drawing.Point(24, 294);
+            this.notifyButton.Name = "notifyButton";
+            this.notifyButton.Size = new System.Drawing.Size(196, 17);
+            this.notifyButton.TabIndex = 50;
+            this.notifyButton.Text = "Notify by Email If Runs Longer Than";
+            this.notifyButton.UseVisualStyleBackColor = true;
+            this.notifyButton.CheckedChanged += new System.EventHandler(this.NotifyButton_CheckedChanged);
             // 
-            // runsLongerThanHour
+            // startConsecutivelyPanel
             // 
-            this.RunsLongerThanHour.AutoSize = true;
-            this.RunsLongerThanHour.Location = new System.Drawing.Point(121, 10);
-            this.RunsLongerThanHour.Name = "runsLongerThanHour";
-            this.RunsLongerThanHour.Size = new System.Drawing.Size(48, 17);
-            this.RunsLongerThanHour.TabIndex = 35;
-            this.RunsLongerThanHour.Text = "Hour";
-            this.RunsLongerThanHour.UseVisualStyleBackColor = true;
-            // 
-            // runsLongerThanDay
-            // 
-            this.RunsLongerThanDay.AutoSize = true;
-            this.RunsLongerThanDay.Location = new System.Drawing.Point(73, 10);
-            this.RunsLongerThanDay.Name = "runsLongerThanDay";
-            this.RunsLongerThanDay.Size = new System.Drawing.Size(44, 17);
-            this.RunsLongerThanDay.TabIndex = 34;
-            this.RunsLongerThanDay.Text = "Day";
-            this.RunsLongerThanDay.UseVisualStyleBackColor = true;
-            // 
-            // runsLongerThanWeek
-            // 
-            this.RunsLongerThanWeek.AutoSize = true;
-            this.RunsLongerThanWeek.Location = new System.Drawing.Point(13, 10);
-            this.RunsLongerThanWeek.Name = "runsLongerThanWeek";
-            this.RunsLongerThanWeek.Size = new System.Drawing.Size(54, 17);
-            this.RunsLongerThanWeek.TabIndex = 33;
-            this.RunsLongerThanWeek.Text = "Week";
-            this.RunsLongerThanWeek.UseVisualStyleBackColor = true;
-            // 
-            // runsLongerThanEvery
-            // 
-            this.RunsLongerThanEvery.FormattingEnabled = true;
-            this.RunsLongerThanEvery.Items.AddRange(new object[] {
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16",
-            "17",
-            "18",
-            "19",
-            "20",
-            "21",
-            "22",
-            "23",
-            "24",
-            "25",
-            "26",
-            "27",
-            "28",
-            "29",
-            "30"});
-            this.RunsLongerThanEvery.Location = new System.Drawing.Point(230, 292);
-            this.RunsLongerThanEvery.Name = "runsLongerThanEvery";
-            this.RunsLongerThanEvery.Size = new System.Drawing.Size(46, 21);
-            this.RunsLongerThanEvery.TabIndex = 32;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(248, 328);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(122, 23);
-            this.button1.TabIndex = 30;
-            this.button1.Text = "Add Task";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.Button1_Click);
-            // 
-            // startConsecutivelyMin
-            // 
-            this.startConsecutivelyMin.AutoSize = true;
-            this.startConsecutivelyMin.Location = new System.Drawing.Point(183, 5);
-            this.startConsecutivelyMin.Name = "startConsecutivelyMin";
-            this.startConsecutivelyMin.Size = new System.Drawing.Size(42, 17);
-            this.startConsecutivelyMin.TabIndex = 29;
-            this.startConsecutivelyMin.Text = "Min";
-            this.startConsecutivelyMin.UseVisualStyleBackColor = true;
-            // 
-            // startConsecutivelyHour
-            // 
-            this.startConsecutivelyHour.AutoSize = true;
-            this.startConsecutivelyHour.Location = new System.Drawing.Point(129, 5);
-            this.startConsecutivelyHour.Name = "startConsecutivelyHour";
-            this.startConsecutivelyHour.Size = new System.Drawing.Size(48, 17);
-            this.startConsecutivelyHour.TabIndex = 28;
-            this.startConsecutivelyHour.Text = "Hour";
-            this.startConsecutivelyHour.UseVisualStyleBackColor = true;
-            // 
-            // startConsecutivelyDay
-            // 
-            this.startConsecutivelyDay.AutoSize = true;
-            this.startConsecutivelyDay.Location = new System.Drawing.Point(75, 5);
-            this.startConsecutivelyDay.Name = "startConsecutivelyDay";
-            this.startConsecutivelyDay.Size = new System.Drawing.Size(44, 17);
-            this.startConsecutivelyDay.TabIndex = 27;
-            this.startConsecutivelyDay.Text = "Day";
-            this.startConsecutivelyDay.UseVisualStyleBackColor = true;
-            // 
-            // startConsecutivelyWeek
-            // 
-            this.startConsecutivelyWeek.AutoSize = true;
-            this.startConsecutivelyWeek.Location = new System.Drawing.Point(15, 5);
-            this.startConsecutivelyWeek.Name = "startConsecutivelyWeek";
-            this.startConsecutivelyWeek.Size = new System.Drawing.Size(54, 17);
-            this.startConsecutivelyWeek.TabIndex = 26;
-            this.startConsecutivelyWeek.Text = "Week";
-            this.startConsecutivelyWeek.UseVisualStyleBackColor = true;
-            this.startConsecutivelyWeek.CheckedChanged += new System.EventHandler(this.StartConsecutivelyWeek_CheckedChanged);
+            this.startConsecutivelyPanel.Controls.Add(this.startConsecutivelyDelay);
+            this.startConsecutivelyPanel.Controls.Add(this.panel5);
+            this.startConsecutivelyPanel.Controls.Add(this.startConsecutivelyDateTimePicker);
+            this.startConsecutivelyPanel.Controls.Add(this.startConsecutivelyIntervalPanel);
+            this.startConsecutivelyPanel.Controls.Add(this.startConsecutivelyDelayText);
+            this.startConsecutivelyPanel.Location = new System.Drawing.Point(165, 201);
+            this.startConsecutivelyPanel.Name = "startConsecutivelyPanel";
+            this.startConsecutivelyPanel.Size = new System.Drawing.Size(495, 70);
+            this.startConsecutivelyPanel.TabIndex = 49;
             // 
             // startConsecutivelyDelay
             // 
-            this.startConsecutivelyDelay.FormattingEnabled = true;
-            this.startConsecutivelyDelay.Items.AddRange(new object[] {
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16",
-            "17",
-            "18",
-            "19",
-            "20",
-            "21",
-            "22",
-            "23",
-            "24",
-            "25",
-            "26",
-            "27",
-            "28",
-            "29",
-            "30"});
-            this.startConsecutivelyDelay.Location = new System.Drawing.Point(75, 39);
+            this.startConsecutivelyDelay.DecimalPlaces = 2;
+            this.startConsecutivelyDelay.Location = new System.Drawing.Point(74, 40);
             this.startConsecutivelyDelay.Name = "startConsecutivelyDelay";
-            this.startConsecutivelyDelay.Size = new System.Drawing.Size(46, 21);
-            this.startConsecutivelyDelay.TabIndex = 25;
+            this.startConsecutivelyDelay.Size = new System.Drawing.Size(47, 20);
+            this.startConsecutivelyDelay.TabIndex = 51;
             // 
-            // startConsecutivelyDelayText
+            // panel5
             // 
-            this.startConsecutivelyDelayText.AutoSize = true;
-            this.startConsecutivelyDelayText.Location = new System.Drawing.Point(35, 42);
-            this.startConsecutivelyDelayText.Name = "startConsecutivelyDelayText";
-            this.startConsecutivelyDelayText.Size = new System.Drawing.Size(34, 13);
-            this.startConsecutivelyDelayText.TabIndex = 24;
-            this.startConsecutivelyDelayText.Text = "Delay";
+            this.panel5.Controls.Add(this.startConsecutivelyNowButton);
+            this.panel5.Controls.Add(this.startConsecutivelySelectDateButton);
+            this.panel5.Location = new System.Drawing.Point(5, 2);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(200, 27);
+            this.panel5.TabIndex = 44;
             // 
             // startConsecutivelyNowButton
             // 
@@ -341,14 +206,6 @@ namespace TaskScheduler
             this.startConsecutivelyNowButton.UseVisualStyleBackColor = true;
             this.startConsecutivelyNowButton.CheckedChanged += new System.EventHandler(this.StartConsecutivelyNowButton_CheckedChanged);
             // 
-            // startConsecutivelyDateTimePicker
-            // 
-            this.startConsecutivelyDateTimePicker.Location = new System.Drawing.Point(211, 5);
-            this.startConsecutivelyDateTimePicker.Name = "startConsecutivelyDateTimePicker";
-            this.startConsecutivelyDateTimePicker.Size = new System.Drawing.Size(200, 20);
-            this.startConsecutivelyDateTimePicker.TabIndex = 21;
-            this.startConsecutivelyDateTimePicker.Visible = false;
-            // 
             // startConsecutivelySelectDateButton
             // 
             this.startConsecutivelySelectDateButton.AutoSize = true;
@@ -360,102 +217,100 @@ namespace TaskScheduler
             this.startConsecutivelySelectDateButton.UseVisualStyleBackColor = true;
             this.startConsecutivelySelectDateButton.CheckedChanged += new System.EventHandler(this.StartConsecutivelySelectDateButton_CheckedChanged);
             // 
-            // startPeriodicallyMin
+            // startConsecutivelyDateTimePicker
             // 
-            this.startPeriodicallyMin.AutoSize = true;
-            this.startPeriodicallyMin.Location = new System.Drawing.Point(183, 3);
-            this.startPeriodicallyMin.Name = "startPeriodicallyMin";
-            this.startPeriodicallyMin.Size = new System.Drawing.Size(42, 17);
-            this.startPeriodicallyMin.TabIndex = 19;
-            this.startPeriodicallyMin.Text = "Min";
-            this.startPeriodicallyMin.UseVisualStyleBackColor = true;
+            this.startConsecutivelyDateTimePicker.CustomFormat = "MM\'/\'dd\'/\'yyyy hh\':\'mm tt";
+            this.startConsecutivelyDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.startConsecutivelyDateTimePicker.Location = new System.Drawing.Point(211, 5);
+            this.startConsecutivelyDateTimePicker.Name = "startConsecutivelyDateTimePicker";
+            this.startConsecutivelyDateTimePicker.Size = new System.Drawing.Size(200, 20);
+            this.startConsecutivelyDateTimePicker.TabIndex = 21;
+            this.startConsecutivelyDateTimePicker.Visible = false;
             // 
-            // startPeriodicallyHour
+            // startConsecutivelyIntervalPanel
             // 
-            this.startPeriodicallyHour.AutoSize = true;
-            this.startPeriodicallyHour.Location = new System.Drawing.Point(129, 3);
-            this.startPeriodicallyHour.Name = "startPeriodicallyHour";
-            this.startPeriodicallyHour.Size = new System.Drawing.Size(48, 17);
-            this.startPeriodicallyHour.TabIndex = 18;
-            this.startPeriodicallyHour.Text = "Hour";
-            this.startPeriodicallyHour.UseVisualStyleBackColor = true;
+            this.startConsecutivelyIntervalPanel.Controls.Add(this.startConsecutivelyWeek);
+            this.startConsecutivelyIntervalPanel.Controls.Add(this.startConsecutivelyDay);
+            this.startConsecutivelyIntervalPanel.Controls.Add(this.startConsecutivelyHour);
+            this.startConsecutivelyIntervalPanel.Controls.Add(this.startConsecutivelyMin);
+            this.startConsecutivelyIntervalPanel.Location = new System.Drawing.Point(127, 35);
+            this.startConsecutivelyIntervalPanel.Name = "startConsecutivelyIntervalPanel";
+            this.startConsecutivelyIntervalPanel.Size = new System.Drawing.Size(235, 25);
+            this.startConsecutivelyIntervalPanel.TabIndex = 43;
             // 
-            // startPeriodicallyDay
+            // startConsecutivelyWeek
             // 
-            this.startPeriodicallyDay.AutoSize = true;
-            this.startPeriodicallyDay.Location = new System.Drawing.Point(75, 3);
-            this.startPeriodicallyDay.Name = "startPeriodicallyDay";
-            this.startPeriodicallyDay.Size = new System.Drawing.Size(44, 17);
-            this.startPeriodicallyDay.TabIndex = 17;
-            this.startPeriodicallyDay.Text = "Day";
-            this.startPeriodicallyDay.UseVisualStyleBackColor = true;
+            this.startConsecutivelyWeek.AutoSize = true;
+            this.startConsecutivelyWeek.Checked = true;
+            this.startConsecutivelyWeek.Location = new System.Drawing.Point(15, 5);
+            this.startConsecutivelyWeek.Name = "startConsecutivelyWeek";
+            this.startConsecutivelyWeek.Size = new System.Drawing.Size(54, 17);
+            this.startConsecutivelyWeek.TabIndex = 26;
+            this.startConsecutivelyWeek.TabStop = true;
+            this.startConsecutivelyWeek.Text = "Week";
+            this.startConsecutivelyWeek.UseVisualStyleBackColor = true;
+            this.startConsecutivelyWeek.CheckedChanged += new System.EventHandler(this.StartConsecutivelyWeek_CheckedChanged);
             // 
-            // startPeriodicallyWeek
+            // startConsecutivelyDay
             // 
-            this.startPeriodicallyWeek.AutoSize = true;
-            this.startPeriodicallyWeek.Location = new System.Drawing.Point(15, 3);
-            this.startPeriodicallyWeek.Name = "startPeriodicallyWeek";
-            this.startPeriodicallyWeek.Size = new System.Drawing.Size(54, 17);
-            this.startPeriodicallyWeek.TabIndex = 16;
-            this.startPeriodicallyWeek.Text = "Week";
-            this.startPeriodicallyWeek.UseVisualStyleBackColor = true;
+            this.startConsecutivelyDay.AutoSize = true;
+            this.startConsecutivelyDay.Location = new System.Drawing.Point(75, 5);
+            this.startConsecutivelyDay.Name = "startConsecutivelyDay";
+            this.startConsecutivelyDay.Size = new System.Drawing.Size(44, 17);
+            this.startConsecutivelyDay.TabIndex = 27;
+            this.startConsecutivelyDay.Text = "Day";
+            this.startConsecutivelyDay.UseVisualStyleBackColor = true;
             // 
-            // startPeriodicallyEvery
+            // startConsecutivelyHour
             // 
-            this.startPeriodicallyEvery.FormattingEnabled = true;
-            this.startPeriodicallyEvery.Items.AddRange(new object[] {
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16",
-            "17",
-            "18",
-            "19",
-            "20",
-            "21",
-            "22",
-            "23",
-            "24",
-            "25",
-            "26",
-            "27",
-            "28",
-            "29",
-            "30"});
-            this.startPeriodicallyEvery.Location = new System.Drawing.Point(169, 45);
-            this.startPeriodicallyEvery.Name = "startPeriodicallyEvery";
-            this.startPeriodicallyEvery.Size = new System.Drawing.Size(46, 21);
-            this.startPeriodicallyEvery.TabIndex = 15;
+            this.startConsecutivelyHour.AutoSize = true;
+            this.startConsecutivelyHour.Location = new System.Drawing.Point(129, 5);
+            this.startConsecutivelyHour.Name = "startConsecutivelyHour";
+            this.startConsecutivelyHour.Size = new System.Drawing.Size(48, 17);
+            this.startConsecutivelyHour.TabIndex = 28;
+            this.startConsecutivelyHour.Text = "Hour";
+            this.startConsecutivelyHour.UseVisualStyleBackColor = true;
             // 
-            // startPeriodicallyEveryText
+            // startConsecutivelyMin
             // 
-            this.startPeriodicallyEveryText.AutoSize = true;
-            this.startPeriodicallyEveryText.Location = new System.Drawing.Point(129, 48);
-            this.startPeriodicallyEveryText.Name = "startPeriodicallyEveryText";
-            this.startPeriodicallyEveryText.Size = new System.Drawing.Size(34, 13);
-            this.startPeriodicallyEveryText.TabIndex = 14;
-            this.startPeriodicallyEveryText.Text = "Every";
+            this.startConsecutivelyMin.AutoSize = true;
+            this.startConsecutivelyMin.Location = new System.Drawing.Point(183, 5);
+            this.startConsecutivelyMin.Name = "startConsecutivelyMin";
+            this.startConsecutivelyMin.Size = new System.Drawing.Size(42, 17);
+            this.startConsecutivelyMin.TabIndex = 29;
+            this.startConsecutivelyMin.Text = "Min";
+            this.startConsecutivelyMin.UseVisualStyleBackColor = true;
             // 
-            // startPeriodicallyTimeText
+            // startConsecutivelyDelayText
             // 
-            this.startPeriodicallyTimeText.AutoSize = true;
-            this.startPeriodicallyTimeText.Location = new System.Drawing.Point(7, 48);
-            this.startPeriodicallyTimeText.Name = "startPeriodicallyTimeText";
-            this.startPeriodicallyTimeText.Size = new System.Drawing.Size(116, 13);
-            this.startPeriodicallyTimeText.TabIndex = 13;
-            this.startPeriodicallyTimeText.Text = "Time Between Periods:";
+            this.startConsecutivelyDelayText.AutoSize = true;
+            this.startConsecutivelyDelayText.Location = new System.Drawing.Point(35, 42);
+            this.startConsecutivelyDelayText.Name = "startConsecutivelyDelayText";
+            this.startConsecutivelyDelayText.Size = new System.Drawing.Size(34, 13);
+            this.startConsecutivelyDelayText.TabIndex = 24;
+            this.startConsecutivelyDelayText.Text = "Delay";
+            // 
+            // startPeriodicallyPanel
+            // 
+            this.startPeriodicallyPanel.Controls.Add(this.startPeriodicallyEvery);
+            this.startPeriodicallyPanel.Controls.Add(this.panel2);
+            this.startPeriodicallyPanel.Controls.Add(this.startPeriodicallyDateTimePicker);
+            this.startPeriodicallyPanel.Controls.Add(this.startPeriodicallyIntervalPanel);
+            this.startPeriodicallyPanel.Controls.Add(this.startPeriodicallyTimeText);
+            this.startPeriodicallyPanel.Controls.Add(this.startPeriodicallyEveryText);
+            this.startPeriodicallyPanel.Location = new System.Drawing.Point(165, 120);
+            this.startPeriodicallyPanel.Name = "startPeriodicallyPanel";
+            this.startPeriodicallyPanel.Size = new System.Drawing.Size(495, 77);
+            this.startPeriodicallyPanel.TabIndex = 48;
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.startPeriodicallyNowButton);
+            this.panel2.Controls.Add(this.startPeriodicallySelectDateButton);
+            this.panel2.Location = new System.Drawing.Point(3, 3);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(200, 33);
+            this.panel2.TabIndex = 41;
             // 
             // startPeriodicallyNowButton
             // 
@@ -471,14 +326,6 @@ namespace TaskScheduler
             this.startPeriodicallyNowButton.UseVisualStyleBackColor = true;
             this.startPeriodicallyNowButton.CheckedChanged += new System.EventHandler(this.StartPeriodicallyNowButton_CheckedChanged);
             // 
-            // startPeriodicallyDateTimePicker
-            // 
-            this.startPeriodicallyDateTimePicker.Location = new System.Drawing.Point(226, 10);
-            this.startPeriodicallyDateTimePicker.Name = "startPeriodicallyDateTimePicker";
-            this.startPeriodicallyDateTimePicker.Size = new System.Drawing.Size(200, 20);
-            this.startPeriodicallyDateTimePicker.TabIndex = 11;
-            this.startPeriodicallyDateTimePicker.Visible = false;
-            // 
             // startPeriodicallySelectDateButton
             // 
             this.startPeriodicallySelectDateButton.AutoSize = true;
@@ -489,6 +336,105 @@ namespace TaskScheduler
             this.startPeriodicallySelectDateButton.Text = "Select Date";
             this.startPeriodicallySelectDateButton.UseVisualStyleBackColor = true;
             this.startPeriodicallySelectDateButton.CheckedChanged += new System.EventHandler(this.StartPeriodicallySelectDateButton_CheckedChanged);
+            // 
+            // startPeriodicallyDateTimePicker
+            // 
+            this.startPeriodicallyDateTimePicker.CustomFormat = "MM\'/\'dd\'/\'yyyy hh\':\'mm tt";
+            this.startPeriodicallyDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.startPeriodicallyDateTimePicker.Location = new System.Drawing.Point(226, 10);
+            this.startPeriodicallyDateTimePicker.Name = "startPeriodicallyDateTimePicker";
+            this.startPeriodicallyDateTimePicker.Size = new System.Drawing.Size(200, 20);
+            this.startPeriodicallyDateTimePicker.TabIndex = 11;
+            this.startPeriodicallyDateTimePicker.Visible = false;
+            // 
+            // startPeriodicallyIntervalPanel
+            // 
+            this.startPeriodicallyIntervalPanel.Controls.Add(this.startPeriodicallyWeek);
+            this.startPeriodicallyIntervalPanel.Controls.Add(this.startPeriodicallyDay);
+            this.startPeriodicallyIntervalPanel.Controls.Add(this.startPeriodicallyHour);
+            this.startPeriodicallyIntervalPanel.Controls.Add(this.startPeriodicallyMin);
+            this.startPeriodicallyIntervalPanel.Location = new System.Drawing.Point(224, 41);
+            this.startPeriodicallyIntervalPanel.Name = "startPeriodicallyIntervalPanel";
+            this.startPeriodicallyIntervalPanel.Size = new System.Drawing.Size(235, 25);
+            this.startPeriodicallyIntervalPanel.TabIndex = 42;
+            // 
+            // startPeriodicallyWeek
+            // 
+            this.startPeriodicallyWeek.AutoSize = true;
+            this.startPeriodicallyWeek.Checked = true;
+            this.startPeriodicallyWeek.Location = new System.Drawing.Point(15, 3);
+            this.startPeriodicallyWeek.Name = "startPeriodicallyWeek";
+            this.startPeriodicallyWeek.Size = new System.Drawing.Size(54, 17);
+            this.startPeriodicallyWeek.TabIndex = 16;
+            this.startPeriodicallyWeek.TabStop = true;
+            this.startPeriodicallyWeek.Text = "Week";
+            this.startPeriodicallyWeek.UseVisualStyleBackColor = true;
+            // 
+            // startPeriodicallyDay
+            // 
+            this.startPeriodicallyDay.AutoSize = true;
+            this.startPeriodicallyDay.Location = new System.Drawing.Point(75, 3);
+            this.startPeriodicallyDay.Name = "startPeriodicallyDay";
+            this.startPeriodicallyDay.Size = new System.Drawing.Size(44, 17);
+            this.startPeriodicallyDay.TabIndex = 17;
+            this.startPeriodicallyDay.Text = "Day";
+            this.startPeriodicallyDay.UseVisualStyleBackColor = true;
+            // 
+            // startPeriodicallyHour
+            // 
+            this.startPeriodicallyHour.AutoSize = true;
+            this.startPeriodicallyHour.Location = new System.Drawing.Point(129, 3);
+            this.startPeriodicallyHour.Name = "startPeriodicallyHour";
+            this.startPeriodicallyHour.Size = new System.Drawing.Size(48, 17);
+            this.startPeriodicallyHour.TabIndex = 18;
+            this.startPeriodicallyHour.Text = "Hour";
+            this.startPeriodicallyHour.UseVisualStyleBackColor = true;
+            // 
+            // startPeriodicallyMin
+            // 
+            this.startPeriodicallyMin.AutoSize = true;
+            this.startPeriodicallyMin.Location = new System.Drawing.Point(183, 3);
+            this.startPeriodicallyMin.Name = "startPeriodicallyMin";
+            this.startPeriodicallyMin.Size = new System.Drawing.Size(42, 17);
+            this.startPeriodicallyMin.TabIndex = 19;
+            this.startPeriodicallyMin.Text = "Min";
+            this.startPeriodicallyMin.UseVisualStyleBackColor = true;
+            // 
+            // startPeriodicallyTimeText
+            // 
+            this.startPeriodicallyTimeText.AutoSize = true;
+            this.startPeriodicallyTimeText.Location = new System.Drawing.Point(7, 48);
+            this.startPeriodicallyTimeText.Name = "startPeriodicallyTimeText";
+            this.startPeriodicallyTimeText.Size = new System.Drawing.Size(116, 13);
+            this.startPeriodicallyTimeText.TabIndex = 13;
+            this.startPeriodicallyTimeText.Text = "Time Between Periods:";
+            // 
+            // startPeriodicallyEveryText
+            // 
+            this.startPeriodicallyEveryText.AutoSize = true;
+            this.startPeriodicallyEveryText.Location = new System.Drawing.Point(129, 48);
+            this.startPeriodicallyEveryText.Name = "startPeriodicallyEveryText";
+            this.startPeriodicallyEveryText.Size = new System.Drawing.Size(34, 13);
+            this.startPeriodicallyEveryText.TabIndex = 14;
+            this.startPeriodicallyEveryText.Text = "Every";
+            // 
+            // startOncePanel
+            // 
+            this.startOncePanel.Controls.Add(this.panel1);
+            this.startOncePanel.Controls.Add(this.startOnceDateTimePicker);
+            this.startOncePanel.Location = new System.Drawing.Point(165, 80);
+            this.startOncePanel.Name = "startOncePanel";
+            this.startOncePanel.Size = new System.Drawing.Size(439, 37);
+            this.startOncePanel.TabIndex = 47;
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.startOnceNowButton);
+            this.panel1.Controls.Add(this.startOnceSelectDateButton);
+            this.panel1.Location = new System.Drawing.Point(3, 8);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(200, 29);
+            this.panel1.TabIndex = 40;
             // 
             // startOnceNowButton
             // 
@@ -503,14 +449,6 @@ namespace TaskScheduler
             this.startOnceNowButton.UseVisualStyleBackColor = true;
             this.startOnceNowButton.CheckedChanged += new System.EventHandler(this.StartOnceNowButton_CheckedChanged);
             // 
-            // startOnceDateTimePicker
-            // 
-            this.startOnceDateTimePicker.Location = new System.Drawing.Point(209, 14);
-            this.startOnceDateTimePicker.Name = "startOnceDateTimePicker";
-            this.startOnceDateTimePicker.Size = new System.Drawing.Size(200, 20);
-            this.startOnceDateTimePicker.TabIndex = 8;
-            this.startOnceDateTimePicker.Visible = false;
-            // 
             // startOnceSelectDateButton
             // 
             this.startOnceSelectDateButton.AutoSize = true;
@@ -522,16 +460,87 @@ namespace TaskScheduler
             this.startOnceSelectDateButton.UseVisualStyleBackColor = true;
             this.startOnceSelectDateButton.CheckedChanged += new System.EventHandler(this.StartOnceSelectDateButton_CheckedChanged);
             // 
-            // startConsecutivelyButton
+            // startOnceDateTimePicker
             // 
-            this.startConsecutivelyButton.AutoSize = true;
-            this.startConsecutivelyButton.Location = new System.Drawing.Point(7, 114);
-            this.startConsecutivelyButton.Name = "startConsecutivelyButton";
-            this.startConsecutivelyButton.Size = new System.Drawing.Size(116, 17);
-            this.startConsecutivelyButton.TabIndex = 6;
-            this.startConsecutivelyButton.Text = "Start Consecutively";
-            this.startConsecutivelyButton.UseVisualStyleBackColor = true;
-            this.startConsecutivelyButton.CheckedChanged += new System.EventHandler(this.StartConsecutivelyButton_CheckedChanged);
+            this.startOnceDateTimePicker.CustomFormat = "MM\'/\'dd\'/\'yyyy hh\':\'mm tt";
+            this.startOnceDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.startOnceDateTimePicker.Location = new System.Drawing.Point(209, 14);
+            this.startOnceDateTimePicker.Name = "startOnceDateTimePicker";
+            this.startOnceDateTimePicker.Size = new System.Drawing.Size(200, 20);
+            this.startOnceDateTimePicker.TabIndex = 8;
+            this.startOnceDateTimePicker.Visible = false;
+            // 
+            // runsLongerThanPanel
+            // 
+            this.runsLongerThanPanel.Controls.Add(this.runsLongerThanWeek);
+            this.runsLongerThanPanel.Controls.Add(this.runsLongerThanDay);
+            this.runsLongerThanPanel.Controls.Add(this.runsLongerThanHour);
+            this.runsLongerThanPanel.Controls.Add(this.runsLongerThanMin);
+            this.runsLongerThanPanel.Location = new System.Drawing.Point(292, 289);
+            this.runsLongerThanPanel.Name = "runsLongerThanPanel";
+            this.runsLongerThanPanel.Size = new System.Drawing.Size(225, 30);
+            this.runsLongerThanPanel.TabIndex = 46;
+            // 
+            // runsLongerThanWeek
+            // 
+            this.runsLongerThanWeek.AutoSize = true;
+            this.runsLongerThanWeek.Location = new System.Drawing.Point(13, 10);
+            this.runsLongerThanWeek.Name = "runsLongerThanWeek";
+            this.runsLongerThanWeek.Size = new System.Drawing.Size(54, 17);
+            this.runsLongerThanWeek.TabIndex = 33;
+            this.runsLongerThanWeek.Text = "Week";
+            this.runsLongerThanWeek.UseVisualStyleBackColor = true;
+            // 
+            // runsLongerThanDay
+            // 
+            this.runsLongerThanDay.AutoSize = true;
+            this.runsLongerThanDay.Location = new System.Drawing.Point(73, 10);
+            this.runsLongerThanDay.Name = "runsLongerThanDay";
+            this.runsLongerThanDay.Size = new System.Drawing.Size(44, 17);
+            this.runsLongerThanDay.TabIndex = 34;
+            this.runsLongerThanDay.Text = "Day";
+            this.runsLongerThanDay.UseVisualStyleBackColor = true;
+            // 
+            // runsLongerThanHour
+            // 
+            this.runsLongerThanHour.AutoSize = true;
+            this.runsLongerThanHour.Location = new System.Drawing.Point(121, 10);
+            this.runsLongerThanHour.Name = "runsLongerThanHour";
+            this.runsLongerThanHour.Size = new System.Drawing.Size(48, 17);
+            this.runsLongerThanHour.TabIndex = 35;
+            this.runsLongerThanHour.Text = "Hour";
+            this.runsLongerThanHour.UseVisualStyleBackColor = true;
+            // 
+            // runsLongerThanMin
+            // 
+            this.runsLongerThanMin.AutoSize = true;
+            this.runsLongerThanMin.Location = new System.Drawing.Point(175, 10);
+            this.runsLongerThanMin.Name = "runsLongerThanMin";
+            this.runsLongerThanMin.Size = new System.Drawing.Size(42, 17);
+            this.runsLongerThanMin.TabIndex = 36;
+            this.runsLongerThanMin.Text = "Min";
+            this.runsLongerThanMin.UseVisualStyleBackColor = true;
+            // 
+            // panel6
+            // 
+            this.panel6.Controls.Add(this.startOnceButton);
+            this.panel6.Controls.Add(this.startPeriodicallyButton);
+            this.panel6.Controls.Add(this.startConsecutivelyButton);
+            this.panel6.Location = new System.Drawing.Point(24, 94);
+            this.panel6.Name = "panel6";
+            this.panel6.Size = new System.Drawing.Size(134, 159);
+            this.panel6.TabIndex = 45;
+            // 
+            // startOnceButton
+            // 
+            this.startOnceButton.AutoSize = true;
+            this.startOnceButton.Location = new System.Drawing.Point(28, 4);
+            this.startOnceButton.Name = "startOnceButton";
+            this.startOnceButton.Size = new System.Drawing.Size(76, 17);
+            this.startOnceButton.TabIndex = 4;
+            this.startOnceButton.Text = "Start Once";
+            this.startOnceButton.UseVisualStyleBackColor = true;
+            this.startOnceButton.CheckedChanged += new System.EventHandler(this.StartOnceButton_CheckedChanged);
             // 
             // startPeriodicallyButton
             // 
@@ -544,16 +553,42 @@ namespace TaskScheduler
             this.startPeriodicallyButton.UseVisualStyleBackColor = true;
             this.startPeriodicallyButton.CheckedChanged += new System.EventHandler(this.StartPeriodicallyButton_CheckedChanged);
             // 
-            // startOnceButton
+            // startConsecutivelyButton
             // 
-            this.startOnceButton.AutoSize = true;
-            this.startOnceButton.Location = new System.Drawing.Point(28, 4);
-            this.startOnceButton.Name = "startOnceButton";
-            this.startOnceButton.Size = new System.Drawing.Size(76, 17);
-            this.startOnceButton.TabIndex = 4;
-            this.startOnceButton.Text = "Start Once";
-            this.startOnceButton.UseVisualStyleBackColor = true;
-            this.startOnceButton.CheckedChanged += new System.EventHandler(this.StartOnceButton_CheckedChanged);
+            this.startConsecutivelyButton.AutoSize = true;
+            this.startConsecutivelyButton.Location = new System.Drawing.Point(7, 114);
+            this.startConsecutivelyButton.Name = "startConsecutivelyButton";
+            this.startConsecutivelyButton.Size = new System.Drawing.Size(116, 17);
+            this.startConsecutivelyButton.TabIndex = 6;
+            this.startConsecutivelyButton.Text = "Start Consecutively";
+            this.startConsecutivelyButton.UseVisualStyleBackColor = true;
+            this.startConsecutivelyButton.CheckedChanged += new System.EventHandler(this.StartConsecutivelyButton_CheckedChanged);
+            // 
+            // emailAddressTextBox
+            // 
+            this.emailAddressTextBox.Location = new System.Drawing.Point(535, 297);
+            this.emailAddressTextBox.Name = "emailAddressTextBox";
+            this.emailAddressTextBox.Size = new System.Drawing.Size(152, 20);
+            this.emailAddressTextBox.TabIndex = 39;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(513, 299);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(23, 13);
+            this.label6.TabIndex = 38;
+            this.label6.Text = "To:";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(248, 328);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(122, 23);
+            this.button1.TabIndex = 30;
+            this.button1.Text = "Add Task";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.Button1_Click);
             // 
             // taskExecutablePath
             // 
@@ -587,168 +622,56 @@ namespace TaskScheduler
             this.label1.TabIndex = 0;
             this.label1.Text = "Task Name:";
             // 
-            // notifyButton
+            // runsLongerThanEvery
             // 
-            this.NotifyButton.AutoSize = true;
-            this.NotifyButton.Location = new System.Drawing.Point(24, 292);
-            this.NotifyButton.Name = "notifyButton";
-            this.NotifyButton.Size = new System.Drawing.Size(194, 17);
-            this.NotifyButton.TabIndex = 37;
-            this.NotifyButton.Text = "Notify by Email if Runs Longer Than";
-            this.NotifyButton.UseVisualStyleBackColor = true;
-            this.NotifyButton.CheckedChanged += new System.EventHandler(this.RadioButton1_CheckedChanged);
+            this.runsLongerThanEvery.DecimalPlaces = 2;
+            this.runsLongerThanEvery.Location = new System.Drawing.Point(239, 294);
+            this.runsLongerThanEvery.Name = "runsLongerThanEvery";
+            this.runsLongerThanEvery.Size = new System.Drawing.Size(47, 20);
+            this.runsLongerThanEvery.TabIndex = 51;
             // 
-            // label6
+            // startPeriodicallyEvery
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(513, 299);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(23, 13);
-            this.label6.TabIndex = 38;
-            this.label6.Text = "To:";
-            // 
-            // emailAddressTextBox
-            // 
-            this.EmailAddressTextBox.Location = new System.Drawing.Point(535, 297);
-            this.EmailAddressTextBox.Name = "emailAddressTextBox";
-            this.EmailAddressTextBox.Size = new System.Drawing.Size(152, 20);
-            this.EmailAddressTextBox.TabIndex = 39;
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.startOnceNowButton);
-            this.panel1.Controls.Add(this.startOnceSelectDateButton);
-            this.panel1.Location = new System.Drawing.Point(3, 8);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(200, 29);
-            this.panel1.TabIndex = 40;
-            // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.startPeriodicallyNowButton);
-            this.panel2.Controls.Add(this.startPeriodicallySelectDateButton);
-            this.panel2.Location = new System.Drawing.Point(3, 3);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(200, 33);
-            this.panel2.TabIndex = 41;
-            // 
-            // startPeriodicallyIntervalPanel
-            // 
-            this.startPeriodicallyIntervalPanel.Controls.Add(this.startPeriodicallyWeek);
-            this.startPeriodicallyIntervalPanel.Controls.Add(this.startPeriodicallyDay);
-            this.startPeriodicallyIntervalPanel.Controls.Add(this.startPeriodicallyHour);
-            this.startPeriodicallyIntervalPanel.Controls.Add(this.startPeriodicallyMin);
-            this.startPeriodicallyIntervalPanel.Location = new System.Drawing.Point(224, 41);
-            this.startPeriodicallyIntervalPanel.Name = "startPeriodicallyIntervalPanel";
-            this.startPeriodicallyIntervalPanel.Size = new System.Drawing.Size(235, 25);
-            this.startPeriodicallyIntervalPanel.TabIndex = 42;
-            // 
-            // startConsecutivelyIntervalPanel
-            // 
-            this.startConsecutivelyIntervalPanel.Controls.Add(this.startConsecutivelyWeek);
-            this.startConsecutivelyIntervalPanel.Controls.Add(this.startConsecutivelyDay);
-            this.startConsecutivelyIntervalPanel.Controls.Add(this.startConsecutivelyHour);
-            this.startConsecutivelyIntervalPanel.Controls.Add(this.startConsecutivelyMin);
-            this.startConsecutivelyIntervalPanel.Location = new System.Drawing.Point(127, 35);
-            this.startConsecutivelyIntervalPanel.Name = "startConsecutivelyIntervalPanel";
-            this.startConsecutivelyIntervalPanel.Size = new System.Drawing.Size(235, 25);
-            this.startConsecutivelyIntervalPanel.TabIndex = 43;
-            // 
-            // panel5
-            // 
-            this.panel5.Controls.Add(this.startConsecutivelyNowButton);
-            this.panel5.Controls.Add(this.startConsecutivelySelectDateButton);
-            this.panel5.Location = new System.Drawing.Point(5, 2);
-            this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(200, 27);
-            this.panel5.TabIndex = 44;
-            // 
-            // panel6
-            // 
-            this.panel6.Controls.Add(this.startOnceButton);
-            this.panel6.Controls.Add(this.startPeriodicallyButton);
-            this.panel6.Controls.Add(this.startConsecutivelyButton);
-            this.panel6.Location = new System.Drawing.Point(24, 94);
-            this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(134, 159);
-            this.panel6.TabIndex = 45;
-            // 
-            // runsLongerThanPanel
-            // 
-            this.runsLongerThanPanel.Controls.Add(this.RunsLongerThanWeek);
-            this.runsLongerThanPanel.Controls.Add(this.RunsLongerThanDay);
-            this.runsLongerThanPanel.Controls.Add(this.RunsLongerThanHour);
-            this.runsLongerThanPanel.Controls.Add(this.RunsLongerThanMin);
-            this.runsLongerThanPanel.Location = new System.Drawing.Point(292, 289);
-            this.runsLongerThanPanel.Name = "runsLongerThanPanel";
-            this.runsLongerThanPanel.Size = new System.Drawing.Size(225, 30);
-            this.runsLongerThanPanel.TabIndex = 46;
-            // 
-            // startOncePanel
-            // 
-            this.startOncePanel.Controls.Add(this.panel1);
-            this.startOncePanel.Controls.Add(this.startOnceDateTimePicker);
-            this.startOncePanel.Location = new System.Drawing.Point(165, 80);
-            this.startOncePanel.Name = "startOncePanel";
-            this.startOncePanel.Size = new System.Drawing.Size(439, 37);
-            this.startOncePanel.TabIndex = 47;
-            // 
-            // startPeriodicallyPanel
-            // 
-            this.startPeriodicallyPanel.Controls.Add(this.panel2);
-            this.startPeriodicallyPanel.Controls.Add(this.startPeriodicallyDateTimePicker);
-            this.startPeriodicallyPanel.Controls.Add(this.startPeriodicallyIntervalPanel);
-            this.startPeriodicallyPanel.Controls.Add(this.startPeriodicallyTimeText);
-            this.startPeriodicallyPanel.Controls.Add(this.startPeriodicallyEveryText);
-            this.startPeriodicallyPanel.Controls.Add(this.startPeriodicallyEvery);
-            this.startPeriodicallyPanel.Location = new System.Drawing.Point(165, 120);
-            this.startPeriodicallyPanel.Name = "startPeriodicallyPanel";
-            this.startPeriodicallyPanel.Size = new System.Drawing.Size(495, 77);
-            this.startPeriodicallyPanel.TabIndex = 48;
-            // 
-            // startConsecutivelyPanel
-            // 
-            this.startConsecutivelyPanel.Controls.Add(this.panel5);
-            this.startConsecutivelyPanel.Controls.Add(this.startConsecutivelyDateTimePicker);
-            this.startConsecutivelyPanel.Controls.Add(this.startConsecutivelyIntervalPanel);
-            this.startConsecutivelyPanel.Controls.Add(this.startConsecutivelyDelayText);
-            this.startConsecutivelyPanel.Controls.Add(this.startConsecutivelyDelay);
-            this.startConsecutivelyPanel.Location = new System.Drawing.Point(165, 201);
-            this.startConsecutivelyPanel.Name = "startConsecutivelyPanel";
-            this.startConsecutivelyPanel.Size = new System.Drawing.Size(495, 70);
-            this.startConsecutivelyPanel.TabIndex = 49;
+            this.startPeriodicallyEvery.DecimalPlaces = 2;
+            this.startPeriodicallyEvery.Location = new System.Drawing.Point(177, 44);
+            this.startPeriodicallyEvery.Name = "startPeriodicallyEvery";
+            this.startPeriodicallyEvery.Size = new System.Drawing.Size(41, 20);
+            this.startPeriodicallyEvery.TabIndex = 43;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(823, 442);
-            this.Controls.Add(this.TabControl1);
+            this.Controls.Add(this.tabControl1);
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
-            this.TabControl1.ResumeLayout(false);
-            this.TabPage3.ResumeLayout(false);
-            this.TabPage3.PerformLayout();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
+            this.tabControl1.ResumeLayout(false);
+            this.tabPage3.ResumeLayout(false);
+            this.tabPage3.PerformLayout();
+            this.startConsecutivelyPanel.ResumeLayout(false);
+            this.startConsecutivelyPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.startConsecutivelyDelay)).EndInit();
+            this.panel5.ResumeLayout(false);
+            this.panel5.PerformLayout();
+            this.startConsecutivelyIntervalPanel.ResumeLayout(false);
+            this.startConsecutivelyIntervalPanel.PerformLayout();
+            this.startPeriodicallyPanel.ResumeLayout(false);
+            this.startPeriodicallyPanel.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.startPeriodicallyIntervalPanel.ResumeLayout(false);
             this.startPeriodicallyIntervalPanel.PerformLayout();
-            this.startConsecutivelyIntervalPanel.ResumeLayout(false);
-            this.startConsecutivelyIntervalPanel.PerformLayout();
-            this.panel5.ResumeLayout(false);
-            this.panel5.PerformLayout();
-            this.panel6.ResumeLayout(false);
-            this.panel6.PerformLayout();
+            this.startOncePanel.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.runsLongerThanPanel.ResumeLayout(false);
             this.runsLongerThanPanel.PerformLayout();
-            this.startOncePanel.ResumeLayout(false);
-            this.startPeriodicallyPanel.ResumeLayout(false);
-            this.startPeriodicallyPanel.PerformLayout();
-            this.startConsecutivelyPanel.ResumeLayout(false);
-            this.startConsecutivelyPanel.PerformLayout();
+            this.panel6.ResumeLayout(false);
+            this.panel6.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.runsLongerThanEvery)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.startPeriodicallyEvery)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -769,7 +692,6 @@ namespace TaskScheduler
         private System.Windows.Forms.TextBox taskName;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox startPeriodicallyEvery;
         private System.Windows.Forms.Label startPeriodicallyEveryText;
         private System.Windows.Forms.Label startPeriodicallyTimeText;
         private System.Windows.Forms.RadioButton startPeriodicallyNowButton;
@@ -784,7 +706,6 @@ namespace TaskScheduler
         private System.Windows.Forms.RadioButton startConsecutivelyHour;
         private System.Windows.Forms.RadioButton startConsecutivelyDay;
         private System.Windows.Forms.RadioButton startConsecutivelyWeek;
-        private System.Windows.Forms.ComboBox startConsecutivelyDelay;
         private System.Windows.Forms.Label startConsecutivelyDelayText;
         private System.Windows.Forms.RadioButton startConsecutivelyNowButton;
         private System.Windows.Forms.DateTimePicker startConsecutivelyDateTimePicker;
@@ -793,10 +714,8 @@ namespace TaskScheduler
         private System.Windows.Forms.RadioButton runsLongerThanHour;
         private System.Windows.Forms.RadioButton runsLongerThanDay;
         private System.Windows.Forms.RadioButton runsLongerThanWeek;
-        private System.Windows.Forms.ComboBox runsLongerThanEvery;
         private System.Windows.Forms.TextBox emailAddressTextBox;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.RadioButton notifyButton;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel startConsecutivelyIntervalPanel;
         private System.Windows.Forms.Panel startPeriodicallyIntervalPanel;
@@ -807,13 +726,22 @@ namespace TaskScheduler
         private System.Windows.Forms.Panel startOncePanel;
         private System.Windows.Forms.Panel startPeriodicallyPanel;
         private System.Windows.Forms.Panel startConsecutivelyPanel;
+        private CheckBox notifyButton;
+        private NumericUpDown startConsecutivelyDelay;
+        private NumericUpDown runsLongerThanEvery;
+        private NumericUpDown startPeriodicallyEvery;
 
+        public TextBox TaskName { get => taskName; set => taskName = value; }
+        public TextBox TaskExecutablePath { get => taskExecutablePath; set => taskExecutablePath = value; }
+        public RadioButton StartOnceButton { get => startOnceButton; set => startOnceButton = value; }
+        public RadioButton StartPeriodicallyButton { get => startPeriodicallyButton; set => startPeriodicallyButton = value; }
+        public RadioButton StartConsecutivelyButton { get => startConsecutivelyButton; set => startConsecutivelyButton = value; }
         public TabControl TabControl1 { get => tabControl1; set => tabControl1 = value; }
         public TabPage TabPage2 { get => tabPage2; set => tabPage2 = value; }
         public TabPage TabPage3 { get => tabPage3; set => tabPage3 = value; }
         public TabPage TabPage1 { get => tabPage1; set => tabPage1 = value; }
-        public RadioButton NotifyButton { get => notifyButton; set => notifyButton = value; }
-        public ComboBox RunsLongerThanEvery { get => runsLongerThanEvery; set => runsLongerThanEvery = value; }
+        public CheckBox NotifyButton { get => notifyButton; set => notifyButton = value; }
+        public NumericUpDown RunsLongerThanEvery { get => runsLongerThanEvery; set => runsLongerThanEvery = value; }
         public TextBox EmailAddressTextBox { get => emailAddressTextBox; set => emailAddressTextBox = value; }
         public RadioButton RunsLongerThanWeek { get => runsLongerThanWeek; set => runsLongerThanWeek = value; }
         public RadioButton RunsLongerThanDay { get => runsLongerThanDay; set => runsLongerThanDay = value; }

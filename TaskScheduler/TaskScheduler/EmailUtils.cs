@@ -12,7 +12,7 @@ namespace TaskScheduler
         {
             if (Form1.Form.NotifyButton.Checked)
             {
-                int every = int.Parse(Form1.Form.RunsLongerThanEvery.SelectedItem.ToString());
+                float every = (float) Form1.Form.RunsLongerThanEvery.Value;
                 var interval = GetSelectedRunsLongerThanInterval();
 
                 EmailInfo emailInfo = new EmailInfo
