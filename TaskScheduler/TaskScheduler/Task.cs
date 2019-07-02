@@ -22,12 +22,12 @@ namespace TaskScheduler
         public TimeSpan TimeBetween { get; set; }
     }
 
-    enum StartProperty
+    public enum StartProperty
     {
         Once, Periodically, Consecutively,
     }
 
-    enum Interval
+    public enum Interval
     {
         Week, Day, Hour, Min
     }

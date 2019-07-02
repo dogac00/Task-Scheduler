@@ -10,31 +10,24 @@ namespace TaskScheduler
 {
     public partial class Form1 : Form
     {
-        private readonly EmailUtils emailUtils;
         private readonly Validation validation;
-        System.Threading.Timer updateTimer;
-        System.Threading.Timer checkEverySecondsTimer;
+        public List<System.Threading.Timer> Timers;
 
         public Form1()
         {
             Form = this;
-            emailUtils = new EmailUtils();
             validation = new Validation(Form);
+            Timers = new List<System.Threading.Timer>();
             InitializeComponent();
         }
 
         public static Form1 Form { get; private set; }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void Button1_Click(object sender, EventArgs e)
         {
             if (!this.IsValid()) return;
 
-            var task = CreateTask();
+            var task = TaskUtils.CreateTask();
             JsonUtils.AddTask(task);
 
             DoWorkForTimerAndProcess(task);
@@ -52,33 +45,13 @@ namespace TaskScheduler
             {
                 if (startPeriodicallyNowButton.Checked)
                 {
-                    RunTask(task);
-                    UpdateIsRunningEverySeconds(task, 3);
-                    RunTaskPeriodicallyNow(task);
+                    TaskUtils.StartTask(task);
                 }
                 else if (startPeriodicallySelectDateButton.Checked)
                 {
-
+                    TaskUtils.SetTaskStartingTimer(task, 5);
                 }
             }
-        }
-
-        private void RunTaskPeriodicallyNow(Task task)
-        {
-            var startTimeSpan = TimeSpan.Zero;
-            var periodTimeSpan = task.Period.TimeBetween;
-
-            System.Threading.Timer timer = null;
-            timer = new System.Threading.Timer((e) =>
-            {
-
-                if (!task.IsRunning)
-                {
-                    MessageBox.Show("TimeBetween reached task is running...");
-                    RunTask(task);
-                }
-
-            }, null, startTimeSpan, periodTimeSpan);
         }
 
         private void CheckForStartOnce(Task task)
@@ -87,82 +60,14 @@ namespace TaskScheduler
             {
                 if (startOnceNowButton.Checked)
                 {
-                    RunTask(task);
-                    UpdateIsRunningEverySeconds(task, 5);
+                    TaskUtils.RunTask(task);
+                    TaskUtils.UpdateStatusEverySeconds(task, 5);
                 }
                 else if (startOnceSelectDateButton.Checked)
                 {
-                    RunTaskAfterSeconds(task, 5);
+                    TaskUtils.SetTaskStartingTimer(task, 5);
                 }
             }
-        }
-
-        private void UpdateIsRunningEverySeconds(Task task, int seconds)
-        {
-            var startTimeSpan = TimeSpan.FromSeconds(3);
-            var periodTimeSpan = TimeSpan.FromSeconds(seconds);
-
-            updateTimer = new System.Threading.Timer((e) =>
-            {
-                if (!IsProcessRunning(task))
-                {
-                    if (task.IsRunning != false)
-                    {
-                        task.IsRunning = false;
-                        JsonUtils.UpdateTask(task, false);
-                    }
-                }
-                else
-                {
-                    if (task.IsRunning != true)
-                    {
-                        task.IsRunning = true;
-                        JsonUtils.UpdateTask(task, true);
-                    }
-                }
-
-            }, null, startTimeSpan, periodTimeSpan);
-        }
-
-        private bool IsProcessRunning(Task task)
-        {
-            Process[] processes = Process.GetProcessesByName(task.ExecutablePath);
-
-            return processes.Length != 0;
-        }
-
-        private void RunTaskAfterSeconds(Task task, int seconds)
-        {
-            var startTimeSpan = TimeSpan.Zero;
-            var periodTimeSpan = TimeSpan.FromSeconds(seconds);
-
-            checkEverySecondsTimer = new System.Threading.Timer((e) =>
-            {
-
-                if (IsTimeReady(task)) checkEverySecondsTimer.Dispose();
-
-            }, null, startTimeSpan, periodTimeSpan);
-        }
-
-        private bool IsTimeReady(Task task)
-        {
-            var ts = new TimeSpan(DateTime.Now.Ticks - task.Period.StartDate.Ticks);
-            double delta = Math.Abs(ts.TotalSeconds);
-
-            if (!task.IsRunning && delta < 120)
-            {
-                RunTask(task);
-                return true;
-            }
-
-            return false;
-        }
-        
-        private void RunTask(Task task)
-        {
-            task.IsRunning = true;
-            JsonUtils.UpdateTask(task, true);
-            Process.Start(task.ExecutablePath);
         }
 
         private bool IsValid()
@@ -174,101 +79,7 @@ namespace TaskScheduler
             return true;
         }
 
-        private Task CreateTask()
-        {
-            Task task = new Task
-            {
-                Name = taskName.Text,
-                ExecutablePath = taskExecutablePath.Text,
-                IsRunning = false,
-                Period = SetPeriod(),
-                EmailInfo = emailUtils.SetEmailInfo()
-            };
-
-            return task;
-        }
-
-
-        private TaskPeriod SetPeriod()
-        {
-            TaskPeriod period;
-
-            if (startOnceButton.Checked)
-            {
-                period = new TaskPeriod
-                {
-                    Property = StartProperty.Once,
-                    StartDate = GetStartDate(StartProperty.Once),
-                    TimeBetween = TimeSpan.FromSeconds(0)
-                };
-            }
-            else if (startPeriodicallyButton.Checked)
-            {
-                period = new TaskPeriod
-                {
-                    Property = StartProperty.Periodically,
-                    StartDate = GetStartDate(StartProperty.Periodically),
-                    TimeBetween = GetTimeBetween(StartProperty.Periodically)
-                };
-            }
-            else
-            {
-                period = new TaskPeriod
-                {
-                    Property = StartProperty.Consecutively,
-                    StartDate = GetStartDate(StartProperty.Consecutively),
-                    TimeBetween = GetTimeBetween(StartProperty.Consecutively)
-                };
-            }
-
-            return period;
-        }
-
-        private DateTime GetStartDate(StartProperty prop)
-        {
-            if (prop == StartProperty.Once)
-            {
-                if (startOnceNowButton.Checked)
-                    return DateTime.Now;
-
-                return startOnceDateTimePicker.Value;
-            }
-            else if (prop == StartProperty.Periodically)
-            {
-                if (startPeriodicallyNowButton.Checked)
-                    return DateTime.Now;
-
-                return startPeriodicallyDateTimePicker.Value;
-            }
-            else
-            {
-                if (startConsecutivelyNowButton.Checked)
-                    return DateTime.Now;
-
-                return startConsecutivelyDateTimePicker.Value;
-            }
-        }
-
-        private TimeSpan GetTimeBetween(StartProperty prop)
-        {
-            float every;
-            Interval interval;
-
-            if (prop == StartProperty.Periodically)
-            {
-                every = (float) startPeriodicallyEvery.Value;
-                interval = GetInterval();
-            }
-            else
-            {
-                every = (float) startConsecutivelyDelay.Value;
-                interval = GetInterval();
-            }
-
-            return TimeSpanUtils.GenerateTimeSpan(every, interval);
-        }
-
-        private Interval GetInterval()
+        public Interval GetInterval()
         {
             if (startPeriodicallyButton.Checked)
             {
@@ -293,10 +104,29 @@ namespace TaskScheduler
                     return Interval.Min;
             }
         }
-
-        private void StartConsecutivelyWeek_CheckedChanged(object sender, EventArgs e)
+        public DateTime GetStartDate(StartProperty prop)
         {
+            if (prop == StartProperty.Once)
+            {
+                if (startOnceNowButton.Checked)
+                    return DateTime.Now;
 
+                return startOnceDateTimePicker.Value;
+            }
+            else if (prop == StartProperty.Periodically)
+            {
+                if (startPeriodicallyNowButton.Checked)
+                    return DateTime.Now;
+
+                return startPeriodicallyDateTimePicker.Value;
+            }
+            else
+            {
+                if (startConsecutivelyNowButton.Checked)
+                    return DateTime.Now;
+
+                return startConsecutivelyDateTimePicker.Value;
+            }
         }
 
         private void StartOnceNowButton_CheckedChanged(object sender, EventArgs e)
@@ -348,11 +178,6 @@ namespace TaskScheduler
         private void StartConsecutivelySelectDateButton_CheckedChanged(object sender, EventArgs e)
         {
             startConsecutivelyDateTimePicker.Visible = true;
-        }
-
-        private void RadioButton1_CheckedChanged(object sender, EventArgs e)
-        {
-
         }
 
         private void NotifyButton_CheckedChanged(object sender, EventArgs e)

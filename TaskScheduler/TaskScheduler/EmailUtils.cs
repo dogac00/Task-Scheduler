@@ -8,7 +8,7 @@ namespace TaskScheduler
 {
     class EmailUtils
     {
-        public EmailInfo SetEmailInfo()
+        public static EmailInfo SetEmailInfo()
         {
             if (Form1.Form.NotifyButton.Checked)
             {
@@ -30,7 +30,7 @@ namespace TaskScheduler
             }
         }
 
-        private Interval GetSelectedRunsLongerThanInterval()
+        private static Interval GetSelectedRunsLongerThanInterval()
         {
             if (Form1.Form.RunsLongerThanWeek.Checked)
                 return Interval.Week;

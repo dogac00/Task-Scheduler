@@ -249,7 +249,6 @@ namespace TaskScheduler
             this.startConsecutivelyWeek.TabStop = true;
             this.startConsecutivelyWeek.Text = "Week";
             this.startConsecutivelyWeek.UseVisualStyleBackColor = true;
-            this.startConsecutivelyWeek.CheckedChanged += new System.EventHandler(this.StartConsecutivelyWeek_CheckedChanged);
             // 
             // startConsecutivelyDay
             // 
@@ -646,7 +645,6 @@ namespace TaskScheduler
             this.Controls.Add(this.tabControl1);
             this.Name = "Form1";
             this.Text = "Form1";
-            this.Load += new System.EventHandler(this.Form1_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
@@ -735,6 +733,8 @@ namespace TaskScheduler
         public TextBox TaskExecutablePath { get => taskExecutablePath; set => taskExecutablePath = value; }
         public RadioButton StartOnceButton { get => startOnceButton; set => startOnceButton = value; }
         public RadioButton StartPeriodicallyButton { get => startPeriodicallyButton; set => startPeriodicallyButton = value; }
+        public NumericUpDown StartConsecutivelyDelay { get => startConsecutivelyDelay; set => startConsecutivelyDelay = value; }
+        public NumericUpDown StartPeriodicallyEvery { get => startPeriodicallyEvery; set => startPeriodicallyEvery = value; }
         public RadioButton StartConsecutivelyButton { get => startConsecutivelyButton; set => startConsecutivelyButton = value; }
         public TabControl TabControl1 { get => tabControl1; set => tabControl1 = value; }
         public TabPage TabPage2 { get => tabPage2; set => tabPage2 = value; }
