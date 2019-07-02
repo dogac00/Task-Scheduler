@@ -30,10 +30,12 @@ namespace TaskScheduler
         /// </summary>
         private void InitializeComponent()
         {
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.tabControl = new System.Windows.Forms.TabControl();
+            this.activeTasksPage = new System.Windows.Forms.TabPage();
+            this.allTasksPage = new System.Windows.Forms.TabPage();
+            this.tasksDataGrid = new System.Windows.Forms.DataGridView();
+            this.addTaskPage = new System.Windows.Forms.TabPage();
+            this.runsLongerThanEvery = new System.Windows.Forms.NumericUpDown();
             this.notifyButton = new System.Windows.Forms.CheckBox();
             this.startConsecutivelyPanel = new System.Windows.Forms.Panel();
             this.startConsecutivelyDelay = new System.Windows.Forms.NumericUpDown();
@@ -48,6 +50,7 @@ namespace TaskScheduler
             this.startConsecutivelyMin = new System.Windows.Forms.RadioButton();
             this.startConsecutivelyDelayText = new System.Windows.Forms.Label();
             this.startPeriodicallyPanel = new System.Windows.Forms.Panel();
+            this.startPeriodicallyEvery = new System.Windows.Forms.NumericUpDown();
             this.panel2 = new System.Windows.Forms.Panel();
             this.startPeriodicallyNowButton = new System.Windows.Forms.RadioButton();
             this.startPeriodicallySelectDateButton = new System.Windows.Forms.RadioButton();
@@ -80,78 +83,98 @@ namespace TaskScheduler
             this.taskName = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.runsLongerThanEvery = new System.Windows.Forms.NumericUpDown();
-            this.startPeriodicallyEvery = new System.Windows.Forms.NumericUpDown();
-            this.tabControl1.SuspendLayout();
-            this.tabPage3.SuspendLayout();
+            this.updateGridButton = new System.Windows.Forms.Button();
+            this.tabControl.SuspendLayout();
+            this.allTasksPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tasksDataGrid)).BeginInit();
+            this.addTaskPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.runsLongerThanEvery)).BeginInit();
             this.startConsecutivelyPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.startConsecutivelyDelay)).BeginInit();
             this.panel5.SuspendLayout();
             this.startConsecutivelyIntervalPanel.SuspendLayout();
             this.startPeriodicallyPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.startPeriodicallyEvery)).BeginInit();
             this.panel2.SuspendLayout();
             this.startPeriodicallyIntervalPanel.SuspendLayout();
             this.startOncePanel.SuspendLayout();
             this.panel1.SuspendLayout();
             this.runsLongerThanPanel.SuspendLayout();
             this.panel6.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.runsLongerThanEvery)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.startPeriodicallyEvery)).BeginInit();
             this.SuspendLayout();
             // 
-            // tabControl1
+            // tabControl
             // 
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Controls.Add(this.tabPage3);
-            this.tabControl1.Location = new System.Drawing.Point(12, 12);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(799, 418);
-            this.tabControl1.TabIndex = 0;
+            this.tabControl.Controls.Add(this.activeTasksPage);
+            this.tabControl.Controls.Add(this.allTasksPage);
+            this.tabControl.Controls.Add(this.addTaskPage);
+            this.tabControl.Location = new System.Drawing.Point(12, 12);
+            this.tabControl.Name = "tabControl";
+            this.tabControl.SelectedIndex = 0;
+            this.tabControl.Size = new System.Drawing.Size(799, 418);
+            this.tabControl.TabIndex = 0;
+            this.tabControl.SelectedIndexChanged += new System.EventHandler(this.tabControl_SelectedIndexChanged);
             // 
-            // tabPage1
+            // activeTasksPage
             // 
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(791, 392);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Active Task Status";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.activeTasksPage.Location = new System.Drawing.Point(4, 22);
+            this.activeTasksPage.Name = "activeTasksPage";
+            this.activeTasksPage.Padding = new System.Windows.Forms.Padding(3);
+            this.activeTasksPage.Size = new System.Drawing.Size(791, 392);
+            this.activeTasksPage.TabIndex = 0;
+            this.activeTasksPage.Text = "Active Task Status";
+            this.activeTasksPage.UseVisualStyleBackColor = true;
             // 
-            // tabPage2
+            // allTasksPage
             // 
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(791, 392);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Tasks";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.allTasksPage.Controls.Add(this.updateGridButton);
+            this.allTasksPage.Controls.Add(this.tasksDataGrid);
+            this.allTasksPage.Location = new System.Drawing.Point(4, 22);
+            this.allTasksPage.Name = "allTasksPage";
+            this.allTasksPage.Padding = new System.Windows.Forms.Padding(3);
+            this.allTasksPage.Size = new System.Drawing.Size(791, 392);
+            this.allTasksPage.TabIndex = 1;
+            this.allTasksPage.Text = "Tasks";
+            this.allTasksPage.UseVisualStyleBackColor = true;
             // 
-            // tabPage3
+            // tasksDataGrid
             // 
-            this.tabPage3.Controls.Add(this.runsLongerThanEvery);
-            this.tabPage3.Controls.Add(this.notifyButton);
-            this.tabPage3.Controls.Add(this.startConsecutivelyPanel);
-            this.tabPage3.Controls.Add(this.startPeriodicallyPanel);
-            this.tabPage3.Controls.Add(this.startOncePanel);
-            this.tabPage3.Controls.Add(this.runsLongerThanPanel);
-            this.tabPage3.Controls.Add(this.panel6);
-            this.tabPage3.Controls.Add(this.emailAddressTextBox);
-            this.tabPage3.Controls.Add(this.label6);
-            this.tabPage3.Controls.Add(this.button1);
-            this.tabPage3.Controls.Add(this.taskExecutablePath);
-            this.tabPage3.Controls.Add(this.taskName);
-            this.tabPage3.Controls.Add(this.label2);
-            this.tabPage3.Controls.Add(this.label1);
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(791, 392);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "Add Task";
-            this.tabPage3.UseVisualStyleBackColor = true;
+            this.tasksDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.tasksDataGrid.Location = new System.Drawing.Point(6, 6);
+            this.tasksDataGrid.Name = "tasksDataGrid";
+            this.tasksDataGrid.Size = new System.Drawing.Size(782, 383);
+            this.tasksDataGrid.TabIndex = 0;
+            // 
+            // addTaskPage
+            // 
+            this.addTaskPage.Controls.Add(this.runsLongerThanEvery);
+            this.addTaskPage.Controls.Add(this.notifyButton);
+            this.addTaskPage.Controls.Add(this.startConsecutivelyPanel);
+            this.addTaskPage.Controls.Add(this.startPeriodicallyPanel);
+            this.addTaskPage.Controls.Add(this.startOncePanel);
+            this.addTaskPage.Controls.Add(this.runsLongerThanPanel);
+            this.addTaskPage.Controls.Add(this.panel6);
+            this.addTaskPage.Controls.Add(this.emailAddressTextBox);
+            this.addTaskPage.Controls.Add(this.label6);
+            this.addTaskPage.Controls.Add(this.button1);
+            this.addTaskPage.Controls.Add(this.taskExecutablePath);
+            this.addTaskPage.Controls.Add(this.taskName);
+            this.addTaskPage.Controls.Add(this.label2);
+            this.addTaskPage.Controls.Add(this.label1);
+            this.addTaskPage.Location = new System.Drawing.Point(4, 22);
+            this.addTaskPage.Name = "addTaskPage";
+            this.addTaskPage.Size = new System.Drawing.Size(791, 392);
+            this.addTaskPage.TabIndex = 2;
+            this.addTaskPage.Text = "Add Task";
+            this.addTaskPage.UseVisualStyleBackColor = true;
+            // 
+            // runsLongerThanEvery
+            // 
+            this.runsLongerThanEvery.DecimalPlaces = 2;
+            this.runsLongerThanEvery.Location = new System.Drawing.Point(239, 294);
+            this.runsLongerThanEvery.Name = "runsLongerThanEvery";
+            this.runsLongerThanEvery.Size = new System.Drawing.Size(47, 20);
+            this.runsLongerThanEvery.TabIndex = 51;
             // 
             // notifyButton
             // 
@@ -301,6 +324,14 @@ namespace TaskScheduler
             this.startPeriodicallyPanel.Name = "startPeriodicallyPanel";
             this.startPeriodicallyPanel.Size = new System.Drawing.Size(495, 77);
             this.startPeriodicallyPanel.TabIndex = 48;
+            // 
+            // startPeriodicallyEvery
+            // 
+            this.startPeriodicallyEvery.DecimalPlaces = 2;
+            this.startPeriodicallyEvery.Location = new System.Drawing.Point(177, 44);
+            this.startPeriodicallyEvery.Name = "startPeriodicallyEvery";
+            this.startPeriodicallyEvery.Size = new System.Drawing.Size(41, 20);
+            this.startPeriodicallyEvery.TabIndex = 43;
             // 
             // panel2
             // 
@@ -621,33 +652,31 @@ namespace TaskScheduler
             this.label1.TabIndex = 0;
             this.label1.Text = "Task Name:";
             // 
-            // runsLongerThanEvery
+            // updateGridButton
             // 
-            this.runsLongerThanEvery.DecimalPlaces = 2;
-            this.runsLongerThanEvery.Location = new System.Drawing.Point(239, 294);
-            this.runsLongerThanEvery.Name = "runsLongerThanEvery";
-            this.runsLongerThanEvery.Size = new System.Drawing.Size(47, 20);
-            this.runsLongerThanEvery.TabIndex = 51;
-            // 
-            // startPeriodicallyEvery
-            // 
-            this.startPeriodicallyEvery.DecimalPlaces = 2;
-            this.startPeriodicallyEvery.Location = new System.Drawing.Point(177, 44);
-            this.startPeriodicallyEvery.Name = "startPeriodicallyEvery";
-            this.startPeriodicallyEvery.Size = new System.Drawing.Size(41, 20);
-            this.startPeriodicallyEvery.TabIndex = 43;
+            this.updateGridButton.Location = new System.Drawing.Point(665, 15);
+            this.updateGridButton.Name = "updateGridButton";
+            this.updateGridButton.Size = new System.Drawing.Size(109, 29);
+            this.updateGridButton.TabIndex = 1;
+            this.updateGridButton.Text = "Update Grid";
+            this.updateGridButton.UseVisualStyleBackColor = true;
+            this.updateGridButton.Click += new System.EventHandler(this.UpdateGridButton_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(823, 442);
-            this.Controls.Add(this.tabControl1);
+            this.Controls.Add(this.tabControl);
             this.Name = "Form1";
             this.Text = "Form1";
-            this.tabControl1.ResumeLayout(false);
-            this.tabPage3.ResumeLayout(false);
-            this.tabPage3.PerformLayout();
+            this.Load += new System.EventHandler(this.Form1_Load);
+            this.tabControl.ResumeLayout(false);
+            this.allTasksPage.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.tasksDataGrid)).EndInit();
+            this.addTaskPage.ResumeLayout(false);
+            this.addTaskPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.runsLongerThanEvery)).EndInit();
             this.startConsecutivelyPanel.ResumeLayout(false);
             this.startConsecutivelyPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.startConsecutivelyDelay)).EndInit();
@@ -657,6 +686,7 @@ namespace TaskScheduler
             this.startConsecutivelyIntervalPanel.PerformLayout();
             this.startPeriodicallyPanel.ResumeLayout(false);
             this.startPeriodicallyPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.startPeriodicallyEvery)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.startPeriodicallyIntervalPanel.ResumeLayout(false);
@@ -668,18 +698,16 @@ namespace TaskScheduler
             this.runsLongerThanPanel.PerformLayout();
             this.panel6.ResumeLayout(false);
             this.panel6.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.runsLongerThanEvery)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.startPeriodicallyEvery)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.TabPage tabPage3;
-        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabControl tabControl;
+        private System.Windows.Forms.TabPage allTasksPage;
+        private System.Windows.Forms.TabPage addTaskPage;
+        private System.Windows.Forms.TabPage activeTasksPage;
         private System.Windows.Forms.RadioButton startOnceNowButton;
         private System.Windows.Forms.DateTimePicker startOnceDateTimePicker;
         private System.Windows.Forms.RadioButton startOnceSelectDateButton;
@@ -728,6 +756,8 @@ namespace TaskScheduler
         private NumericUpDown startConsecutivelyDelay;
         private NumericUpDown runsLongerThanEvery;
         private NumericUpDown startPeriodicallyEvery;
+        private DataGridView tasksDataGrid;
+        private Button updateGridButton;
 
         public TextBox TaskName { get => taskName; set => taskName = value; }
         public TextBox TaskExecutablePath { get => taskExecutablePath; set => taskExecutablePath = value; }
@@ -736,10 +766,10 @@ namespace TaskScheduler
         public NumericUpDown StartConsecutivelyDelay { get => startConsecutivelyDelay; set => startConsecutivelyDelay = value; }
         public NumericUpDown StartPeriodicallyEvery { get => startPeriodicallyEvery; set => startPeriodicallyEvery = value; }
         public RadioButton StartConsecutivelyButton { get => startConsecutivelyButton; set => startConsecutivelyButton = value; }
-        public TabControl TabControl1 { get => tabControl1; set => tabControl1 = value; }
-        public TabPage TabPage2 { get => tabPage2; set => tabPage2 = value; }
-        public TabPage TabPage3 { get => tabPage3; set => tabPage3 = value; }
-        public TabPage TabPage1 { get => tabPage1; set => tabPage1 = value; }
+        public TabControl TabControl1 { get => tabControl; set => tabControl = value; }
+        public TabPage TabPage2 { get => allTasksPage; set => allTasksPage = value; }
+        public TabPage TabPage3 { get => addTaskPage; set => addTaskPage = value; }
+        public TabPage TabPage1 { get => activeTasksPage; set => activeTasksPage = value; }
         public CheckBox NotifyButton { get => notifyButton; set => notifyButton = value; }
         public NumericUpDown RunsLongerThanEvery { get => runsLongerThanEvery; set => runsLongerThanEvery = value; }
         public TextBox EmailAddressTextBox { get => emailAddressTextBox; set => emailAddressTextBox = value; }

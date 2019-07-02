@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace TaskScheduler
 {
@@ -51,9 +52,13 @@ namespace TaskScheduler
 
         public static void RunTask(Task task)
         {
+            try
+            {
+                Process.Start(task.ExecutablePath);
+            }
+            catch { MessageBox.Show("Invalida executable path."); return; }
             task.IsRunning = true;
             JsonUtils.UpdateTask(task, true);
-            Process.Start(task.ExecutablePath);
         }
 
         public static void UpdateStatusEverySeconds(Task task, int everySeconds)

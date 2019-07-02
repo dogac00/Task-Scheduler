@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows.Forms;
 using FRUtility;
@@ -183,6 +184,50 @@ namespace TaskScheduler
         private void NotifyButton_CheckedChanged(object sender, EventArgs e)
         {
             if (notifyButton.Checked) runsLongerThanWeek.Checked = true;
+        }
+
+        private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (tabControl.SelectedIndex == 1)
+            {
+                UpdateGrid();
+            }
+        }
+
+        private void UpdateGrid()
+        {
+            List<Task> tasks = JsonUtils.FetchJsonData();
+
+            var list = new BindingList<Task>(tasks);
+            var source = new BindingSource(list, null);
+
+            try { tasksDataGrid.DataSource = source; }
+            catch { /* Exception due to cross-threading */ }
+        }
+
+        private void SetGridTimer()
+        {
+            var startTimeSpan = TimeSpan.Zero;
+            var periodTimeSpan = TimeSpan.FromSeconds(3);
+
+            var timer = new System.Threading.Timer((e) =>
+            {
+
+                UpdateGrid();
+
+            }, null, startTimeSpan, periodTimeSpan);
+
+            Timers.Add(timer);
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            SetGridTimer();
+        }
+
+        private void UpdateGridButton_Click(object sender, EventArgs e)
+        {
+            UpdateGrid();
         }
     }
 

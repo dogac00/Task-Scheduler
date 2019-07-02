@@ -34,25 +34,48 @@ namespace TaskScheduler
             File.WriteAllText(jsonFilePath, jsonData);
         }
 
+        public static List<Task> FetchJsonData()
+        {
+            FileUtils.CheckIfFileExists(jsonFilePath);
+
+            string jsonData = null;
+
+            try
+            {
+                jsonData = File.ReadAllText(jsonFilePath);
+            } catch (Exception e) { MessageBox.Show(e.Message); }
+            
+            
+            List<Task> tasks;
+
+            try { tasks = DeserializeTasks(jsonData); }
+            catch { tasks = new List<Task>(); }
+
+            return tasks;
+        }
+
         public static void UpdateTask(Task task, bool isRunning)
         {
             FileUtils.CheckIfFileExists(jsonFilePath);
 
-            var jsonData = File.ReadAllText(jsonFilePath);
-
-            List<Task> tasksList = DeserializeTasks(jsonData);
-
-            for (int i = 0; i < tasksList.Count; ++i)
+            try
             {
-                if (tasksList[i].Name == task.Name)
+                var jsonData = File.ReadAllText(jsonFilePath);
+
+                List<Task> tasksList = DeserializeTasks(jsonData);
+
+                for (int i = 0; i < tasksList.Count; ++i)
                 {
-                    tasksList[i].IsRunning = isRunning;
+                    if (tasksList[i].Name == task.Name)
+                    {
+                        tasksList[i].IsRunning = isRunning;
+                    }
                 }
-            }
 
-            jsonData = JsonConvert.SerializeObject(tasksList);
+                jsonData = JsonConvert.SerializeObject(tasksList);
 
-            File.WriteAllText(jsonFilePath, jsonData);
+                File.WriteAllText(jsonFilePath, jsonData);
+            } catch { }
         }
 
         private static List<Task> DeserializeTasks(string jsonData)
