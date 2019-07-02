@@ -34,6 +34,34 @@ namespace TaskScheduler
             File.WriteAllText(jsonFilePath, jsonData);
         }
 
+        public static bool DeleteTask(Task task)
+        {
+            bool isDeleted = false;
+
+            try
+            {
+                var jsonData = File.ReadAllText(jsonFilePath);
+
+                List<Task> tasksList = DeserializeTasks(jsonData);
+
+                for (int i = 0; i < tasksList.Count; ++i)
+                {
+                    if (tasksList[i].Name == task.Name)
+                    {
+                        tasksList.RemoveAt(i);
+                        isDeleted = true;
+                    }
+                }
+
+                jsonData = JsonConvert.SerializeObject(tasksList);
+
+                File.WriteAllText(jsonFilePath, jsonData);
+            }
+            catch { }
+
+            return isDeleted;
+        }
+
         public static List<Task> FetchJsonData()
         {
             FileUtils.CheckIfFileExists(jsonFilePath);

@@ -56,7 +56,11 @@ namespace TaskScheduler
             {
                 Process.Start(task.ExecutablePath);
             }
-            catch { MessageBox.Show("Invalida executable path."); return; }
+            catch {
+                MessageBox.Show("Invalid executable path.");
+                JsonUtils.DeleteTask(task);
+                return;
+            }
             task.IsRunning = true;
             JsonUtils.UpdateTask(task, true);
         }
@@ -95,15 +99,23 @@ namespace TaskScheduler
             var startTimeSpan = TimeSpan.Zero;
             var periodTimeSpan = TimeSpan.FromSeconds(runEverySeconds);
 
-            var timer = new System.Threading.Timer((e) =>
+            System.Threading.Timer timer = null;
+            timer = new System.Threading.Timer((e) =>
             {
 
-                IsTimeReady(task);
+                if (IsTimeReady(task)) RemoveTimer(timer);
 
             }, null, startTimeSpan, periodTimeSpan);
 
             Form1.Form.Timers.Add(timer);
         }
+
+        public static void RemoveTimer(System.Threading.Timer timer)
+        {
+            Form1.Form.Timers.Remove(timer);
+            timer.Dispose();
+        }
+
         private static bool IsTimeReady(Task task)
         {
             var ts = new TimeSpan(DateTime.Now.Ticks - task.Period.StartDate.Ticks);
