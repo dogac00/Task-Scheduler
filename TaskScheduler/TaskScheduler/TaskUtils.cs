@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,6 +30,34 @@ namespace TaskScheduler
             Form1.Form.Timers.Add(timer);
         }
 
+        public static void SetDelayForConsecutive(Task task)
+        {
+            var startTimeSpan = TimeSpan.Zero;
+            var delayTimeSpan = TimeSpanUtils
+                .GenerateTimeSpan((float) Form1.Form.StartConsecutivelyDelay.Value,
+                                    Form1.Form.GetInterval());
+
+            var isTimerCreated = false;
+
+            System.Threading.Timer timer = null;
+
+            timer = new System.Threading.Timer((e) =>
+            {
+
+                if (isTimerCreated)
+                {
+                    RunTaskConsecutively(task);
+                    TimerUtils.DisposeTimer(timer);
+                } else
+                {
+                    isTimerCreated = true;
+                }
+
+            }, null, startTimeSpan, delayTimeSpan);
+
+            Form1.Form.Timers.Add(timer);
+        }
+
         public static Task CreateTask()
         {
             Task task = new Task
@@ -36,6 +65,7 @@ namespace TaskScheduler
                 Name = Form1.Form.TaskName.Text,
                 ExecutablePath = Form1.Form.TaskExecutablePath.Text,
                 IsRunning = false,
+                ProcessId = -1,
                 Period = TaskPeriodUtils.SetPeriod(),
                 EmailInfo = EmailUtils.SetEmailInfo()
             };
@@ -43,55 +73,103 @@ namespace TaskScheduler
             return task;
         }
 
-        public static void StartTask(Task task)
+        public static void StartTaskForPeriodical(Task task)
         {
             RunTask(task);
             UpdateStatusEverySeconds(task, 5);
             SetTaskTimerForPeriods(task);
         }
 
-        public static void RunTask(Task task)
+        public static void RunTaskConsecutively(Task task)
+        {
+            RunTask(task);
+            UpdateStatusConsecutively(task, 3);
+        }
+
+        public static bool RunTask(Task task)
         {
             try
             {
-                Process.Start(task.ExecutablePath);
+                task.ProcessId = Process.Start(task.ExecutablePath).Id;
+                task.IsRunning = true;
+                JsonUtils.UpdateTask(task, true, task.ProcessId);
+                return true;
             }
             catch {
                 MessageBox.Show("Invalid executable path.");
                 JsonUtils.DeleteTask(task);
-                return;
+                return false;
             }
-            task.IsRunning = true;
-            JsonUtils.UpdateTask(task, true);
         }
 
         public static void UpdateStatusEverySeconds(Task task, int everySeconds)
         {
-            var startTimeSpan = TimeSpan.FromSeconds(3);
+            var startTimeSpan = TimeSpan.FromSeconds(5);
             var periodTimeSpan = TimeSpan.FromSeconds(everySeconds);
 
-            var timer = new System.Threading.Timer((e) =>
+            System.Threading.Timer timer = null;
+
+            timer = new System.Threading.Timer((e) =>
             {
-                if (!IsProcessRunning(task))
+
+                if (!CheckIfTaskIsRunningAndUpdate(task))
                 {
-                    if (task.IsRunning != false)
-                    {
-                        task.IsRunning = false;
-                        JsonUtils.UpdateTask(task, false);
-                    }
-                }
-                else
-                {
-                    if (task.IsRunning != true)
-                    {
-                        task.IsRunning = true;
-                        JsonUtils.UpdateTask(task, true);
-                    }
+                    if (task.Period.Property == StartProperty.Once)
+                        TimerUtils.FindAndDisposeTimer(timer);
                 }
 
             }, null, startTimeSpan, periodTimeSpan);
 
             Form1.Form.Timers.Add(timer);
+        }
+
+        
+
+        public static void UpdateStatusConsecutively(Task task, int everySeconds)
+        {
+            var startTimeSpan = TimeSpan.Zero;
+            var periodTimeSpan = TimeSpan.FromSeconds(everySeconds);
+
+            System.Threading.Timer timer = null;
+            timer = new System.Threading.Timer((e) =>
+            {
+
+                if (!CheckIfTaskIsRunningAndUpdate(task))
+                {
+                    TimerUtils.DisposeTimer(timer);
+                    SetDelayForConsecutive(task);
+                }
+
+            }, null, startTimeSpan, periodTimeSpan);
+
+            Form1.Form.Timers.Add(timer);
+        }
+
+        private static bool CheckIfTaskIsRunningAndUpdate(Task taskArg)
+        {
+            Task task = JsonUtils.GetTask(taskArg);
+
+            if (!ProcessUtils.IsProcessRunning(task))
+            {
+                if (task.IsRunning == true)
+                {
+                    task.IsRunning = false;
+                    task.ProcessId = -1;
+                    JsonUtils.UpdateTask(task, false, -1);
+                }
+
+                return false;
+            }
+            else
+            {
+                if (task.IsRunning == false)
+                {
+                    task.IsRunning = true;
+                    JsonUtils.UpdateTask(task, true, task.ProcessId);
+                }
+
+                return true;
+            }
         }
 
         public static void SetTaskStartingTimer(Task task, int runEverySeconds)
@@ -103,38 +181,25 @@ namespace TaskScheduler
             timer = new System.Threading.Timer((e) =>
             {
 
-                if (IsTimeReady(task)) RemoveTimer(timer);
+                if (IsTaskTimeReady(task)) TimerUtils.DisposeTimer(timer);
 
             }, null, startTimeSpan, periodTimeSpan);
 
             Form1.Form.Timers.Add(timer);
         }
 
-        public static void RemoveTimer(System.Threading.Timer timer)
-        {
-            Form1.Form.Timers.Remove(timer);
-            timer.Dispose();
-        }
-
-        private static bool IsTimeReady(Task task)
+        private static bool IsTaskTimeReady(Task task)
         {
             var ts = new TimeSpan(DateTime.Now.Ticks - task.Period.StartDate.Ticks);
             double delta = Math.Abs(ts.TotalSeconds);
 
             if (!task.IsRunning && delta < 10)
             {
-                StartTask(task);
+                StartTaskForPeriodical(task);
                 return true;
             }
 
             return false;
-        }
-
-        private static bool IsProcessRunning(Task task)
-        {
-            Process[] processes = Process.GetProcessesByName(task.ExecutablePath);
-
-            return processes.Length != 0;
         }
     }
 }

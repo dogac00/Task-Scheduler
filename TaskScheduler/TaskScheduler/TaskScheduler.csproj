@@ -63,10 +63,12 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="JsonUtils.cs" />
+    <Compile Include="ProcessUtils.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TaskPeriodUtils.cs" />
     <Compile Include="TaskUtils.cs" />
+    <Compile Include="TimerUtils.cs" />
     <Compile Include="TimeSpanUtils.cs" />
     <Compile Include="Task.cs" />
     <Compile Include="TimeSpanExtensions.cs" />

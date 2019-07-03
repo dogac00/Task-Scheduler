@@ -32,7 +32,10 @@ namespace TaskScheduler
         {
             this.tabControl = new System.Windows.Forms.TabControl();
             this.activeTasksPage = new System.Windows.Forms.TabPage();
+            this.processLabel = new System.Windows.Forms.Label();
+            this.processPath = new System.Windows.Forms.TextBox();
             this.allTasksPage = new System.Windows.Forms.TabPage();
+            this.updateGridButton = new System.Windows.Forms.Button();
             this.tasksDataGrid = new System.Windows.Forms.DataGridView();
             this.addTaskPage = new System.Windows.Forms.TabPage();
             this.runsLongerThanEvery = new System.Windows.Forms.NumericUpDown();
@@ -83,8 +86,10 @@ namespace TaskScheduler
             this.taskName = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.updateGridButton = new System.Windows.Forms.Button();
+            this.isRunningLabel = new System.Windows.Forms.Label();
+            this.checkProcess = new System.Windows.Forms.Button();
             this.tabControl.SuspendLayout();
+            this.activeTasksPage.SuspendLayout();
             this.allTasksPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tasksDataGrid)).BeginInit();
             this.addTaskPage.SuspendLayout();
@@ -117,6 +122,10 @@ namespace TaskScheduler
             // 
             // activeTasksPage
             // 
+            this.activeTasksPage.Controls.Add(this.checkProcess);
+            this.activeTasksPage.Controls.Add(this.isRunningLabel);
+            this.activeTasksPage.Controls.Add(this.processLabel);
+            this.activeTasksPage.Controls.Add(this.processPath);
             this.activeTasksPage.Location = new System.Drawing.Point(4, 22);
             this.activeTasksPage.Name = "activeTasksPage";
             this.activeTasksPage.Padding = new System.Windows.Forms.Padding(3);
@@ -124,6 +133,22 @@ namespace TaskScheduler
             this.activeTasksPage.TabIndex = 0;
             this.activeTasksPage.Text = "Active Task Status";
             this.activeTasksPage.UseVisualStyleBackColor = true;
+            // 
+            // processLabel
+            // 
+            this.processLabel.AutoSize = true;
+            this.processLabel.Location = new System.Drawing.Point(40, 53);
+            this.processLabel.Name = "processLabel";
+            this.processLabel.Size = new System.Drawing.Size(98, 13);
+            this.processLabel.TabIndex = 1;
+            this.processLabel.Text = "Enter Process Path";
+            // 
+            // processPath
+            // 
+            this.processPath.Location = new System.Drawing.Point(168, 50);
+            this.processPath.Name = "processPath";
+            this.processPath.Size = new System.Drawing.Size(291, 20);
+            this.processPath.TabIndex = 0;
             // 
             // allTasksPage
             // 
@@ -136,6 +161,16 @@ namespace TaskScheduler
             this.allTasksPage.TabIndex = 1;
             this.allTasksPage.Text = "Tasks";
             this.allTasksPage.UseVisualStyleBackColor = true;
+            // 
+            // updateGridButton
+            // 
+            this.updateGridButton.Location = new System.Drawing.Point(665, 15);
+            this.updateGridButton.Name = "updateGridButton";
+            this.updateGridButton.Size = new System.Drawing.Size(109, 29);
+            this.updateGridButton.TabIndex = 1;
+            this.updateGridButton.Text = "Update Grid";
+            this.updateGridButton.UseVisualStyleBackColor = true;
+            this.updateGridButton.Click += new System.EventHandler(this.UpdateGridButton_Click);
             // 
             // tasksDataGrid
             // 
@@ -652,15 +687,24 @@ namespace TaskScheduler
             this.label1.TabIndex = 0;
             this.label1.Text = "Task Name:";
             // 
-            // updateGridButton
+            // isRunningLabel
             // 
-            this.updateGridButton.Location = new System.Drawing.Point(665, 15);
-            this.updateGridButton.Name = "updateGridButton";
-            this.updateGridButton.Size = new System.Drawing.Size(109, 29);
-            this.updateGridButton.TabIndex = 1;
-            this.updateGridButton.Text = "Update Grid";
-            this.updateGridButton.UseVisualStyleBackColor = true;
-            this.updateGridButton.Click += new System.EventHandler(this.UpdateGridButton_Click);
+            this.isRunningLabel.AutoSize = true;
+            this.isRunningLabel.Location = new System.Drawing.Point(208, 131);
+            this.isRunningLabel.Name = "isRunningLabel";
+            this.isRunningLabel.Size = new System.Drawing.Size(35, 13);
+            this.isRunningLabel.TabIndex = 2;
+            this.isRunningLabel.Text = "label3";
+            // 
+            // checkProcess
+            // 
+            this.checkProcess.Location = new System.Drawing.Point(182, 88);
+            this.checkProcess.Name = "checkProcess";
+            this.checkProcess.Size = new System.Drawing.Size(75, 23);
+            this.checkProcess.TabIndex = 3;
+            this.checkProcess.Text = "Check";
+            this.checkProcess.UseVisualStyleBackColor = true;
+            this.checkProcess.Click += new System.EventHandler(this.CheckProcess_Click);
             // 
             // Form1
             // 
@@ -672,6 +716,8 @@ namespace TaskScheduler
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.tabControl.ResumeLayout(false);
+            this.activeTasksPage.ResumeLayout(false);
+            this.activeTasksPage.PerformLayout();
             this.allTasksPage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.tasksDataGrid)).EndInit();
             this.addTaskPage.ResumeLayout(false);
@@ -758,6 +804,10 @@ namespace TaskScheduler
         private NumericUpDown startPeriodicallyEvery;
         private DataGridView tasksDataGrid;
         private Button updateGridButton;
+        private Label processLabel;
+        private TextBox processPath;
+        private Button checkProcess;
+        private Label isRunningLabel;
 
         public TextBox TaskName { get => taskName; set => taskName = value; }
         public TextBox TaskExecutablePath { get => taskExecutablePath; set => taskExecutablePath = value; }

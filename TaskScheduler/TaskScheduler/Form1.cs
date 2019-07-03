@@ -38,6 +38,18 @@ namespace TaskScheduler
         {
             CheckForStartOnce(task);
             CheckForStartPeriodically(task);
+            CheckForStartConsecutively(task);
+        }
+
+        private void CheckForStartConsecutively(Task task)
+        {
+            if (task.Period.Property == StartProperty.Consecutively)
+            {
+                if (startConsecutivelyNowButton.Checked)
+                {
+                    TaskUtils.RunTaskConsecutively(task);
+                }
+            }
         }
 
         private void CheckForStartPeriodically(Task task)
@@ -46,7 +58,7 @@ namespace TaskScheduler
             {
                 if (startPeriodicallyNowButton.Checked)
                 {
-                    TaskUtils.StartTask(task);
+                    TaskUtils.StartTaskForPeriodical(task);
                 }
                 else if (startPeriodicallySelectDateButton.Checked)
                 {
@@ -61,8 +73,10 @@ namespace TaskScheduler
             {
                 if (startOnceNowButton.Checked)
                 {
-                    TaskUtils.RunTask(task);
-                    TaskUtils.UpdateStatusEverySeconds(task, 5);
+                    if (TaskUtils.RunTask(task))
+                    {
+                        TaskUtils.UpdateStatusEverySeconds(task, 5);
+                    }
                 }
                 else if (startOnceSelectDateButton.Checked)
                 {
@@ -105,6 +119,7 @@ namespace TaskScheduler
                     return Interval.Min;
             }
         }
+
         public DateTime GetStartDate(StartProperty prop)
         {
             if (prop == StartProperty.Once)
@@ -205,29 +220,30 @@ namespace TaskScheduler
             catch { /* Exception due to cross-threading */ }
         }
 
-        private void SetGridTimer()
-        {
-            var startTimeSpan = TimeSpan.Zero;
-            var periodTimeSpan = TimeSpan.FromSeconds(3);
-
-            var timer = new System.Threading.Timer((e) =>
-            {
-
-                UpdateGrid();
-
-            }, null, startTimeSpan, periodTimeSpan);
-
-            Timers.Add(timer);
-        }
-
         private void Form1_Load(object sender, EventArgs e)
         {
-            SetGridTimer();
+
         }
 
         private void UpdateGridButton_Click(object sender, EventArgs e)
         {
             UpdateGrid();
+        }
+
+        private void CheckProcess_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var processId = int.Parse(processPath.Text);
+
+                var result = TaskUtils.IsProcessRunning(processId);
+
+                isRunningLabel.Text = result.ToString();
+            }
+            catch
+            {
+                MessageBox.Show("Process path is incorrect.");
+            }
         }
     }
 

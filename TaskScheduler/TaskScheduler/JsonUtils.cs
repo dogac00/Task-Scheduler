@@ -82,7 +82,7 @@ namespace TaskScheduler
             return tasks;
         }
 
-        public static void UpdateTask(Task task, bool isRunning)
+        public static void UpdateTask(Task task, bool isRunning, int processId)
         {
             FileUtils.CheckIfFileExists(jsonFilePath);
 
@@ -97,6 +97,7 @@ namespace TaskScheduler
                     if (tasksList[i].Name == task.Name)
                     {
                         tasksList[i].IsRunning = isRunning;
+                        tasksList[i].ProcessId = processId;
                     }
                 }
 
@@ -104,6 +105,34 @@ namespace TaskScheduler
 
                 File.WriteAllText(jsonFilePath, jsonData);
             } catch { }
+        }
+
+        public static Task GetTask(Task task)
+        {
+            return GetTaskByName(task.Name);
+        }
+
+        public static Task GetTaskByName(string taskName)
+        {
+            FileUtils.CheckIfFileExists(jsonFilePath);
+
+            try
+            {
+                var jsonData = File.ReadAllText(jsonFilePath);
+
+                List<Task> tasksList = DeserializeTasks(jsonData);
+
+                for (int i = 0; i < tasksList.Count; ++i)
+                {
+                    if (tasksList[i].Name == taskName)
+                    {
+                        return tasksList[i];
+                    }
+                }
+
+                return null;
+            }
+            catch { return null; }
         }
 
         private static List<Task> DeserializeTasks(string jsonData)

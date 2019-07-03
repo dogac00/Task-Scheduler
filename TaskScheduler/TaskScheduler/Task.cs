@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,7 @@ namespace TaskScheduler
         public string Name { get; set; }
         public string ExecutablePath { get; set; }
         public bool IsRunning { get; set; }
+        public int ProcessId { get; set; }
         public TaskPeriod Period { get; set; }
         public EmailInfo EmailInfo { get; set; }
     }
