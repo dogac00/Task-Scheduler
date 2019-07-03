@@ -16,11 +16,20 @@ namespace TaskScheduler
 
         public static void FindAndDisposeTimer(System.Threading.Timer timer)
         {
+            System.Threading.Timer temp = null;
+
             foreach (var t in Form1.Form.Timers)
             {
                 if (t == timer)
-                    DisposeTimer(timer);
+                    temp = t;
             }
+
+            try
+            {
+                DisposeTimer(temp);
+                Form1.Form.Timers.Remove(temp);
+
+            } catch { }
         }
     }
 }

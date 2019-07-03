@@ -19,10 +19,12 @@ namespace TaskScheduler
             var timer = new System.Threading.Timer((e) =>
             {
 
-                if (!task.IsRunning)
+                var localTask = JsonUtils.GetTask(task);
+
+                if (!localTask.IsRunning)
                 {
                     // TimeBetween reached. Run task if not running.
-                    RunTask(task);
+                    RunTask(localTask);
                 }
 
             }, null, startTimeSpan, periodTimeSpan);
@@ -62,6 +64,7 @@ namespace TaskScheduler
         {
             Task task = new Task
             {
+                Id = -1,
                 Name = Form1.Form.TaskName.Text,
                 ExecutablePath = Form1.Form.TaskExecutablePath.Text,
                 IsRunning = false,
@@ -76,7 +79,7 @@ namespace TaskScheduler
         public static void StartTaskForPeriodical(Task task)
         {
             RunTask(task);
-            UpdateStatusEverySeconds(task, 5);
+            UpdateStatusEverySeconds(task, 3);
             SetTaskTimerForPeriods(task);
         }
 

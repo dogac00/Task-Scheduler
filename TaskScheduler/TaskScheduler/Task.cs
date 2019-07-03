@@ -9,6 +9,7 @@ namespace TaskScheduler
 {
     class Task
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public string ExecutablePath { get; set; }
         public bool IsRunning { get; set; }

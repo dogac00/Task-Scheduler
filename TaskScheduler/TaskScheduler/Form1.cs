@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Windows.Forms;
 using FRUtility;
-using Newtonsoft.Json;
 
 namespace TaskScheduler
 {
@@ -85,11 +82,15 @@ namespace TaskScheduler
             }
         }
 
+        
+
         private bool IsValid()
         {
             if (!validation.IsValidForNames()) return false;
             if (!validation.IsValidForNonClick()) return false;
             if (!validation.IsValidForEmail()) return false;
+            if (!validation.IsValidNumericUpDown()) return false;
+            if (!validation.IsTaskNameValid()) return false;
 
             return true;
         }
@@ -144,6 +145,8 @@ namespace TaskScheduler
                 return startConsecutivelyDateTimePicker.Value;
             }
         }
+
+        // Form Click Event Handlers from now on...
 
         private void StartOnceNowButton_CheckedChanged(object sender, EventArgs e)
         {
@@ -201,33 +204,52 @@ namespace TaskScheduler
             if (notifyButton.Checked) runsLongerThanWeek.Checked = true;
         }
 
-        private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
+        private void TabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (tabControl.SelectedIndex == 1)
             {
-                UpdateGrid();
+                GridUtils.UpdateGrid();
             }
-        }
-
-        private void UpdateGrid()
-        {
-            List<Task> tasks = JsonUtils.FetchJsonData();
-
-            var list = new BindingList<Task>(tasks);
-            var source = new BindingSource(list, null);
-
-            try { tasksDataGrid.DataSource = source; }
-            catch { /* Exception due to cross-threading */ }
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
         }
 
         private void UpdateGridButton_Click(object sender, EventArgs e)
         {
-            UpdateGrid();
+            GridUtils.UpdateGrid();
+        }
+
+        void TasksDataGrid_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            // if click is on new row or header row
+            if (e.RowIndex == tasksDataGrid.NewRowIndex || e.RowIndex < 0)
+                return;
+
+            //Check if click is on specific column 
+            if (e.ColumnIndex == tasksDataGrid.Columns["dataGridViewDeleteButtonColumn"].Index)
+            {
+                // Put some logic here, for example to remove row from your binding list.
+
+                if (MessageBox.Show("Are you sure you want to delete this task?", "Message", 
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes) {
+
+                    var taskId = e.RowIndex;
+
+                    if (JsonUtils.DeleteTask(taskId))
+                    {
+                        GridUtils.UpdateGrid();
+                    } else
+                    {
+                        MessageBox.Show("Row cannot be deleted.");
+                    }
+
+                }
+            }
+            else if (e.ColumnIndex == tasksDataGrid.Columns["dataGridViewStartButtonColumn"].Index)
+            {
+                // Put some logic here, for example to remove row from your binding list.
+                var taskId = e.RowIndex;
+
+                MessageBox.Show($"Task id is : {taskId}");
+            }
         }
 
         private void CheckProcess_Click(object sender, EventArgs e)
@@ -236,7 +258,7 @@ namespace TaskScheduler
             {
                 var processId = int.Parse(processPath.Text);
 
-                var result = TaskUtils.IsProcessRunning(processId);
+                var result = ProcessUtils.IsProcessRunning(processId);
 
                 isRunningLabel.Text = result.ToString();
             }
@@ -244,6 +266,11 @@ namespace TaskScheduler
             {
                 MessageBox.Show("Process path is incorrect.");
             }
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            GridUtils.OnLoadUpdate();
         }
     }
 

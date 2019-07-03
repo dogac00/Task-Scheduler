@@ -62,6 +62,8 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="GridTask.cs" />
+    <Compile Include="GridUtils.cs" />
     <Compile Include="JsonUtils.cs" />
     <Compile Include="ProcessUtils.cs" />
     <Compile Include="Program.cs" />

@@ -61,6 +61,41 @@ namespace TaskScheduler
             return true;
         }
 
+        public bool IsValidNumericUpDown()
+        {
+            if (form.StartPeriodicallyButton.Checked && 
+                form.StartPeriodicallyEvery.Value == 0M)
+            {
+                MessageBox.Show("Period value cannot be zero.");
+                return false;
+            }
+            else if (form.StartConsecutivelyButton.Checked &&
+                    form.StartConsecutivelyDelay.Value == 0M)
+            {
+                MessageBox.Show("Delay value cannot be zero.");
+                return false;
+            }
+            else if (form.NotifyButton.Checked &&
+                    form.RunsLongerThanEvery.Value == 0M)
+            {
+                MessageBox.Show("Longer than value cannot be zero.");
+                return false;
+            }
+
+            return true;
+        }
+
+        public bool IsTaskNameValid()
+        {
+            if (JsonUtils.GetTaskByName(form.TaskName.Text) != null)
+            {
+                MessageBox.Show("Task name exists. Please select another name.");
+                return false;
+            }
+
+            return true;
+        }
+
         private bool IsValidEmail(string source)
         {
             return new EmailAddressAttribute().IsValid(source);

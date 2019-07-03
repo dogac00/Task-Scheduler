@@ -32,6 +32,8 @@ namespace TaskScheduler
         {
             this.tabControl = new System.Windows.Forms.TabControl();
             this.activeTasksPage = new System.Windows.Forms.TabPage();
+            this.checkProcess = new System.Windows.Forms.Button();
+            this.isRunningLabel = new System.Windows.Forms.Label();
             this.processLabel = new System.Windows.Forms.Label();
             this.processPath = new System.Windows.Forms.TextBox();
             this.allTasksPage = new System.Windows.Forms.TabPage();
@@ -86,8 +88,6 @@ namespace TaskScheduler
             this.taskName = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.isRunningLabel = new System.Windows.Forms.Label();
-            this.checkProcess = new System.Windows.Forms.Button();
             this.tabControl.SuspendLayout();
             this.activeTasksPage.SuspendLayout();
             this.allTasksPage.SuspendLayout();
@@ -118,7 +118,7 @@ namespace TaskScheduler
             this.tabControl.SelectedIndex = 0;
             this.tabControl.Size = new System.Drawing.Size(799, 418);
             this.tabControl.TabIndex = 0;
-            this.tabControl.SelectedIndexChanged += new System.EventHandler(this.tabControl_SelectedIndexChanged);
+            this.tabControl.SelectedIndexChanged += new System.EventHandler(this.TabControl_SelectedIndexChanged);
             // 
             // activeTasksPage
             // 
@@ -133,6 +133,25 @@ namespace TaskScheduler
             this.activeTasksPage.TabIndex = 0;
             this.activeTasksPage.Text = "Active Task Status";
             this.activeTasksPage.UseVisualStyleBackColor = true;
+            // 
+            // checkProcess
+            // 
+            this.checkProcess.Location = new System.Drawing.Point(182, 88);
+            this.checkProcess.Name = "checkProcess";
+            this.checkProcess.Size = new System.Drawing.Size(75, 23);
+            this.checkProcess.TabIndex = 3;
+            this.checkProcess.Text = "Check";
+            this.checkProcess.UseVisualStyleBackColor = true;
+            this.checkProcess.Click += new System.EventHandler(this.CheckProcess_Click);
+            // 
+            // isRunningLabel
+            // 
+            this.isRunningLabel.AutoSize = true;
+            this.isRunningLabel.Location = new System.Drawing.Point(208, 131);
+            this.isRunningLabel.Name = "isRunningLabel";
+            this.isRunningLabel.Size = new System.Drawing.Size(35, 13);
+            this.isRunningLabel.TabIndex = 2;
+            this.isRunningLabel.Text = "label3";
             // 
             // processLabel
             // 
@@ -164,7 +183,7 @@ namespace TaskScheduler
             // 
             // updateGridButton
             // 
-            this.updateGridButton.Location = new System.Drawing.Point(665, 15);
+            this.updateGridButton.Location = new System.Drawing.Point(676, 357);
             this.updateGridButton.Name = "updateGridButton";
             this.updateGridButton.Size = new System.Drawing.Size(109, 29);
             this.updateGridButton.TabIndex = 1;
@@ -174,11 +193,18 @@ namespace TaskScheduler
             // 
             // tasksDataGrid
             // 
+            this.tasksDataGrid.AllowUserToAddRows = false;
+            this.tasksDataGrid.AllowUserToDeleteRows = false;
+            this.tasksDataGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.tasksDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.tasksDataGrid.Location = new System.Drawing.Point(6, 6);
+            this.tasksDataGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tasksDataGrid.Location = new System.Drawing.Point(3, 3);
             this.tasksDataGrid.Name = "tasksDataGrid";
-            this.tasksDataGrid.Size = new System.Drawing.Size(782, 383);
+            this.tasksDataGrid.ReadOnly = true;
+            this.tasksDataGrid.RowHeadersWidth = 28;
+            this.tasksDataGrid.Size = new System.Drawing.Size(785, 386);
             this.tasksDataGrid.TabIndex = 0;
+            this.tasksDataGrid.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.TasksDataGrid_CellClick);
             // 
             // addTaskPage
             // 
@@ -687,25 +713,6 @@ namespace TaskScheduler
             this.label1.TabIndex = 0;
             this.label1.Text = "Task Name:";
             // 
-            // isRunningLabel
-            // 
-            this.isRunningLabel.AutoSize = true;
-            this.isRunningLabel.Location = new System.Drawing.Point(208, 131);
-            this.isRunningLabel.Name = "isRunningLabel";
-            this.isRunningLabel.Size = new System.Drawing.Size(35, 13);
-            this.isRunningLabel.TabIndex = 2;
-            this.isRunningLabel.Text = "label3";
-            // 
-            // checkProcess
-            // 
-            this.checkProcess.Location = new System.Drawing.Point(182, 88);
-            this.checkProcess.Name = "checkProcess";
-            this.checkProcess.Size = new System.Drawing.Size(75, 23);
-            this.checkProcess.TabIndex = 3;
-            this.checkProcess.Text = "Check";
-            this.checkProcess.UseVisualStyleBackColor = true;
-            this.checkProcess.Click += new System.EventHandler(this.CheckProcess_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -809,6 +816,7 @@ namespace TaskScheduler
         private Button checkProcess;
         private Label isRunningLabel;
 
+        public DataGridView TasksDataGrid { get => tasksDataGrid; set => tasksDataGrid = value; }
         public TextBox TaskName { get => taskName; set => taskName = value; }
         public TextBox TaskExecutablePath { get => taskExecutablePath; set => taskExecutablePath = value; }
         public RadioButton StartOnceButton { get => startOnceButton; set => startOnceButton = value; }

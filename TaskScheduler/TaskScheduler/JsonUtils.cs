@@ -24,6 +24,7 @@ namespace TaskScheduler
             {
                 // If it throws an exception,
                 // json file is empty.
+
                 tasksList = DeserializeTasks(jsonData);
             }
             catch { tasksList = new List<Task>(); }
@@ -31,10 +32,18 @@ namespace TaskScheduler
             tasksList.Add(task);
 
             jsonData = JsonConvert.SerializeObject(tasksList);
+
             File.WriteAllText(jsonFilePath, jsonData);
+
+            OrderById();
         }
 
         public static bool DeleteTask(Task task)
+        {
+            return DeleteTask(task.Id);
+        }
+
+        public static bool DeleteTask(int taskId)
         {
             bool isDeleted = false;
 
@@ -46,7 +55,7 @@ namespace TaskScheduler
 
                 for (int i = 0; i < tasksList.Count; ++i)
                 {
-                    if (tasksList[i].Name == task.Name)
+                    if (tasksList[i].Id == taskId)
                     {
                         tasksList.RemoveAt(i);
                         isDeleted = true;
@@ -59,7 +68,25 @@ namespace TaskScheduler
             }
             catch { }
 
+            OrderById();
+
             return isDeleted;
+        }
+
+        public static void OrderById()
+        {
+            var jsonData = File.ReadAllText(jsonFilePath);
+
+            List<Task> tasksList = DeserializeTasks(jsonData);
+
+            for (int i = 0; i < tasksList.Count; ++i)
+            {
+                tasksList[i].Id = i;
+            }
+
+            jsonData = JsonConvert.SerializeObject(tasksList);
+
+            File.WriteAllText(jsonFilePath, jsonData);
         }
 
         public static List<Task> FetchJsonData()
@@ -104,6 +131,7 @@ namespace TaskScheduler
                 jsonData = JsonConvert.SerializeObject(tasksList);
 
                 File.WriteAllText(jsonFilePath, jsonData);
+
             } catch { }
         }
 
@@ -133,6 +161,33 @@ namespace TaskScheduler
                 return null;
             }
             catch { return null; }
+        }
+
+        public static List<GridTask> PopulateGridTaskList(List<Task> tasks)
+        {
+            List<GridTask> gridTasks = new List<GridTask>();
+
+            foreach (var task in tasks)
+            {
+                // Due to null reference exception
+                var taskEmail = task.EmailInfo == null ? "No email." : task.EmailInfo.EmailAddress;                
+
+                var gridTask = new GridTask
+                {
+                    Name = task.Name,
+                    ExecutablePath = task.ExecutablePath,
+                    IsRunning = task.IsRunning,
+                    StartProperty = task.Period.Property.ToString(),
+                    StartDate = task.Period.StartDate,
+                    ProcessId = task.ProcessId,
+                    EmailAddress = taskEmail,
+                    TimeBetween = task.Period.TimeBetween,
+                };
+
+                gridTasks.Add(gridTask);
+            }
+
+            return gridTasks;
         }
 
         private static List<Task> DeserializeTasks(string jsonData)
