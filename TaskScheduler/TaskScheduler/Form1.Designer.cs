@@ -37,7 +37,6 @@ namespace TaskScheduler
             this.processLabel = new System.Windows.Forms.Label();
             this.processPath = new System.Windows.Forms.TextBox();
             this.allTasksPage = new System.Windows.Forms.TabPage();
-            this.updateGridButton = new System.Windows.Forms.Button();
             this.tasksDataGrid = new System.Windows.Forms.DataGridView();
             this.addTaskPage = new System.Windows.Forms.TabPage();
             this.runsLongerThanEvery = new System.Windows.Forms.NumericUpDown();
@@ -171,7 +170,6 @@ namespace TaskScheduler
             // 
             // allTasksPage
             // 
-            this.allTasksPage.Controls.Add(this.updateGridButton);
             this.allTasksPage.Controls.Add(this.tasksDataGrid);
             this.allTasksPage.Location = new System.Drawing.Point(4, 22);
             this.allTasksPage.Name = "allTasksPage";
@@ -180,16 +178,6 @@ namespace TaskScheduler
             this.allTasksPage.TabIndex = 1;
             this.allTasksPage.Text = "Tasks";
             this.allTasksPage.UseVisualStyleBackColor = true;
-            // 
-            // updateGridButton
-            // 
-            this.updateGridButton.Location = new System.Drawing.Point(676, 357);
-            this.updateGridButton.Name = "updateGridButton";
-            this.updateGridButton.Size = new System.Drawing.Size(109, 29);
-            this.updateGridButton.TabIndex = 1;
-            this.updateGridButton.Text = "Update Grid";
-            this.updateGridButton.UseVisualStyleBackColor = true;
-            this.updateGridButton.Click += new System.EventHandler(this.UpdateGridButton_Click);
             // 
             // tasksDataGrid
             // 
@@ -810,7 +798,6 @@ namespace TaskScheduler
         private NumericUpDown runsLongerThanEvery;
         private NumericUpDown startPeriodicallyEvery;
         private DataGridView tasksDataGrid;
-        private Button updateGridButton;
         private Label processLabel;
         private TextBox processPath;
         private Button checkProcess;

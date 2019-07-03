@@ -36,6 +36,8 @@ namespace TaskScheduler
             CheckForStartOnce(task);
             CheckForStartPeriodically(task);
             CheckForStartConsecutively(task);
+
+            MessageBox.Show("Task is successfully added.");
         }
 
         private void CheckForStartConsecutively(Task task)
@@ -82,7 +84,7 @@ namespace TaskScheduler
             }
         }
 
-        
+
 
         private bool IsValid()
         {
@@ -212,11 +214,6 @@ namespace TaskScheduler
             }
         }
 
-        private void UpdateGridButton_Click(object sender, EventArgs e)
-        {
-            GridUtils.UpdateGrid();
-        }
-
         void TasksDataGrid_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             // if click is on new row or header row
@@ -228,15 +225,17 @@ namespace TaskScheduler
             {
                 // Put some logic here, for example to remove row from your binding list.
 
-                if (MessageBox.Show("Are you sure you want to delete this task?", "Message", 
-                    MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes) {
+                if (MessageBox.Show("Are you sure you want to delete this task?", "Message",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
 
                     var taskId = e.RowIndex;
 
                     if (JsonUtils.DeleteTask(taskId))
                     {
                         GridUtils.UpdateGrid();
-                    } else
+                    }
+                    else
                     {
                         MessageBox.Show("Row cannot be deleted.");
                     }
@@ -245,10 +244,31 @@ namespace TaskScheduler
             }
             else if (e.ColumnIndex == tasksDataGrid.Columns["dataGridViewStartButtonColumn"].Index)
             {
-                // Put some logic here, for example to remove row from your binding list.
                 var taskId = e.RowIndex;
 
-                MessageBox.Show($"Task id is : {taskId}");
+                var task = JsonUtils.GetTaskById(taskId);
+
+                if (task == null)
+                {
+                    MessageBox.Show("Internal error. Task cannot be found.");
+                    return;
+                }
+
+                if (ProcessUtils.IsProcessRunning(task))
+                {
+                    MessageBox.Show("Task is already running.");
+                    return;
+                }
+
+                if (TaskUtils.RunTask(task))
+                {
+                    TaskUtils.UpdateStatusEverySeconds(task, 3);
+                    GridUtils.UpdateGrid();
+                }
+                else
+                {
+                    MessageBox.Show("There was an error running the task.");
+                }
             }
         }
 
@@ -271,6 +291,7 @@ namespace TaskScheduler
         private void Form1_Load(object sender, EventArgs e)
         {
             GridUtils.OnLoadUpdate();
+            GridUtils.SetGridTimer();
         }
     }
 

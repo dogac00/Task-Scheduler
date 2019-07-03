@@ -126,8 +126,6 @@ namespace TaskScheduler
             Form1.Form.Timers.Add(timer);
         }
 
-        
-
         public static void UpdateStatusConsecutively(Task task, int everySeconds)
         {
             var startTimeSpan = TimeSpan.Zero;

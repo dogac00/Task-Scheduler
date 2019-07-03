@@ -22,6 +22,25 @@ namespace TaskScheduler
             FetchRowsFromJson();
         }
 
+        public static void SetGridTimer()
+        {
+            var startTimeSpan = TimeSpan.Zero;
+            var periodTimeSpan = TimeSpan.FromSeconds(3);
+
+            System.Threading.Timer timer = null;
+
+            timer = new System.Threading.Timer((e) =>
+            {
+
+                Form1.Form.Invoke(new Action(() => {
+                    UpdateGrid();
+                }));
+
+            }, null, startTimeSpan, periodTimeSpan);
+
+            Form1.Form.Timers.Add(timer);
+        }
+
         private static void AddDeleteButtons()
         {
             var deleteButtonColumn = new DataGridViewButtonColumn();

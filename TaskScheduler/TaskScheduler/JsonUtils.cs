@@ -163,6 +163,29 @@ namespace TaskScheduler
             catch { return null; }
         }
 
+        public static Task GetTaskById(int id)
+        {
+            FileUtils.CheckIfFileExists(jsonFilePath);
+
+            try
+            {
+                var jsonData = File.ReadAllText(jsonFilePath);
+
+                List<Task> tasksList = DeserializeTasks(jsonData);
+
+                for (int i = 0; i < tasksList.Count; ++i)
+                {
+                    if (tasksList[i].Id == id)
+                    {
+                        return tasksList[i];
+                    }
+                }
+
+                return null;
+            }
+            catch { return null; }
+        }
+
         public static List<GridTask> PopulateGridTaskList(List<Task> tasks)
         {
             List<GridTask> gridTasks = new List<GridTask>();
