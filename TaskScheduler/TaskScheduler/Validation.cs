@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace TaskScheduler
@@ -46,17 +44,39 @@ namespace TaskScheduler
         {
             if (form.NotifyButton.Checked)
             {
-                if (form.EmailAddressTextBox.Text == "")
+                var emailTextBox = form.EmailAddressTextBox.Text;
+
+                if (emailTextBox == "")
                 {
                     MessageBox.Show("Please enter email.");
                     return false;
                 }
-                else if (!IsValidEmail(form.EmailAddressTextBox.Text))
+
+                var trimmedEmails = emailTextBox.RemoveAllWhiteSpace();
+
+                if (trimmedEmails == "")
                 {
-                    MessageBox.Show("Please enter a valid email.");
+                    MessageBox.Show("Please enter email.");
+                    return false;
+                }
+
+                var emails = trimmedEmails.Split(',');
+
+                if (!IsValidEmails(emails))
+                {
+                    MessageBox.Show("All emails must be valid.");
                     return false;
                 }
             }
+
+            return true;
+        }
+
+        private bool IsValidEmails(string [] emails)
+        {
+            foreach (var email in emails)
+                if (!IsValidEmail(email))
+                    return false;
 
             return true;
         }
@@ -94,6 +114,40 @@ namespace TaskScheduler
             }
 
             return true;
+        }
+
+        public bool IsValidForDates()
+        {
+            if (!IsValidForDateTimePickers())
+            {
+                MessageBox.Show("Please select a valid date.");
+                return false;
+            }
+
+            return true;
+        }
+
+        public bool IsValidForDateTimePickers()
+        {
+            if (form.StartOnceButton.Checked && form.StartOnceSelectDateButton.Checked)
+            {
+                return !IsDatePassed(form.StartOnceDateTimePicker.Value);
+            }
+            else if (form.StartPeriodicallyButton.Checked && form.StartPeriodicallySelectDateButton.Checked)
+            {
+                return !IsDatePassed(form.StartPeriodicallyDateTimePicker.Value);
+            }
+            else if (form.StartConsecutivelyButton.Checked && form.StartConsecutivelySelectDateButton.Checked)
+            {
+                return !IsDatePassed(form.StartConsecutivelyDateTimePicker.Value);
+            }
+
+            return true;
+        }
+
+        private bool IsDatePassed(DateTime date)
+        {
+            return date < DateTime.Now;
         }
 
         private bool IsValidEmail(string source)

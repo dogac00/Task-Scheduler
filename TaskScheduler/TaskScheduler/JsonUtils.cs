@@ -13,7 +13,7 @@ namespace TaskScheduler
     {
         private static readonly string jsonFilePath = @"..\..\tasks.json";
 
-        public static void AddTask(Task task)
+        public static Task AddTask(Task task)
         {
             FileUtils.CheckIfFileExists(jsonFilePath);
 
@@ -36,6 +36,13 @@ namespace TaskScheduler
             File.WriteAllText(jsonFilePath, jsonData);
 
             OrderById();
+
+            return GetTaskByName(task.Name);
+        }
+
+        public static bool IsTaskNull(Task task)
+        {
+            return GetTaskByName(task.Name) == null;
         }
 
         public static bool DeleteTask(Task task)
@@ -66,7 +73,7 @@ namespace TaskScheduler
 
                 File.WriteAllText(jsonFilePath, jsonData);
             }
-            catch { }
+            catch (Exception e) { MessageBox.Show(e.Message); }
 
             OrderById();
 
@@ -109,6 +116,11 @@ namespace TaskScheduler
             return tasks;
         }
 
+        public static void UpdateTask(Task task)
+        {
+            UpdateTask(task, task.IsRunning, task.ProcessId);
+        }
+
         public static void UpdateTask(Task task, bool isRunning, int processId)
         {
             FileUtils.CheckIfFileExists(jsonFilePath);
@@ -132,12 +144,14 @@ namespace TaskScheduler
 
                 File.WriteAllText(jsonFilePath, jsonData);
 
-            } catch { }
+            } catch (Exception e) { MessageBox.Show(e.Message); }
+
+            OrderById();
         }
 
         public static Task GetTask(Task task)
         {
-            return GetTaskByName(task.Name);
+            return GetTaskById(task.Id);
         }
 
         public static Task GetTaskByName(string taskName)
@@ -167,23 +181,19 @@ namespace TaskScheduler
         {
             FileUtils.CheckIfFileExists(jsonFilePath);
 
-            try
+            var jsonData = File.ReadAllText(jsonFilePath);
+
+            List<Task> tasksList = DeserializeTasks(jsonData);
+
+            for (int i = 0; i < tasksList.Count; ++i)
             {
-                var jsonData = File.ReadAllText(jsonFilePath);
-
-                List<Task> tasksList = DeserializeTasks(jsonData);
-
-                for (int i = 0; i < tasksList.Count; ++i)
+                if (tasksList[i].Id == id)
                 {
-                    if (tasksList[i].Id == id)
-                    {
-                        return tasksList[i];
-                    }
+                    return tasksList[i];
                 }
-
-                return null;
             }
-            catch { return null; }
+
+            return null;
         }
 
         public static List<GridTask> PopulateGridTaskList(List<Task> tasks)
@@ -193,7 +203,9 @@ namespace TaskScheduler
             foreach (var task in tasks)
             {
                 // Due to null reference exception
-                var taskEmail = task.EmailInfo == null ? "No email." : task.EmailInfo.EmailAddress;                
+                var taskEmail = task.EmailInfo == null ? "No email." : task.EmailInfo.EmailAddress;
+                var timeBetween = task.Period.TimeBetween == TimeSpan.Zero ? 
+                    "Just Once." : task.Period.TimeBetween.ToString();
 
                 var gridTask = new GridTask
                 {
@@ -204,7 +216,7 @@ namespace TaskScheduler
                     StartDate = task.Period.StartDate,
                     ProcessId = task.ProcessId,
                     EmailAddress = taskEmail,
-                    TimeBetween = task.Period.TimeBetween,
+                    TimeBetween = timeBetween,
                 };
 
                 gridTasks.Add(gridTask);

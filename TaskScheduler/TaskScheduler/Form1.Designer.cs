@@ -31,11 +31,6 @@ namespace TaskScheduler
         private void InitializeComponent()
         {
             this.tabControl = new System.Windows.Forms.TabControl();
-            this.activeTasksPage = new System.Windows.Forms.TabPage();
-            this.checkProcess = new System.Windows.Forms.Button();
-            this.isRunningLabel = new System.Windows.Forms.Label();
-            this.processLabel = new System.Windows.Forms.Label();
-            this.processPath = new System.Windows.Forms.TextBox();
             this.allTasksPage = new System.Windows.Forms.TabPage();
             this.tasksDataGrid = new System.Windows.Forms.DataGridView();
             this.addTaskPage = new System.Windows.Forms.TabPage();
@@ -88,7 +83,6 @@ namespace TaskScheduler
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.tabControl.SuspendLayout();
-            this.activeTasksPage.SuspendLayout();
             this.allTasksPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tasksDataGrid)).BeginInit();
             this.addTaskPage.SuspendLayout();
@@ -109,7 +103,6 @@ namespace TaskScheduler
             // 
             // tabControl
             // 
-            this.tabControl.Controls.Add(this.activeTasksPage);
             this.tabControl.Controls.Add(this.allTasksPage);
             this.tabControl.Controls.Add(this.addTaskPage);
             this.tabControl.Location = new System.Drawing.Point(12, 12);
@@ -118,55 +111,6 @@ namespace TaskScheduler
             this.tabControl.Size = new System.Drawing.Size(799, 418);
             this.tabControl.TabIndex = 0;
             this.tabControl.SelectedIndexChanged += new System.EventHandler(this.TabControl_SelectedIndexChanged);
-            // 
-            // activeTasksPage
-            // 
-            this.activeTasksPage.Controls.Add(this.checkProcess);
-            this.activeTasksPage.Controls.Add(this.isRunningLabel);
-            this.activeTasksPage.Controls.Add(this.processLabel);
-            this.activeTasksPage.Controls.Add(this.processPath);
-            this.activeTasksPage.Location = new System.Drawing.Point(4, 22);
-            this.activeTasksPage.Name = "activeTasksPage";
-            this.activeTasksPage.Padding = new System.Windows.Forms.Padding(3);
-            this.activeTasksPage.Size = new System.Drawing.Size(791, 392);
-            this.activeTasksPage.TabIndex = 0;
-            this.activeTasksPage.Text = "Active Task Status";
-            this.activeTasksPage.UseVisualStyleBackColor = true;
-            // 
-            // checkProcess
-            // 
-            this.checkProcess.Location = new System.Drawing.Point(182, 88);
-            this.checkProcess.Name = "checkProcess";
-            this.checkProcess.Size = new System.Drawing.Size(75, 23);
-            this.checkProcess.TabIndex = 3;
-            this.checkProcess.Text = "Check";
-            this.checkProcess.UseVisualStyleBackColor = true;
-            this.checkProcess.Click += new System.EventHandler(this.CheckProcess_Click);
-            // 
-            // isRunningLabel
-            // 
-            this.isRunningLabel.AutoSize = true;
-            this.isRunningLabel.Location = new System.Drawing.Point(208, 131);
-            this.isRunningLabel.Name = "isRunningLabel";
-            this.isRunningLabel.Size = new System.Drawing.Size(35, 13);
-            this.isRunningLabel.TabIndex = 2;
-            this.isRunningLabel.Text = "label3";
-            // 
-            // processLabel
-            // 
-            this.processLabel.AutoSize = true;
-            this.processLabel.Location = new System.Drawing.Point(40, 53);
-            this.processLabel.Name = "processLabel";
-            this.processLabel.Size = new System.Drawing.Size(98, 13);
-            this.processLabel.TabIndex = 1;
-            this.processLabel.Text = "Enter Process Path";
-            // 
-            // processPath
-            // 
-            this.processPath.Location = new System.Drawing.Point(168, 50);
-            this.processPath.Name = "processPath";
-            this.processPath.Size = new System.Drawing.Size(291, 20);
-            this.processPath.TabIndex = 0;
             // 
             // allTasksPage
             // 
@@ -711,8 +655,6 @@ namespace TaskScheduler
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.tabControl.ResumeLayout(false);
-            this.activeTasksPage.ResumeLayout(false);
-            this.activeTasksPage.PerformLayout();
             this.allTasksPage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.tasksDataGrid)).EndInit();
             this.addTaskPage.ResumeLayout(false);
@@ -748,7 +690,6 @@ namespace TaskScheduler
         private System.Windows.Forms.TabControl tabControl;
         private System.Windows.Forms.TabPage allTasksPage;
         private System.Windows.Forms.TabPage addTaskPage;
-        private System.Windows.Forms.TabPage activeTasksPage;
         private System.Windows.Forms.RadioButton startOnceNowButton;
         private System.Windows.Forms.DateTimePicker startOnceDateTimePicker;
         private System.Windows.Forms.RadioButton startOnceSelectDateButton;
@@ -798,23 +739,24 @@ namespace TaskScheduler
         private NumericUpDown runsLongerThanEvery;
         private NumericUpDown startPeriodicallyEvery;
         private DataGridView tasksDataGrid;
-        private Label processLabel;
-        private TextBox processPath;
-        private Button checkProcess;
-        private Label isRunningLabel;
 
         public DataGridView TasksDataGrid { get => tasksDataGrid; set => tasksDataGrid = value; }
         public TextBox TaskName { get => taskName; set => taskName = value; }
         public TextBox TaskExecutablePath { get => taskExecutablePath; set => taskExecutablePath = value; }
         public RadioButton StartOnceButton { get => startOnceButton; set => startOnceButton = value; }
         public RadioButton StartPeriodicallyButton { get => startPeriodicallyButton; set => startPeriodicallyButton = value; }
+        public RadioButton StartOnceSelectDateButton { get => startOnceSelectDateButton; set => startOnceSelectDateButton = value; }
         public NumericUpDown StartConsecutivelyDelay { get => startConsecutivelyDelay; set => startConsecutivelyDelay = value; }
         public NumericUpDown StartPeriodicallyEvery { get => startPeriodicallyEvery; set => startPeriodicallyEvery = value; }
         public RadioButton StartConsecutivelyButton { get => startConsecutivelyButton; set => startConsecutivelyButton = value; }
+        public DateTimePicker StartOnceDateTimePicker { get => startOnceDateTimePicker; set => startOnceDateTimePicker = value; }
+        public RadioButton StartPeriodicallySelectDateButton { get => startPeriodicallySelectDateButton; set => startPeriodicallySelectDateButton = value; }
+        public DateTimePicker StartPeriodicallyDateTimePicker { get => startPeriodicallyDateTimePicker; set => startPeriodicallyDateTimePicker = value; }
+        public RadioButton StartConsecutivelySelectDateButton { get => startConsecutivelySelectDateButton; set => startConsecutivelySelectDateButton = value; }
+        public DateTimePicker StartConsecutivelyDateTimePicker { get => startConsecutivelyDateTimePicker; set => startConsecutivelyDateTimePicker = value; }
         public TabControl TabControl1 { get => tabControl; set => tabControl = value; }
         public TabPage TabPage2 { get => allTasksPage; set => allTasksPage = value; }
         public TabPage TabPage3 { get => addTaskPage; set => addTaskPage = value; }
-        public TabPage TabPage1 { get => activeTasksPage; set => activeTasksPage = value; }
         public CheckBox NotifyButton { get => notifyButton; set => notifyButton = value; }
         public NumericUpDown RunsLongerThanEvery { get => runsLongerThanEvery; set => runsLongerThanEvery = value; }
         public TextBox EmailAddressTextBox { get => emailAddressTextBox; set => emailAddressTextBox = value; }

@@ -11,7 +11,7 @@ namespace TaskScheduler
         public int ProcessId { get; set; }
         public string StartProperty { get; set; }
         public DateTime StartDate { get; set; }
-        public TimeSpan TimeBetween { get; set; }
+        public string TimeBetween { get; set; }
         public string EmailAddress { get; set; }
     }
 }

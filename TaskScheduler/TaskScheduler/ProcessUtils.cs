@@ -11,21 +11,14 @@ namespace TaskScheduler
     {
         public static bool IsProcessRunning(Task task)
         {
+            if (task == null) return false;
+
             return IsProcessRunning(task.ProcessId);
         }
 
         public static bool IsProcessRunning(int processId)
         {
-            try
-            {
-                Process process = Process.GetProcessById(processId);
-
-                return !process.HasExited;
-            }
-            catch
-            {
-                return false;
-            }
+            return Process.GetProcesses().Any(x => x.Id == processId);
         }
     }
 }

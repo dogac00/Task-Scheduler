@@ -25,7 +25,7 @@ namespace TaskScheduler
         public static void SetGridTimer()
         {
             var startTimeSpan = TimeSpan.Zero;
-            var periodTimeSpan = TimeSpan.FromSeconds(3);
+            var periodTimeSpan = TimeSpan.FromSeconds(2);
 
             System.Threading.Timer timer = null;
 
@@ -74,7 +74,7 @@ namespace TaskScheduler
             var source = new BindingSource(list, null);
 
             try { Form1.Form.TasksDataGrid.DataSource = source; }
-            catch { /* Exception can occur due to cross-threading in UI */ }
+            catch { MessageBox.Show("Something went wrong while fetching JSON."); }
         }
     }
 }

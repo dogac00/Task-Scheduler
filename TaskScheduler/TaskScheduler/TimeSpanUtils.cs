@@ -14,6 +14,14 @@ namespace TaskScheduler
             return GenerateTimeSpan((float) every, interval);
         }
 
+        public static TimeSpan GetDifference(DateTime higherTime, DateTime lowerTime)
+        {
+            var higher = new TimeSpan(higherTime.Ticks);
+            var lower = new TimeSpan(lowerTime.Ticks);
+
+            return higher - lower;
+        }
+
         public static TimeSpan GenerateTimeSpan(float every, Interval interval)
         {
             if (interval == Interval.Week)

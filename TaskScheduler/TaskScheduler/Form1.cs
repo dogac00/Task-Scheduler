@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net;
+using System.Net.Mail;
 using System.Windows.Forms;
-using FRUtility;
 
 namespace TaskScheduler
 {
@@ -19,14 +20,19 @@ namespace TaskScheduler
             InitializeComponent();
         }
 
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            GridUtils.OnLoadUpdate();
+            GridUtils.SetGridTimer();
+        }
+
         public static Form1 Form { get; private set; }
 
         private void Button1_Click(object sender, EventArgs e)
         {
             if (!this.IsValid()) return;
 
-            var task = TaskUtils.CreateTask();
-            JsonUtils.AddTask(task);
+            var task = JsonUtils.AddTask(TaskUtils.CreateTask());
 
             DoWorkForTimerAndProcess(task);
         }
@@ -36,34 +42,37 @@ namespace TaskScheduler
             CheckForStartOnce(task);
             CheckForStartPeriodically(task);
             CheckForStartConsecutively(task);
-
-            MessageBox.Show("Task is successfully added.");
+            CheckForNotifyEmail(task);
         }
 
-        private void CheckForStartConsecutively(Task task)
+        private void CheckForNotifyEmail(Task task)
         {
-            if (task.Period.Property == StartProperty.Consecutively)
+            if (notifyButton.Checked)
             {
-                if (startConsecutivelyNowButton.Checked)
-                {
-                    TaskUtils.RunTaskConsecutively(task);
-                }
+                var dontRunLongerThan = GetDontRunLongerThanValue();
+
+                TaskUtils.StartNotificationTimer(task, 3, dontRunLongerThan);
             }
         }
 
-        private void CheckForStartPeriodically(Task task)
+        private TimeSpan GetDontRunLongerThanValue()
         {
-            if (task.Period.Property == StartProperty.Periodically)
-            {
-                if (startPeriodicallyNowButton.Checked)
-                {
-                    TaskUtils.StartTaskForPeriodical(task);
-                }
-                else if (startPeriodicallySelectDateButton.Checked)
-                {
-                    TaskUtils.SetTaskStartingTimer(task, 5);
-                }
-            }
+            var every = (float) runsLongerThanEvery.Value;
+            var longerThan = GetDontRunLongerThanInterval();
+
+            return TimeSpanUtils.GenerateTimeSpan(every, longerThan);
+        }
+
+        private Interval GetDontRunLongerThanInterval()
+        {
+            if (runsLongerThanWeek.Checked)
+                return Interval.Week;
+            else if (runsLongerThanDay.Checked)
+                return Interval.Day;
+            else if (RunsLongerThanHour.Checked)
+                return Interval.Hour;
+            else
+                return Interval.Min;
         }
 
         private void CheckForStartOnce(Task task)
@@ -74,17 +83,45 @@ namespace TaskScheduler
                 {
                     if (TaskUtils.RunTask(task))
                     {
-                        TaskUtils.UpdateStatusEverySeconds(task, 5);
+                        TaskUtils.UpdateStatusEverySeconds(task, 3);
                     }
                 }
                 else if (startOnceSelectDateButton.Checked)
                 {
-                    TaskUtils.SetTaskStartingTimer(task, 5);
+                    TaskUtils.SetTaskStartingTimer(task);
                 }
             }
         }
 
+        private void CheckForStartPeriodically(Task task)
+        {
+            if (task.Period.Property == StartProperty.Periodically)
+            {
+                if (startPeriodicallyNowButton.Checked)
+                {
+                    TaskUtils.StartTaskPeriodically(task);
+                }
+                else if (startPeriodicallySelectDateButton.Checked)
+                {
+                    TaskUtils.SetTaskStartingTimer(task);
+                }
+            }
+        }
 
+        private void CheckForStartConsecutively(Task task)
+        {
+            if (task.Period.Property == StartProperty.Consecutively)
+            {
+                if (startConsecutivelyNowButton.Checked)
+                {
+                    TaskUtils.StartTaskConsecutively(task);
+                }
+                else if (startConsecutivelySelectDateButton.Checked)
+                {
+                    TaskUtils.SetTaskStartingTimer(task);
+                }
+            }
+        }
 
         private bool IsValid()
         {
@@ -93,6 +130,7 @@ namespace TaskScheduler
             if (!validation.IsValidForEmail()) return false;
             if (!validation.IsValidNumericUpDown()) return false;
             if (!validation.IsTaskNameValid()) return false;
+            if (!validation.IsValidForDates()) return false;
 
             return true;
         }
@@ -147,8 +185,6 @@ namespace TaskScheduler
                 return startConsecutivelyDateTimePicker.Value;
             }
         }
-
-        // Form Click Event Handlers from now on...
 
         private void StartOnceNowButton_CheckedChanged(object sender, EventArgs e)
         {
@@ -216,15 +252,12 @@ namespace TaskScheduler
 
         void TasksDataGrid_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            // if click is on new row or header row
+            // If click new row or header
             if (e.RowIndex == tasksDataGrid.NewRowIndex || e.RowIndex < 0)
                 return;
 
-            //Check if click is on specific column 
             if (e.ColumnIndex == tasksDataGrid.Columns["dataGridViewDeleteButtonColumn"].Index)
             {
-                // Put some logic here, for example to remove row from your binding list.
-
                 if (MessageBox.Show("Are you sure you want to delete this task?", "Message",
                     MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
@@ -237,7 +270,7 @@ namespace TaskScheduler
                     }
                     else
                     {
-                        MessageBox.Show("Row cannot be deleted.");
+                        MessageBox.Show("Row could not be deleted.");
                     }
 
                 }
@@ -250,7 +283,7 @@ namespace TaskScheduler
 
                 if (task == null)
                 {
-                    MessageBox.Show("Internal error. Task cannot be found.");
+                    MessageBox.Show("Internal error. Task could not be found.");
                     return;
                 }
 
@@ -272,27 +305,7 @@ namespace TaskScheduler
             }
         }
 
-        private void CheckProcess_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                var processId = int.Parse(processPath.Text);
-
-                var result = ProcessUtils.IsProcessRunning(processId);
-
-                isRunningLabel.Text = result.ToString();
-            }
-            catch
-            {
-                MessageBox.Show("Process path is incorrect.");
-            }
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            GridUtils.OnLoadUpdate();
-            GridUtils.SetGridTimer();
-        }
+        
     }
 
 }

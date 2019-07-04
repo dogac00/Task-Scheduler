@@ -8,6 +8,11 @@ namespace TaskScheduler
 {
     class TimerUtils
     {
+        public static void DisposeAllTimers()
+        {
+            Form1.Form.Timers.Clear();
+        }
+
         public static void DisposeTimer(System.Threading.Timer timer)
         {
             Form1.Form.Timers.Remove(timer);

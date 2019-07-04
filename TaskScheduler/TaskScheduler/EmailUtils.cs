@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows.Forms;
+using FRUtility;
 
 namespace TaskScheduler
 {
@@ -27,6 +27,32 @@ namespace TaskScheduler
             else
             {
                 return null;
+            }
+        }
+
+        public static bool SendEmail(string taskName, TimeSpan dontRunLongerThan)
+        {
+            EmailService emailService = new EmailService();
+
+            var emails = Form1.Form.EmailAddressTextBox.Text.Split(',');
+
+            try
+            {
+                if (emailService.SendEmail(emails, taskName, dontRunLongerThan))
+                {
+                    MessageBox.Show("email sent successfully.");
+                    return true;
+                }
+                else
+                {
+                    MessageBox.Show("email could not be sent.");
+                    return false;
+                }
+                
+            } catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+                return false;
             }
         }
 
