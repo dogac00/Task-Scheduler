@@ -47,7 +47,14 @@ namespace TaskScheduler
 
         public static bool DeleteTask(Task task)
         {
-            return DeleteTask(task.Id);
+            var taskId = task.Id;
+
+            task = null;
+
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+
+            return DeleteTask(taskId);
         }
 
         public static bool DeleteTask(int taskId)
@@ -149,6 +156,13 @@ namespace TaskScheduler
             OrderById();
         }
 
+        public static void UpdateForNotified(Task task)
+        {
+            var emailInfo = new EmailInfo();
+
+            emailInfo.EmailAddress = null;
+        }
+
         public static Task GetTask(Task task)
         {
             return GetTaskById(task.Id);
@@ -202,11 +216,6 @@ namespace TaskScheduler
 
             foreach (var task in tasks)
             {
-                // Due to null reference exception
-                var taskEmail = task.EmailInfo == null ? "No email." : task.EmailInfo.EmailAddress;
-                var timeBetween = task.Period.TimeBetween == TimeSpan.Zero ? 
-                    "Just Once." : task.Period.TimeBetween.ToString();
-
                 var gridTask = new GridTask
                 {
                     Name = task.Name,
@@ -215,8 +224,8 @@ namespace TaskScheduler
                     StartProperty = task.Period.Property.ToString(),
                     StartDate = task.Period.StartDate,
                     ProcessId = task.ProcessId,
-                    EmailAddress = taskEmail,
-                    TimeBetween = timeBetween,
+                    EmailAddress = EmailUtils.GetTaskEmails(task),
+                    TimeBetween = TaskUtils.GetTaskTimeBetween(task),
                 };
 
                 gridTasks.Add(gridTask);

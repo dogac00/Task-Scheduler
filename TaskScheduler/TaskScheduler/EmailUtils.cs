@@ -18,7 +18,7 @@ namespace TaskScheduler
                 EmailInfo emailInfo = new EmailInfo
                 {
                     IsToBeNotified = true,
-                    EmailAddress = Form1.Form.EmailAddressTextBox.Text,
+                    EmailAddress = GetTextBoxEmailsList(),
                     NoLongerThan = TimeSpanUtils.GenerateTimeSpan(every, interval)
                 };
 
@@ -30,11 +30,46 @@ namespace TaskScheduler
             }
         }
 
+        public static List<string> GetTextBoxEmailsList()
+        {
+            return Form1.Form.EmailAddressTextBox.Text.Split(',').ToList();
+        }
+
+        public static string [] GetTextBoxEmailsArray()
+        {
+            return Form1.Form.EmailAddressTextBox.Text.Split(',');
+        }
+
+        public static string ConvertEmailsToString()
+        {
+            var emails = GetTextBoxEmailsArray();
+            string emailsString = "";
+
+            foreach (var email in emails)
+            {
+                emailsString += email + ",";
+            }
+
+            return emailsString.Remove(emailsString.Length - 1);
+        }
+
+        public static string GetTaskEmails(Task task)
+        {
+            if (task.EmailInfo == null)
+            {
+                return "No email.";
+            }
+            else
+            {
+                return ConvertEmailsToString();
+            }
+        }
+
         public static bool SendEmail(string taskName, TimeSpan dontRunLongerThan)
         {
             EmailService emailService = new EmailService();
 
-            var emails = Form1.Form.EmailAddressTextBox.Text.Split(',');
+            string [] emails = GetTextBoxEmailsArray();
 
             try
             {

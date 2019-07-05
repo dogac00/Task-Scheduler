@@ -744,6 +744,15 @@ namespace TaskScheduler
         public TextBox TaskName { get => taskName; set => taskName = value; }
         public TextBox TaskExecutablePath { get => taskExecutablePath; set => taskExecutablePath = value; }
         public RadioButton StartOnceButton { get => startOnceButton; set => startOnceButton = value; }
+        public RadioButton StartOnceNowButton { get => startOnceNowButton; set => startOnceNowButton = value; }
+        public RadioButton StartPeriodicallyNowButton { get => startPeriodicallyNowButton; set => startPeriodicallyNowButton = value; }
+        public RadioButton StartConsecutivelyNowButton { get => startConsecutivelyNowButton; set => startConsecutivelyNowButton = value; }
+        public RadioButton StartPeriodicallyWeek { get => startPeriodicallyWeek; set => startPeriodicallyWeek = value; }
+        public RadioButton StartPeriodicallyDay { get => startPeriodicallyDay; set => startPeriodicallyDay = value; }
+        public RadioButton StartPeriodicallyHour { get => startPeriodicallyHour; set => startPeriodicallyHour = value; }
+        public RadioButton StartConsecutivelyWeek { get => startConsecutivelyWeek; set => startConsecutivelyWeek = value; }
+        public RadioButton StartConsecutivelyDay { get => startConsecutivelyDay; set => startConsecutivelyDay = value; }
+        public RadioButton StartConsecutivelyHour { get => startConsecutivelyHour; set => startConsecutivelyHour = value; }
         public RadioButton StartPeriodicallyButton { get => startPeriodicallyButton; set => startPeriodicallyButton = value; }
         public RadioButton StartOnceSelectDateButton { get => startOnceSelectDateButton; set => startOnceSelectDateButton = value; }
         public NumericUpDown StartConsecutivelyDelay { get => startConsecutivelyDelay; set => startConsecutivelyDelay = value; }

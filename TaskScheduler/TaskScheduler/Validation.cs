@@ -6,16 +6,26 @@ using System.Windows.Forms;
 
 namespace TaskScheduler
 {
-    class Validation
+    static class Validation
     {
-        private readonly Form1 form;
+        private static readonly Form1 form = Form1.Form;
 
-        public Validation(Form form)
+        public static bool IsValid
         {
-            this.form = (Form1) form;
+            get
+            {
+                if (!IsValidForNames()) return false;
+                if (!IsValidForNonClick()) return false;
+                if (!IsValidForEmail()) return false;
+                if (!IsValidNumericUpDown()) return false;
+                if (!IsTaskNameValid()) return false;
+                if (!IsValidForDates()) return false;
+
+                return true;
+            }
         }
 
-        public bool IsValidForNonClick()
+        private static bool IsValidForNonClick()
         {
             if (form.StartOnceButton.Checked || form.StartPeriodicallyButton.Checked
                 || form.StartConsecutivelyButton.Checked)
@@ -29,7 +39,7 @@ namespace TaskScheduler
             }
         }
 
-        public bool IsValidForNames()
+        private static bool IsValidForNames()
         {
             if (form.TaskName.Text == "" || form.TaskExecutablePath.Text == "")
             {
@@ -40,7 +50,7 @@ namespace TaskScheduler
             return true;
         }
 
-        public bool IsValidForEmail()
+        private static bool IsValidForEmail()
         {
             if (form.NotifyButton.Checked)
             {
@@ -72,7 +82,7 @@ namespace TaskScheduler
             return true;
         }
 
-        private bool IsValidEmails(string [] emails)
+        private static bool IsValidEmails(string [] emails)
         {
             foreach (var email in emails)
                 if (!IsValidEmail(email))
@@ -81,7 +91,7 @@ namespace TaskScheduler
             return true;
         }
 
-        public bool IsValidNumericUpDown()
+        private static bool IsValidNumericUpDown()
         {
             if (form.StartPeriodicallyButton.Checked && 
                 form.StartPeriodicallyEvery.Value == 0M)
@@ -105,7 +115,7 @@ namespace TaskScheduler
             return true;
         }
 
-        public bool IsTaskNameValid()
+        private static bool IsTaskNameValid()
         {
             if (JsonUtils.GetTaskByName(form.TaskName.Text) != null)
             {
@@ -116,7 +126,7 @@ namespace TaskScheduler
             return true;
         }
 
-        public bool IsValidForDates()
+        private static bool IsValidForDates()
         {
             if (!IsValidForDateTimePickers())
             {
@@ -127,7 +137,7 @@ namespace TaskScheduler
             return true;
         }
 
-        public bool IsValidForDateTimePickers()
+        private static bool IsValidForDateTimePickers()
         {
             if (form.StartOnceButton.Checked && form.StartOnceSelectDateButton.Checked)
             {
@@ -145,12 +155,12 @@ namespace TaskScheduler
             return true;
         }
 
-        private bool IsDatePassed(DateTime date)
+        private static bool IsDatePassed(DateTime date)
         {
             return date < DateTime.Now;
         }
 
-        private bool IsValidEmail(string source)
+        private static bool IsValidEmail(string source)
         {
             return new EmailAddressAttribute().IsValid(source);
         }

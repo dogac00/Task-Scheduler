@@ -16,7 +16,7 @@ namespace TaskScheduler
             return IsProcessRunning(task.ProcessId);
         }
 
-        public static bool IsProcessRunning(int processId)
+        private static bool IsProcessRunning(int processId)
         {
             return Process.GetProcesses().Any(x => x.Id == processId);
         }

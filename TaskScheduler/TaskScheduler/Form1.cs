@@ -9,13 +9,13 @@ namespace TaskScheduler
 {
     public partial class Form1 : Form
     {
-        private readonly Validation validation;
+        private static Form1 _form;
+        private static volatile object _lock = new object();
         public List<System.Threading.Timer> Timers;
 
         public Form1()
         {
-            Form = this;
-            validation = new Validation(Form);
+            _form = this;
             Timers = new List<System.Threading.Timer>();
             InitializeComponent();
         }
@@ -26,139 +26,23 @@ namespace TaskScheduler
             GridUtils.SetGridTimer();
         }
 
-        public static Form1 Form { get; private set; }
+        public static Form1 Form { get { lock (_lock) { return _form; } } }
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            if (!this.IsValid()) return;
+            if (!Validation.IsValid) return;
 
             var task = JsonUtils.AddTask(TaskUtils.CreateTask());
 
-            DoWorkForTimerAndProcess(task);
+            FieldChecker.CheckFields(task);
         }
 
-        private void DoWorkForTimerAndProcess(Task task)
-        {
-            CheckForStartOnce(task);
-            CheckForStartPeriodically(task);
-            CheckForStartConsecutively(task);
-            CheckForNotifyEmail(task);
-        }
-
-        private void CheckForNotifyEmail(Task task)
-        {
-            if (notifyButton.Checked)
-            {
-                var dontRunLongerThan = GetDontRunLongerThanValue();
-
-                TaskUtils.StartNotificationTimer(task, 3, dontRunLongerThan);
-            }
-        }
-
-        private TimeSpan GetDontRunLongerThanValue()
+        public TimeSpan GetDontRunLongerThanValue()
         {
             var every = (float) runsLongerThanEvery.Value;
-            var longerThan = GetDontRunLongerThanInterval();
+            var longerThan = IntervalUtils.GetDontRunLongerThanInterval();
 
             return TimeSpanUtils.GenerateTimeSpan(every, longerThan);
-        }
-
-        private Interval GetDontRunLongerThanInterval()
-        {
-            if (runsLongerThanWeek.Checked)
-                return Interval.Week;
-            else if (runsLongerThanDay.Checked)
-                return Interval.Day;
-            else if (RunsLongerThanHour.Checked)
-                return Interval.Hour;
-            else
-                return Interval.Min;
-        }
-
-        private void CheckForStartOnce(Task task)
-        {
-            if (task.Period.Property == StartProperty.Once)
-            {
-                if (startOnceNowButton.Checked)
-                {
-                    if (TaskUtils.RunTask(task))
-                    {
-                        TaskUtils.UpdateStatusEverySeconds(task, 3);
-                    }
-                }
-                else if (startOnceSelectDateButton.Checked)
-                {
-                    TaskUtils.SetTaskStartingTimer(task);
-                }
-            }
-        }
-
-        private void CheckForStartPeriodically(Task task)
-        {
-            if (task.Period.Property == StartProperty.Periodically)
-            {
-                if (startPeriodicallyNowButton.Checked)
-                {
-                    TaskUtils.StartTaskPeriodically(task);
-                }
-                else if (startPeriodicallySelectDateButton.Checked)
-                {
-                    TaskUtils.SetTaskStartingTimer(task);
-                }
-            }
-        }
-
-        private void CheckForStartConsecutively(Task task)
-        {
-            if (task.Period.Property == StartProperty.Consecutively)
-            {
-                if (startConsecutivelyNowButton.Checked)
-                {
-                    TaskUtils.StartTaskConsecutively(task);
-                }
-                else if (startConsecutivelySelectDateButton.Checked)
-                {
-                    TaskUtils.SetTaskStartingTimer(task);
-                }
-            }
-        }
-
-        private bool IsValid()
-        {
-            if (!validation.IsValidForNames()) return false;
-            if (!validation.IsValidForNonClick()) return false;
-            if (!validation.IsValidForEmail()) return false;
-            if (!validation.IsValidNumericUpDown()) return false;
-            if (!validation.IsTaskNameValid()) return false;
-            if (!validation.IsValidForDates()) return false;
-
-            return true;
-        }
-
-        public Interval GetInterval()
-        {
-            if (startPeriodicallyButton.Checked)
-            {
-                if (startPeriodicallyWeek.Checked)
-                    return Interval.Week;
-                else if (startPeriodicallyDay.Checked)
-                    return Interval.Day;
-                else if (startPeriodicallyHour.Checked)
-                    return Interval.Hour;
-                else
-                    return Interval.Min;
-            }
-            else
-            {
-                if (startConsecutivelyWeek.Checked)
-                    return Interval.Week;
-                else if (startConsecutivelyDay.Checked)
-                    return Interval.Day;
-                else if (startConsecutivelyHour.Checked)
-                    return Interval.Hour;
-                else
-                    return Interval.Min;
-            }
         }
 
         public DateTime GetStartDate(StartProperty prop)
@@ -293,9 +177,9 @@ namespace TaskScheduler
                     return;
                 }
 
-                if (TaskUtils.RunTask(task))
+                if (TaskRunner.RunTask(task))
                 {
-                    TaskUtils.UpdateStatusEverySeconds(task, 3);
+                    TaskUpdater.UpdateStatusEverySeconds(task, 3);
                     GridUtils.UpdateGrid();
                 }
                 else
@@ -304,8 +188,6 @@ namespace TaskScheduler
                 }
             }
         }
-
-        
     }
 
 }

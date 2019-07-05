@@ -51,12 +51,12 @@ namespace TaskScheduler
             if (prop == StartProperty.Periodically)
             {
                 every = (float) Form1.Form.StartPeriodicallyEvery.Value;
-                interval = Form1.Form.GetInterval();
+                interval = IntervalUtils.GetInterval();
             }
             else
             {
                 every = (float) Form1.Form.StartConsecutivelyDelay.Value;
-                interval = Form1.Form.GetInterval();
+                interval = IntervalUtils.GetInterval();
             }
 
             return TimeSpanUtils.GenerateTimeSpan(every, interval);
