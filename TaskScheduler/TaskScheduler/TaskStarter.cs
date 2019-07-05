@@ -14,7 +14,7 @@ namespace TaskScheduler
             {
                 case StartProperty.Once:
                     TaskRunner.RunTask(task);
-                    TaskUpdater.UpdateStatusEverySeconds(task, 3);
+                    TaskUpdater.UpdateStatusEverySeconds(task);
                     break;
 
                 case StartProperty.Periodically:
@@ -30,14 +30,14 @@ namespace TaskScheduler
         public static void StartTaskPeriodically(Task task)
         {
             TaskRunner.RunTaskPeriodically(task);
-            TaskUpdater.UpdateStatusEverySeconds(task, 3);
+            TaskUpdater.UpdateStatusEverySeconds(task);
         }
 
         public static void StartTaskConsecutively(Task task)
         {
             TaskRunner.RunTask(task);
             TaskUpdater.UpdateStatusConsecutively(task, 3);
-            TaskUpdater.UpdateStatusEverySeconds(task, 3);
+            TaskUpdater.UpdateStatusEverySeconds(task);
         }
 
         public static void StartNotificationTimer(Task task, int everySeconds,

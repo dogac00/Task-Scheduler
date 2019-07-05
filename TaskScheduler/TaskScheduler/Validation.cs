@@ -20,6 +20,7 @@ namespace TaskScheduler
                 if (!IsValidNumericUpDown()) return false;
                 if (!IsTaskNameValid()) return false;
                 if (!IsValidForDates()) return false;
+                if (!IsValidForTimeBetween()) return false;
 
                 return true;
             }
@@ -87,6 +88,53 @@ namespace TaskScheduler
             foreach (var email in emails)
                 if (!IsValidEmail(email))
                     return false;
+
+            return true;
+        }
+
+        private static bool IsValidForTimeBetween()
+        {
+            if (!ArePeriodsOrDelaysValid())
+            {
+                MessageBox.Show("Period or delay must not exceed 50 days.");
+                return false;
+            }
+
+            if (!IsNotifyLongerThanValid())
+            {
+                MessageBox.Show("Don't run longer than value must not exceed 50 days.");
+                return false;
+            }
+
+            return true;
+        }
+
+        private static bool ArePeriodsOrDelaysValid()
+        {
+            if (form.StartPeriodicallyButton.Checked || form.StartConsecutivelyButton.Checked)
+            {
+                var periodBetween = TaskPeriodUtils.SetPeriod().TimeBetween;
+
+                if (IsTimeSpanExceedingLimit(periodBetween))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        private static bool IsNotifyLongerThanValid()
+        {
+            if (form.NotifyButton.Checked)
+            {
+                var dontRunLongerThan = form.GetDontRunLongerThanValue();
+
+                if (IsTimeSpanExceedingLimit(dontRunLongerThan))
+                {
+                    return false;
+                }
+            }
 
             return true;
         }
@@ -159,7 +207,12 @@ namespace TaskScheduler
         {
             var difference = TimeSpanUtils.GetDifference(date, DateTime.Now);
 
-            return difference > TimeSpan.FromDays(49);
+            return IsTimeSpanExceedingLimit(difference);
+        }
+
+        private static bool IsTimeSpanExceedingLimit(TimeSpan timeSpan)
+        {
+            return timeSpan > TimeSpan.FromDays(49);
         }
 
         private static bool IsDateTimeSpanValid(DateTime date)

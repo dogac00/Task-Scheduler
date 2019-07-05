@@ -54,40 +54,28 @@ namespace TaskScheduler
 
         public static void SetTaskStartingTimer(Task task)
         {
-            var startTimeSpan = new TimeSpan(task.Period.StartDate.Ticks - DateTime.Now.Ticks);
-            var twentyDays = TimeSpan.FromDays(20);
+            var dueTime = TimeSpanUtils.GetMillisecondsFromNow(task.Period.StartDate);
 
             System.Threading.Timer timer = null;
 
             timer = new System.Threading.Timer((e) =>
             {
 
-                if (IsNullChecksPassed(task, timer))
+                if (!IsNull(task))
                 {
                     TaskStarter.StartTaskAccordingly(task);
-                    TimerUtils.DisposeTimer(timer);
                 }
 
-            }, null, startTimeSpan, twentyDays);
+                TimerUtils.DisposeTimer(timer);
+
+            }, null, dueTime, System.Threading.Timeout.Infinite);
 
             Form1.Form.Timers.Add(timer);
         }
 
-        private static bool IsNullChecksPassed(Task task, System.Threading.Timer timer)
+        public static bool IsNull(Task task)
         {
-            if (task == null)
-            {
-                JsonUtils.DeleteTask(task);
-                CleanUpAndDispose(task, timer);
-                return false;
-            }
-            if (JsonUtils.IsTaskNull(task))
-            {
-                CleanUpAndDispose(task, timer);
-                return false;
-            }
-
-            return true;
+            return task == null || JsonUtils.IsTaskNull(task);
         }
 
         public static void CleanUpAndDispose(Task task, System.Threading.Timer timer)

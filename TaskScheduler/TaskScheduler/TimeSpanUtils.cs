@@ -14,6 +14,12 @@ namespace TaskScheduler
             return GenerateTimeSpan((float) every, interval);
         }
 
+        public static long GetMillisecondsFromNow(DateTime date)
+        {
+            var difference = new TimeSpan(date.Ticks - DateTime.Now.Ticks);
+            return (long) difference.TotalMilliseconds;
+        }
+
         public static TimeSpan GetDifference(DateTime higherTime, DateTime lowerTime)
         {
             var higher = new TimeSpan(higherTime.Ticks);

@@ -13,21 +13,12 @@ namespace TaskScheduler
 
         public static void CheckFields(Task task)
         {
-            try
-            {
-                CheckForStartOnce(task);
-                CheckForStartPeriodically(task);
-                CheckForStartConsecutively(task);
-                CheckForNotifyEmail(task);
+            CheckForStartOnce(task);
+            CheckForStartPeriodically(task);
+            CheckForStartConsecutively(task);
+            CheckForNotifyEmail(task);
 
-                MessageBox.Show("Task is successfully added.");
-            }
-            catch (Exception e) {
-
-                TaskUtils.DeleteTask(task);
-                MessageBox.Show(e.Message);
-
-            }
+            MessageBox.Show("Task is successfully added.");
         }
 
         private static void CheckForStartOnce(Task task)
@@ -38,7 +29,7 @@ namespace TaskScheduler
                 {
                     if (TaskRunner.RunTask(task))
                     {
-                        TaskUpdater.UpdateStatusEverySeconds(task, 3);
+                        TaskUpdater.UpdateStatusEverySeconds(task);
                     }
                 }
                 else if (form.StartOnceSelectDateButton.Checked)

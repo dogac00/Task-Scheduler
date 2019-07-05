@@ -8,17 +8,14 @@ namespace TaskScheduler
 {
     static class TaskUpdater
     {
-        public static void UpdateStatusEverySeconds(Task task, int everySeconds)
+        public static void UpdateStatusEverySeconds(Task task)
         {
-            var startTimeSpan = TimeSpan.FromSeconds(3);
-            var periodTimeSpan = TimeSpan.FromSeconds(everySeconds);
-
             System.Threading.Timer timer = null;
 
             timer = new System.Threading.Timer((e) =>
             {
 
-                if (task == null || JsonUtils.IsTaskNull(task))
+                if (TaskUtils.IsNull(task))
                 {
                     TimerUtils.DisposeTimer(timer);
                     return;
@@ -27,7 +24,7 @@ namespace TaskScheduler
                 if (!TaskRunner.IsTaskRunning(task))
                     TaskUtils.DisposeIfOnce(timer, task);
 
-            }, null, startTimeSpan, periodTimeSpan);
+            }, null, 3000, 3000);
 
             Form1.Form.Timers.Add(timer);
         }

@@ -21,9 +21,9 @@ namespace TaskScheduler
             timer = new System.Threading.Timer((e) =>
             {
 
-                if (task == null || JsonUtils.IsTaskNull(task))
+                if (TaskUtils.IsNull(task))
                 {
-                    TaskUtils.CleanUpAndDispose(task, timer);
+                    TimerUtils.DisposeTimer(timer);
 
                     return;
                 }
@@ -60,7 +60,7 @@ namespace TaskScheduler
         }
         public static bool IsTaskRunning(Task task)
         {
-            if (task == null || JsonUtils.IsTaskNull(task))
+            if (TaskUtils.IsNull(task))
                 return false;
 
             if (ProcessUtils.IsProcessRunning(task))

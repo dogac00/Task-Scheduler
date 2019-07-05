@@ -20,21 +20,6 @@ namespace TaskScheduler
             InitializeComponent();
         }
 
-        private void ExecuteOneTime(TimeSpan startTime)
-        {
-            var dueTime = (long) startTime.TotalMilliseconds;
-
-            System.Threading.Timer timer = null;
-
-            timer = new System.Threading.Timer((e) =>
-            {
-
-                MessageBox.Show("Run one time");
-                timer.Dispose();
-
-            }, startTime, dueTime, System.Threading.Timeout.Infinite);
-        }
-
         private void Form1_Load(object sender, EventArgs e)
         {
             GridUtils.OnLoadUpdate();
@@ -52,36 +37,58 @@ namespace TaskScheduler
             FieldChecker.CheckFields(task);
         }
 
-        public TimeSpan GetDontRunLongerThanValue()
+        void TasksDataGrid_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            var every = (float) runsLongerThanEvery.Value;
-            var longerThan = IntervalUtils.GetDontRunLongerThanInterval();
+            // If click new row or header
+            if (e.RowIndex == tasksDataGrid.NewRowIndex || e.RowIndex < 0)
+                return;
 
-            return TimeSpanUtils.GenerateTimeSpan(every, longerThan);
-        }
-
-        public DateTime GetStartDate(StartProperty prop)
-        {
-            if (prop == StartProperty.Once)
+            if (e.ColumnIndex == tasksDataGrid.Columns["dataGridViewDeleteButtonColumn"].Index)
             {
-                if (startOnceNowButton.Checked)
-                    return DateTime.Now;
+                if (MessageBox.Show("Are you sure you want to delete this task?", "Message",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
 
-                return startOnceDateTimePicker.Value;
+                    var taskId = e.RowIndex;
+
+                    try
+                    {
+                        JsonUtils.DeleteTaskById(taskId);
+                        GridUtils.UpdateGrid();
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Row could not be deleted.");
+                    }
+                }
             }
-            else if (prop == StartProperty.Periodically)
+            else if (e.ColumnIndex == tasksDataGrid.Columns["dataGridViewStartButtonColumn"].Index)
             {
-                if (startPeriodicallyNowButton.Checked)
-                    return DateTime.Now;
+                var taskId = e.RowIndex;
 
-                return startPeriodicallyDateTimePicker.Value;
-            }
-            else
-            {
-                if (startConsecutivelyNowButton.Checked)
-                    return DateTime.Now;
+                var task = JsonUtils.GetTaskById(taskId);
 
-                return startConsecutivelyDateTimePicker.Value;
+                if (task == null)
+                {
+                    MessageBox.Show("Internal error. Task could not be found.");
+                    return;
+                }
+
+                if (ProcessUtils.IsProcessRunning(task))
+                {
+                    MessageBox.Show("Task is already running.");
+                    return;
+                }
+
+                if (TaskRunner.RunTask(task))
+                {
+                    TaskUpdater.UpdateStatusEverySeconds(task);
+                    GridUtils.UpdateGrid();
+                }
+                else
+                {
+                    MessageBox.Show("There was an error running the task.");
+                }
             }
         }
 
@@ -149,58 +156,36 @@ namespace TaskScheduler
             }
         }
 
-        void TasksDataGrid_CellClick(object sender, DataGridViewCellEventArgs e)
+        public TimeSpan GetDontRunLongerThanValue()
         {
-            // If click new row or header
-            if (e.RowIndex == tasksDataGrid.NewRowIndex || e.RowIndex < 0)
-                return;
+            var every = (float) runsLongerThanEvery.Value;
+            var longerThan = IntervalUtils.GetDontRunLongerThanInterval();
 
-            if (e.ColumnIndex == tasksDataGrid.Columns["dataGridViewDeleteButtonColumn"].Index)
+            return TimeSpanUtils.GenerateTimeSpan(every, longerThan);
+        }
+
+        public DateTime GetStartDate(StartProperty prop)
+        {
+            if (prop == StartProperty.Once)
             {
-                if (MessageBox.Show("Are you sure you want to delete this task?", "Message",
-                    MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                {
+                if (startOnceNowButton.Checked)
+                    return DateTime.Now;
 
-                    var taskId = e.RowIndex;
-
-                    try
-                    {
-                        JsonUtils.DeleteTaskById(taskId);
-                        GridUtils.UpdateGrid();
-                    }
-                    catch
-                    {
-                        MessageBox.Show("Row could not be deleted.");
-                    }
-                }
+                return startOnceDateTimePicker.Value;
             }
-            else if (e.ColumnIndex == tasksDataGrid.Columns["dataGridViewStartButtonColumn"].Index)
+            else if (prop == StartProperty.Periodically)
             {
-                var taskId = e.RowIndex;
+                if (startPeriodicallyNowButton.Checked)
+                    return DateTime.Now;
 
-                var task = JsonUtils.GetTaskById(taskId);
+                return startPeriodicallyDateTimePicker.Value;
+            }
+            else
+            {
+                if (startConsecutivelyNowButton.Checked)
+                    return DateTime.Now;
 
-                if (task == null)
-                {
-                    MessageBox.Show("Internal error. Task could not be found.");
-                    return;
-                }
-
-                if (ProcessUtils.IsProcessRunning(task))
-                {
-                    MessageBox.Show("Task is already running.");
-                    return;
-                }
-
-                if (TaskRunner.RunTask(task))
-                {
-                    TaskUpdater.UpdateStatusEverySeconds(task, 3);
-                    GridUtils.UpdateGrid();
-                }
-                else
-                {
-                    MessageBox.Show("There was an error running the task.");
-                }
+                return startConsecutivelyDateTimePicker.Value;
             }
         }
     }
