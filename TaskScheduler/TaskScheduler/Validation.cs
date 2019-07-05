@@ -128,34 +128,63 @@ namespace TaskScheduler
 
         private static bool IsValidForDates()
         {
-            if (!IsValidForDateTimePickers())
-            {
-                MessageBox.Show("Please select a valid date.");
-                return false;
-            }
-
-            return true;
+            return IsValidForDateTimePickers();
         }
 
         private static bool IsValidForDateTimePickers()
         {
             if (form.StartOnceButton.Checked && form.StartOnceSelectDateButton.Checked)
             {
-                return !IsDatePassed(form.StartOnceDateTimePicker.Value);
+                if (!IsDateValid(form.StartOnceDateTimePicker.Value)) return false;
+
+                if (!IsDateTimeSpanValid(form.StartOnceDateTimePicker.Value)) return false;
             }
             else if (form.StartPeriodicallyButton.Checked && form.StartPeriodicallySelectDateButton.Checked)
             {
-                return !IsDatePassed(form.StartPeriodicallyDateTimePicker.Value);
+                if (!IsDateValid(form.StartPeriodicallyDateTimePicker.Value)) return false;
+
+                if (!IsDateTimeSpanValid(form.StartPeriodicallyDateTimePicker.Value)) return false;
             }
             else if (form.StartConsecutivelyButton.Checked && form.StartConsecutivelySelectDateButton.Checked)
             {
-                return !IsDatePassed(form.StartConsecutivelyDateTimePicker.Value);
+                if (!IsDateValid(form.StartConsecutivelyDateTimePicker.Value)) return false;
+
+                if (!IsDateTimeSpanValid(form.StartConsecutivelyDateTimePicker.Value)) return false;
             }
 
             return true;
         }
 
-        private static bool IsDatePassed(DateTime date)
+        private static bool IsDateTimeSpanExceedingLimit(DateTime date)
+        {
+            var difference = TimeSpanUtils.GetDifference(date, DateTime.Now);
+
+            return difference > TimeSpan.FromDays(49);
+        }
+
+        private static bool IsDateTimeSpanValid(DateTime date)
+        {
+            if (IsDateTimeSpanExceedingLimit(date))
+            {
+                MessageBox.Show("Task starting date can not be longer than 50 days.");
+                return false;
+            }
+
+            return true;
+        }
+
+        private static bool IsDateValid(DateTime date)
+        {
+            if (IsDatePassedNow(date))
+            {
+                MessageBox.Show("Date can not be passed now.");
+                return false;
+            }
+
+            return true;
+        }
+
+        private static bool IsDatePassedNow(DateTime date)
         {
             return date < DateTime.Now;
         }

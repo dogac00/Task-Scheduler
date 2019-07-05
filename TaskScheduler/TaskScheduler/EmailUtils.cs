@@ -18,7 +18,7 @@ namespace TaskScheduler
                 EmailInfo emailInfo = new EmailInfo
                 {
                     IsToBeNotified = true,
-                    EmailAddress = GetTextBoxEmailsList(),
+                    EmailAddresses = GetTextBoxEmailsList(),
                     NoLongerThan = TimeSpanUtils.GenerateTimeSpan(every, interval)
                 };
 

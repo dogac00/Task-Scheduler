@@ -20,6 +20,21 @@ namespace TaskScheduler
             InitializeComponent();
         }
 
+        private void ExecuteOneTime(TimeSpan startTime)
+        {
+            var dueTime = (long) startTime.TotalMilliseconds;
+
+            System.Threading.Timer timer = null;
+
+            timer = new System.Threading.Timer((e) =>
+            {
+
+                MessageBox.Show("Run one time");
+                timer.Dispose();
+
+            }, startTime, dueTime, System.Threading.Timeout.Infinite);
+        }
+
         private void Form1_Load(object sender, EventArgs e)
         {
             GridUtils.OnLoadUpdate();
@@ -28,7 +43,7 @@ namespace TaskScheduler
 
         public static Form1 Form { get { lock (_lock) { return _form; } } }
 
-        private void Button1_Click(object sender, EventArgs e)
+        private void AddTaskButton_Click(object sender, EventArgs e)
         {
             if (!Validation.IsValid) return;
 
@@ -148,15 +163,15 @@ namespace TaskScheduler
 
                     var taskId = e.RowIndex;
 
-                    if (JsonUtils.DeleteTask(taskId))
+                    try
                     {
+                        JsonUtils.DeleteTaskById(taskId);
                         GridUtils.UpdateGrid();
                     }
-                    else
+                    catch
                     {
                         MessageBox.Show("Row could not be deleted.");
                     }
-
                 }
             }
             else if (e.ColumnIndex == tasksDataGrid.Columns["dataGridViewStartButtonColumn"].Index)

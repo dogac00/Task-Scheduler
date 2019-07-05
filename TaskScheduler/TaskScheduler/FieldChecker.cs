@@ -82,7 +82,7 @@ namespace TaskScheduler
         {
             if (form.NotifyButton.Checked)
             {
-                JsonUtils.UpdateForNotified(task);
+                TaskUtils.UpdateTaskForNotifyEmail(task);
 
                 var dontRunLongerThan = form.GetDontRunLongerThanValue();
 

@@ -45,46 +45,51 @@ namespace TaskScheduler
             return GetTaskByName(task.Name) == null;
         }
 
-        public static bool DeleteTask(Task task)
+        public static void DeleteTask(Task task)
         {
-            var taskId = task.Id;
-
-            task = null;
-
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
-
-            return DeleteTask(taskId);
+            DeleteTaskByName(task.Name);
         }
 
-        public static bool DeleteTask(int taskId)
+        private static void DeleteTaskByName(string name)
         {
-            bool isDeleted = false;
+            var jsonData = File.ReadAllText(jsonFilePath);
 
-            try
+            List<Task> tasksList = DeserializeTasks(jsonData);
+
+            for (int i = 0; i < tasksList.Count; ++i)
             {
-                var jsonData = File.ReadAllText(jsonFilePath);
-
-                List<Task> tasksList = DeserializeTasks(jsonData);
-
-                for (int i = 0; i < tasksList.Count; ++i)
+                if (tasksList[i].Name == name)
                 {
-                    if (tasksList[i].Id == taskId)
-                    {
-                        tasksList.RemoveAt(i);
-                        isDeleted = true;
-                    }
+                    tasksList.RemoveAt(i);
                 }
-
-                jsonData = JsonConvert.SerializeObject(tasksList);
-
-                File.WriteAllText(jsonFilePath, jsonData);
             }
-            catch (Exception e) { MessageBox.Show(e.Message); }
+
+            jsonData = JsonConvert.SerializeObject(tasksList);
+
+            File.WriteAllText(jsonFilePath, jsonData);
 
             OrderById();
+        }
 
-            return isDeleted;
+        public static void DeleteTaskById(int id)
+        {
+            var jsonData = File.ReadAllText(jsonFilePath);
+
+            List<Task> tasksList = DeserializeTasks(jsonData);
+
+            for (int i = 0; i < tasksList.Count; ++i)
+            {
+                if (tasksList[i].Id == id)
+                {
+                    tasksList.RemoveAt(i);
+                }
+            }
+
+            jsonData = JsonConvert.SerializeObject(tasksList);
+
+            File.WriteAllText(jsonFilePath, jsonData);
+
+            OrderById();
         }
 
         public static void OrderById()
@@ -125,42 +130,56 @@ namespace TaskScheduler
 
         public static void UpdateTask(Task task)
         {
-            UpdateTask(task, task.IsRunning, task.ProcessId);
+            FileUtils.CheckIfFileExists(jsonFilePath);
+
+            var jsonData = File.ReadAllText(jsonFilePath);
+
+            List<Task> tasksList = DeserializeTasks(jsonData);
+
+            for (int i = 0; i < tasksList.Count; ++i)
+            {
+                if (tasksList[i].Name == task.Name)
+                {
+                    tasksList[i].ExecutablePath = task.ExecutablePath;
+                    tasksList[i].IsRunning = task.IsRunning;
+                    tasksList[i].ProcessId = task.ProcessId;
+                    tasksList[i].Period = task.Period;
+                    tasksList[i].EmailInfo = task.EmailInfo;
+
+                    break;
+                }
+            }
+
+            jsonData = JsonConvert.SerializeObject(tasksList);
+
+            File.WriteAllText(jsonFilePath, jsonData);
+
+            OrderById();
         }
 
         public static void UpdateTask(Task task, bool isRunning, int processId)
         {
             FileUtils.CheckIfFileExists(jsonFilePath);
 
-            try
+            var jsonData = File.ReadAllText(jsonFilePath);
+
+            List<Task> tasksList = DeserializeTasks(jsonData);
+
+            for (int i = 0; i < tasksList.Count; ++i)
             {
-                var jsonData = File.ReadAllText(jsonFilePath);
-
-                List<Task> tasksList = DeserializeTasks(jsonData);
-
-                for (int i = 0; i < tasksList.Count; ++i)
+                if (tasksList[i].Name == task.Name)
                 {
-                    if (tasksList[i].Name == task.Name)
-                    {
-                        tasksList[i].IsRunning = isRunning;
-                        tasksList[i].ProcessId = processId;
-                    }
+                    tasksList[i].IsRunning = isRunning;
+                    tasksList[i].ProcessId = processId;
+                    return;
                 }
+            }
 
-                jsonData = JsonConvert.SerializeObject(tasksList);
+            jsonData = JsonConvert.SerializeObject(tasksList);
 
-                File.WriteAllText(jsonFilePath, jsonData);
-
-            } catch (Exception e) { MessageBox.Show(e.Message); }
+            File.WriteAllText(jsonFilePath, jsonData);
 
             OrderById();
-        }
-
-        public static void UpdateForNotified(Task task)
-        {
-            var emailInfo = new EmailInfo();
-
-            emailInfo.EmailAddress = null;
         }
 
         public static Task GetTask(Task task)
@@ -172,23 +191,19 @@ namespace TaskScheduler
         {
             FileUtils.CheckIfFileExists(jsonFilePath);
 
-            try
+            var jsonData = File.ReadAllText(jsonFilePath);
+
+            List<Task> tasksList = DeserializeTasks(jsonData);
+
+            for (int i = 0; i < tasksList.Count; ++i)
             {
-                var jsonData = File.ReadAllText(jsonFilePath);
-
-                List<Task> tasksList = DeserializeTasks(jsonData);
-
-                for (int i = 0; i < tasksList.Count; ++i)
+                if (tasksList[i].Name == taskName)
                 {
-                    if (tasksList[i].Name == taskName)
-                    {
-                        return tasksList[i];
-                    }
+                    return tasksList[i];
                 }
-
-                return null;
             }
-            catch { return null; }
+
+            return null;
         }
 
         public static Task GetTaskById(int id)

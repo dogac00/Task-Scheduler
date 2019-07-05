@@ -8,13 +8,15 @@ namespace TaskScheduler
 {
     static class TaskUtils
     {
+        private static readonly Form1 form = Form1.Form;
+
         public static Task CreateTask()
         {
             Task task = new Task
             {
                 Id = -1,
-                Name = Form1.Form.TaskName.Text,
-                ExecutablePath = Form1.Form.TaskExecutablePath.Text,
+                Name = form.TaskName.Text,
+                ExecutablePath = form.TaskExecutablePath.Text,
                 IsRunning = false,
                 ProcessId = -1,
                 Period = TaskPeriodUtils.SetPeriod(),
@@ -27,7 +29,7 @@ namespace TaskScheduler
         public static void StartDelayForConsecutive(Task task)
         {
             var delay = TimeSpanUtils
-                .GenerateTimeSpan((float)Form1.Form.StartConsecutivelyDelay.Value,
+                .GenerateTimeSpan((float) form.StartConsecutivelyDelay.Value,
                                     IntervalUtils.GetInterval());
             var twentyDays = TimeSpan.FromDays(25);
 
@@ -60,38 +62,64 @@ namespace TaskScheduler
             timer = new System.Threading.Timer((e) =>
             {
 
-                if (task == null || JsonUtils.IsTaskNull(task))
+                if (IsNullChecksPassed(task, timer))
                 {
+                    TaskStarter.StartTaskAccordingly(task);
                     TimerUtils.DisposeTimer(timer);
-                    return;
                 }
-
-                TaskStarter.StartTaskAccordingly(task);
-                TimerUtils.DisposeTimer(timer);
 
             }, null, startTimeSpan, twentyDays);
 
             Form1.Form.Timers.Add(timer);
         }
 
+        private static bool IsNullChecksPassed(Task task, System.Threading.Timer timer)
+        {
+            if (task == null)
+            {
+                JsonUtils.DeleteTask(task);
+                CleanUpAndDispose(task, timer);
+                return false;
+            }
+            if (JsonUtils.IsTaskNull(task))
+            {
+                CleanUpAndDispose(task, timer);
+                return false;
+            }
+
+            return true;
+        }
+
         public static void CleanUpAndDispose(Task task, System.Threading.Timer timer)
         {
-            DeleteTask(task);
+            task = null;
+
             TimerUtils.DisposeTimer(timer);
+
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
         }
 
         public static void DeleteTask(Task task)
         {
-            DeleteTaskInMemory(task);
             JsonUtils.DeleteTask(task);
-        }
-
-        public static void DeleteTaskInMemory(Task task)
-        {
             task = null;
 
             GC.Collect();
             GC.WaitForPendingFinalizers();
+        }
+
+        public static void UpdateTaskForNotifyEmail(Task task)
+        {
+            var emails = EmailUtils.GetTextBoxEmailsList();
+            var isToBeNotified = true;
+            var dontRunLongerThan = form.GetDontRunLongerThanValue();
+
+            var emailInfo = new EmailInfo(isToBeNotified, emails, dontRunLongerThan);
+
+            task.EmailInfo = emailInfo;
+
+            JsonUtils.UpdateTask(task);
         }
 
         public static string GetTaskTimeBetween(Task task)

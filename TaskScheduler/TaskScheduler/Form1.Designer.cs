@@ -77,7 +77,7 @@ namespace TaskScheduler
             this.startConsecutivelyButton = new System.Windows.Forms.RadioButton();
             this.emailAddressTextBox = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.addTaskButton = new System.Windows.Forms.Button();
             this.taskExecutablePath = new System.Windows.Forms.TextBox();
             this.taskName = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -149,7 +149,7 @@ namespace TaskScheduler
             this.addTaskPage.Controls.Add(this.panel6);
             this.addTaskPage.Controls.Add(this.emailAddressTextBox);
             this.addTaskPage.Controls.Add(this.label6);
-            this.addTaskPage.Controls.Add(this.button1);
+            this.addTaskPage.Controls.Add(this.addTaskButton);
             this.addTaskPage.Controls.Add(this.taskExecutablePath);
             this.addTaskPage.Controls.Add(this.taskName);
             this.addTaskPage.Controls.Add(this.label2);
@@ -603,15 +603,15 @@ namespace TaskScheduler
             this.label6.TabIndex = 38;
             this.label6.Text = "To:";
             // 
-            // button1
+            // addTaskButton
             // 
-            this.button1.Location = new System.Drawing.Point(248, 328);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(122, 23);
-            this.button1.TabIndex = 30;
-            this.button1.Text = "Add Task";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.Button1_Click);
+            this.addTaskButton.Location = new System.Drawing.Point(246, 338);
+            this.addTaskButton.Name = "addTaskButton";
+            this.addTaskButton.Size = new System.Drawing.Size(122, 23);
+            this.addTaskButton.TabIndex = 30;
+            this.addTaskButton.Text = "Add Task";
+            this.addTaskButton.UseVisualStyleBackColor = true;
+            this.addTaskButton.Click += new System.EventHandler(this.AddTaskButton_Click);
             // 
             // taskExecutablePath
             // 
@@ -709,7 +709,7 @@ namespace TaskScheduler
         private System.Windows.Forms.RadioButton startPeriodicallyHour;
         private System.Windows.Forms.RadioButton startPeriodicallyDay;
         private System.Windows.Forms.RadioButton startPeriodicallyWeek;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button addTaskButton;
         private System.Windows.Forms.RadioButton startConsecutivelyMin;
         private System.Windows.Forms.RadioButton startConsecutivelyHour;
         private System.Windows.Forms.RadioButton startConsecutivelyDay;

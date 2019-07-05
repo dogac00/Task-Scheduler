@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -48,19 +49,18 @@ namespace TaskScheduler
 
                 return true;
             }
-            catch (Exception e)
+            catch (FileNotFoundException)
             {
 
-                MessageBox.Show(e.Message);
-
-                JsonUtils.DeleteTask(task);
+                MessageBox.Show("Invalid executable path.");
+                TaskUtils.DeleteTask(task);
 
                 return false;
             }
         }
         public static bool IsTaskRunning(Task task)
         {
-            if (task == null)
+            if (task == null || JsonUtils.IsTaskNull(task))
                 return false;
 
             if (ProcessUtils.IsProcessRunning(task))
