@@ -30,17 +30,11 @@ namespace TaskScheduler
 
         private void AddTaskButton_Click(object sender, EventArgs e)
         {
-            var watch = System.Diagnostics.Stopwatch.StartNew();
-
             if (!Validation.IsValid) return;
 
             var task = JsonUtils.AddTask(TaskUtils.CreateTask());
 
             FieldChecker.CheckFields(task);
-
-            watch.Stop();
-
-            MessageBox.Show(Convert.ToString((float) watch.ElapsedMilliseconds / 1000));
         }
 
         void TasksDataGrid_CellClick(object sender, DataGridViewCellEventArgs e)
