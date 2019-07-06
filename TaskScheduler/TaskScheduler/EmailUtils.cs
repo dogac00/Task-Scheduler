@@ -40,9 +40,9 @@ namespace TaskScheduler
             return Form1.Form.EmailAddressTextBox.Text.Split(',');
         }
 
-        public static string ConvertEmailsToString()
+        public static string ConvertEmailsToString(Task task)
         {
-            var emails = GetTextBoxEmailsArray();
+            var emails = task.EmailInfo.EmailAddresses;
             string emailsString = "";
 
             foreach (var email in emails)
@@ -61,7 +61,7 @@ namespace TaskScheduler
             }
             else
             {
-                return ConvertEmailsToString();
+                return ConvertEmailsToString(task);
             }
         }
 
