@@ -28,10 +28,12 @@ namespace TaskScheduler
 
         public static void StartDelayForConsecutive(Task task)
         {
-            var delay = TimeSpanUtils
-                .GenerateTimeSpan((float) form.StartConsecutivelyDelay.Value,
-                                    IntervalUtils.GetInterval());
-            var twentyDays = TimeSpan.FromDays(25);
+            var startConsecutivelyValue = (float) form.StartConsecutivelyDelay.Value;
+
+            var delay = (long)
+                TimeSpanUtils
+                .GenerateTimeSpan(startConsecutivelyValue, IntervalUtils.GetInterval())
+                .TotalMilliseconds;
 
             System.Threading.Timer timer = null;
 
@@ -41,7 +43,7 @@ namespace TaskScheduler
                 TaskStarter.StartTaskConsecutively(task);
                 TimerUtils.DisposeTimer(timer);
 
-            }, null, delay, twentyDays);
+            }, null, delay, System.Threading.Timeout.Infinite);
 
             Form1.Form.Timers.Add(timer);
         }
@@ -76,25 +78,6 @@ namespace TaskScheduler
         public static bool IsNull(Task task)
         {
             return task == null || JsonUtils.IsTaskNull(task);
-        }
-
-        public static void CleanUpAndDispose(Task task, System.Threading.Timer timer)
-        {
-            task = null;
-
-            TimerUtils.DisposeTimer(timer);
-
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
-        }
-
-        public static void DeleteTask(Task task)
-        {
-            JsonUtils.DeleteTask(task);
-            task = null;
-
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
         }
 
         public static void UpdateTaskForNotifyEmail(Task task)

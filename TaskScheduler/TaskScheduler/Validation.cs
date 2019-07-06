@@ -21,6 +21,7 @@ namespace TaskScheduler
                 if (!IsTaskNameValid()) return false;
                 if (!IsValidForDates()) return false;
                 if (!IsValidForTimeBetween()) return false;
+                if (!IsValidForExePath()) return false;
 
                 return true;
             }
@@ -49,6 +50,19 @@ namespace TaskScheduler
             }
 
             return true;
+        }
+
+        private static bool IsValidForExePath()
+        {
+            if (System.IO.File.Exists(form.TaskExecutablePath.Text))
+                return true;
+
+            if (IsValidURL(form.TaskExecutablePath.Text))
+                return true;
+
+            MessageBox.Show("Executable path is invalid.");
+
+            return false;
         }
 
         private static bool IsValidForEmail()
@@ -122,6 +136,13 @@ namespace TaskScheduler
             }
 
             return true;
+        }
+
+        public static bool IsValidURL(string source)
+        {
+            Uri uriResult;
+            return Uri.TryCreate(source, UriKind.Absolute, out uriResult)
+                && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
         }
 
         private static bool IsNotifyLongerThanValid()

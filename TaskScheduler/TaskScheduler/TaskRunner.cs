@@ -49,11 +49,11 @@ namespace TaskScheduler
 
                 return true;
             }
-            catch (FileNotFoundException)
+            catch (System.ComponentModel.Win32Exception)
             {
 
                 MessageBox.Show("Invalid executable path.");
-                TaskUtils.DeleteTask(task);
+                JsonUtils.DeleteTask(task);
 
                 return false;
             }

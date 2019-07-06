@@ -13,16 +13,31 @@ namespace TaskScheduler
 
         public static void CheckFields(Task task)
         {
-            CheckForStartOnce(task);
-            CheckForStartPeriodically(task);
-            CheckForStartConsecutively(task);
-            CheckForNotifyEmail(task);
+            try
+            {
+                CheckForStartOnce(task);
+                CheckForStartPeriodically(task);
+                CheckForStartConsecutively(task);
+                CheckForNotifyEmail(task);
 
-            MessageBox.Show("Task is successfully added.");
+                CheckForSuccess(task);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
+        }
+
+        private static void CheckForSuccess(Task task)
+        {
+            if (!TaskUtils.IsNull(task))
+                MessageBox.Show("Task is successfully added.");
         }
 
         private static void CheckForStartOnce(Task task)
         {
+            if (task == null) return;
+
             if (task.Period.Property == StartProperty.Once)
             {
                 if (form.StartOnceNowButton.Checked)
@@ -41,6 +56,8 @@ namespace TaskScheduler
 
         private static void CheckForStartPeriodically(Task task)
         {
+            if (task == null) return;
+
             if (task.Period.Property == StartProperty.Periodically)
             {
                 if (form.StartPeriodicallyNowButton.Checked)
@@ -56,6 +73,8 @@ namespace TaskScheduler
 
         private static void CheckForStartConsecutively(Task task)
         {
+            if (task == null) return;
+
             if (task.Period.Property == StartProperty.Consecutively)
             {
                 if (form.StartConsecutivelyNowButton.Checked)
@@ -71,6 +90,8 @@ namespace TaskScheduler
 
         private static void CheckForNotifyEmail(Task task)
         {
+            if (task == null) return;
+
             if (form.NotifyButton.Checked)
             {
                 TaskUtils.UpdateTaskForNotifyEmail(task);

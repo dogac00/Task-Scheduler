@@ -81,7 +81,7 @@ namespace TaskScheduler
             this.taskExecutablePath = new System.Windows.Forms.TextBox();
             this.taskName = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
+            this.taskNameLabel = new System.Windows.Forms.Label();
             this.tabControl.SuspendLayout();
             this.allTasksPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tasksDataGrid)).BeginInit();
@@ -153,7 +153,7 @@ namespace TaskScheduler
             this.addTaskPage.Controls.Add(this.taskExecutablePath);
             this.addTaskPage.Controls.Add(this.taskName);
             this.addTaskPage.Controls.Add(this.label2);
-            this.addTaskPage.Controls.Add(this.label1);
+            this.addTaskPage.Controls.Add(this.taskNameLabel);
             this.addTaskPage.Location = new System.Drawing.Point(4, 22);
             this.addTaskPage.Name = "addTaskPage";
             this.addTaskPage.Size = new System.Drawing.Size(791, 392);
@@ -549,17 +549,18 @@ namespace TaskScheduler
             this.panel6.Controls.Add(this.startOnceButton);
             this.panel6.Controls.Add(this.startPeriodicallyButton);
             this.panel6.Controls.Add(this.startConsecutivelyButton);
-            this.panel6.Location = new System.Drawing.Point(24, 94);
+            this.panel6.Location = new System.Drawing.Point(16, 88);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(134, 159);
+            this.panel6.Size = new System.Drawing.Size(146, 159);
             this.panel6.TabIndex = 45;
             // 
             // startOnceButton
             // 
             this.startOnceButton.AutoSize = true;
+            this.startOnceButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.startOnceButton.Location = new System.Drawing.Point(28, 4);
             this.startOnceButton.Name = "startOnceButton";
-            this.startOnceButton.Size = new System.Drawing.Size(76, 17);
+            this.startOnceButton.Size = new System.Drawing.Size(88, 20);
             this.startOnceButton.TabIndex = 4;
             this.startOnceButton.Text = "Start Once";
             this.startOnceButton.UseVisualStyleBackColor = true;
@@ -568,9 +569,10 @@ namespace TaskScheduler
             // startPeriodicallyButton
             // 
             this.startPeriodicallyButton.AutoSize = true;
-            this.startPeriodicallyButton.Location = new System.Drawing.Point(19, 50);
+            this.startPeriodicallyButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.startPeriodicallyButton.Location = new System.Drawing.Point(7, 59);
             this.startPeriodicallyButton.Name = "startPeriodicallyButton";
-            this.startPeriodicallyButton.Size = new System.Drawing.Size(103, 17);
+            this.startPeriodicallyButton.Size = new System.Drawing.Size(127, 20);
             this.startPeriodicallyButton.TabIndex = 5;
             this.startPeriodicallyButton.Text = "Start Periodically";
             this.startPeriodicallyButton.UseVisualStyleBackColor = true;
@@ -579,9 +581,10 @@ namespace TaskScheduler
             // startConsecutivelyButton
             // 
             this.startConsecutivelyButton.AutoSize = true;
-            this.startConsecutivelyButton.Location = new System.Drawing.Point(7, 114);
+            this.startConsecutivelyButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.startConsecutivelyButton.Location = new System.Drawing.Point(3, 122);
             this.startConsecutivelyButton.Name = "startConsecutivelyButton";
-            this.startConsecutivelyButton.Size = new System.Drawing.Size(116, 17);
+            this.startConsecutivelyButton.Size = new System.Drawing.Size(140, 20);
             this.startConsecutivelyButton.TabIndex = 6;
             this.startConsecutivelyButton.Text = "Start Consecutively";
             this.startConsecutivelyButton.UseVisualStyleBackColor = true;
@@ -605,9 +608,11 @@ namespace TaskScheduler
             // 
             // addTaskButton
             // 
-            this.addTaskButton.Location = new System.Drawing.Point(246, 338);
+            this.addTaskButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.addTaskButton.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.addTaskButton.Location = new System.Drawing.Point(239, 341);
             this.addTaskButton.Name = "addTaskButton";
-            this.addTaskButton.Size = new System.Drawing.Size(122, 23);
+            this.addTaskButton.Size = new System.Drawing.Size(137, 29);
             this.addTaskButton.TabIndex = 30;
             this.addTaskButton.Text = "Add Task";
             this.addTaskButton.UseVisualStyleBackColor = true;
@@ -615,14 +620,14 @@ namespace TaskScheduler
             // 
             // taskExecutablePath
             // 
-            this.taskExecutablePath.Location = new System.Drawing.Point(154, 53);
+            this.taskExecutablePath.Location = new System.Drawing.Point(195, 45);
             this.taskExecutablePath.Name = "taskExecutablePath";
-            this.taskExecutablePath.Size = new System.Drawing.Size(203, 20);
+            this.taskExecutablePath.Size = new System.Drawing.Size(235, 20);
             this.taskExecutablePath.TabIndex = 3;
             // 
             // taskName
             // 
-            this.taskName.Location = new System.Drawing.Point(154, 19);
+            this.taskName.Location = new System.Drawing.Point(195, 18);
             this.taskName.Name = "taskName";
             this.taskName.Size = new System.Drawing.Size(114, 20);
             this.taskName.TabIndex = 2;
@@ -630,20 +635,25 @@ namespace TaskScheduler
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(33, 60);
+            this.label2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(34, 48);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(115, 13);
+            this.label2.Size = new System.Drawing.Size(138, 15);
             this.label2.TabIndex = 1;
             this.label2.Text = "Task Executable Path:";
             // 
-            // label1
+            // taskNameLabel
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(83, 22);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(65, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Task Name:";
+            this.taskNameLabel.AutoSize = true;
+            this.taskNameLabel.BackColor = System.Drawing.Color.Transparent;
+            this.taskNameLabel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.taskNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.taskNameLabel.Location = new System.Drawing.Point(95, 21);
+            this.taskNameLabel.Name = "taskNameLabel";
+            this.taskNameLabel.Size = new System.Drawing.Size(77, 15);
+            this.taskNameLabel.TabIndex = 0;
+            this.taskNameLabel.Text = "Task Name:";
             // 
             // Form1
             // 
@@ -699,7 +709,7 @@ namespace TaskScheduler
         private System.Windows.Forms.TextBox taskExecutablePath;
         private System.Windows.Forms.TextBox taskName;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label taskNameLabel;
         private System.Windows.Forms.Label startPeriodicallyEveryText;
         private System.Windows.Forms.Label startPeriodicallyTimeText;
         private System.Windows.Forms.RadioButton startPeriodicallyNowButton;

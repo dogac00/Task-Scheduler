@@ -68,13 +68,37 @@ namespace TaskScheduler
         private static void FetchRowsFromJson()
         {
             List<Task> tasks = JsonUtils.FetchJsonData();
-            List<GridTask> gridTasks = JsonUtils.PopulateGridTaskList(tasks);
+            List<GridTask> gridTasks = PopulateGridTaskList(tasks);
 
             var list = new BindingList<GridTask>(gridTasks);
             var source = new BindingSource(list, null);
 
             try { Form1.Form.TasksDataGrid.DataSource = source; }
             catch { MessageBox.Show("Something went wrong while fetching JSON."); }
+        }
+
+        public static List<GridTask> PopulateGridTaskList(List<Task> tasks)
+        {
+            List<GridTask> gridTasks = new List<GridTask>();
+
+            foreach (var task in tasks)
+            {
+                var gridTask = new GridTask
+                {
+                    Name = task.Name,
+                    ExecutablePath = task.ExecutablePath,
+                    IsRunning = task.IsRunning,
+                    StartProperty = task.Period.Property.ToString(),
+                    StartDate = task.Period.StartDate,
+                    ProcessId = task.ProcessId,
+                    EmailAddress = EmailUtils.GetTaskEmails(task),
+                    TimeBetween = TaskUtils.GetTaskTimeBetween(task),
+                };
+
+                gridTasks.Add(gridTask);
+            }
+
+            return gridTasks;
         }
     }
 }

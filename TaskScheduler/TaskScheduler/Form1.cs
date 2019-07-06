@@ -23,7 +23,7 @@ namespace TaskScheduler
         private void Form1_Load(object sender, EventArgs e)
         {
             GridUtils.OnLoadUpdate();
-            GridUtils.SetGridTimer();
+            // GridUtils.SetGridTimer();
         }
 
         public static Form1 Form { get { lock (_lock) { return _form; } } }
@@ -150,10 +150,8 @@ namespace TaskScheduler
 
         private void TabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (tabControl.SelectedIndex == 1)
-            {
+            if (tabControl.SelectedIndex == 0)
                 GridUtils.UpdateGrid();
-            }
         }
 
         public TimeSpan GetDontRunLongerThanValue()

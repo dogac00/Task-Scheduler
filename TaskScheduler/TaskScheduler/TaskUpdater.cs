@@ -28,9 +28,10 @@ namespace TaskScheduler
 
             Form1.Form.Timers.Add(timer);
         }
+
         public static void UpdateStatusConsecutively(Task task, int everySeconds)
         {
-            var startTimeSpan = TimeSpan.Zero;
+            var startTimeSpan = TimeSpan.FromSeconds(3);
             var periodTimeSpan = TimeSpan.FromSeconds(everySeconds);
 
             System.Threading.Timer timer = null;
@@ -38,7 +39,7 @@ namespace TaskScheduler
             timer = new System.Threading.Timer((e) =>
             {
 
-                if (task == null || JsonUtils.IsTaskNull(task))
+                if (TaskUtils.IsNull(task))
                 {
                     TimerUtils.DisposeTimer(timer);
                     return;
