@@ -29,11 +29,28 @@ namespace TaskScheduler
             Form1.Form.Timers.Add(timer);
         }
 
-        public static void UpdateStatusConsecutively(Task task, int everySeconds)
+        public static void UpdateStatusForLoaded(Task task)
         {
-            var startTimeSpan = TimeSpan.FromSeconds(3);
-            var periodTimeSpan = TimeSpan.FromSeconds(everySeconds);
+            System.Threading.Timer timer = null;
 
+            timer = new System.Threading.Timer((e) =>
+            {
+
+                if (TaskUtils.IsNull(task))
+                {
+                    TimerUtils.DisposeTimer(timer);
+                    return;
+                }
+
+                TaskRunner.IsTaskRunning(task);
+
+            }, null, 3000, 3000);
+
+            Form1.Form.Timers.Add(timer);
+        }
+
+        public static void UpdateStatusConsecutively(Task task)
+        {
             System.Threading.Timer timer = null;
 
             timer = new System.Threading.Timer((e) =>
@@ -50,7 +67,7 @@ namespace TaskScheduler
                     TimerUtils.DisposeTimer(timer);
                 }
 
-            }, null, startTimeSpan, periodTimeSpan);
+            }, null, 3000, 3000);
 
             Form1.Form.Timers.Add(timer);
         }

@@ -42,10 +42,7 @@ namespace TaskScheduler
             {
                 if (form.StartOnceNowButton.Checked)
                 {
-                    if (TaskRunner.RunTask(task))
-                    {
-                        TaskUpdater.UpdateStatusEverySeconds(task);
-                    }
+                    TaskStarter.StartTaskOnce(task);
                 }
                 else if (form.StartOnceSelectDateButton.Checked)
                 {
@@ -96,9 +93,7 @@ namespace TaskScheduler
             {
                 TaskUtils.UpdateTaskForNotifyEmail(task);
 
-                var dontRunLongerThan = form.GetDontRunLongerThanValue();
-
-                TaskStarter.StartNotificationTimer(task, 3, dontRunLongerThan);
+                TaskStarter.StartNotificationTimer(task);
             }
         }
     }

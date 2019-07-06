@@ -40,7 +40,8 @@ namespace TaskScheduler
             timer = new System.Threading.Timer((e) =>
             {
 
-                TaskStarter.StartTaskConsecutively(task);
+                TaskRunner.RunTask(task);
+                TaskUpdater.UpdateStatusConsecutively(task);
                 TimerUtils.DisposeTimer(timer);
 
             }, null, delay, System.Threading.Timeout.Infinite);

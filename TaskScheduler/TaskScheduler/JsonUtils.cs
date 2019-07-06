@@ -172,13 +172,11 @@ namespace TaskScheduler
             jsonData = JsonConvert.SerializeObject(tasksList);
 
             WriteAllText(jsonData);
-
-            OrderById();
         }
 
         public static Task GetTask(Task task)
         {
-            return GetTaskById(task.Id);
+            return GetTaskByName(task.Name);
         }
 
         public static Task GetTaskByName(string taskName)

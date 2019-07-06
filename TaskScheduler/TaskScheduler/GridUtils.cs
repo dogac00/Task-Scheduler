@@ -24,9 +24,6 @@ namespace TaskScheduler
 
         public static void SetGridTimer()
         {
-            var startTimeSpan = TimeSpan.Zero;
-            var periodTimeSpan = TimeSpan.FromSeconds(2);
-
             System.Threading.Timer timer = null;
 
             timer = new System.Threading.Timer((e) =>
@@ -34,9 +31,17 @@ namespace TaskScheduler
 
                 Form1.Form.InvokeIfRequired(UpdateGrid);
 
-            }, null, startTimeSpan, periodTimeSpan);
+            }, null, 2000, 2000);
 
             Form1.Form.Timers.Add(timer);
+        }
+
+        public static void AddUpdaters()
+        {
+            List<Task> tasks = JsonUtils.FetchJsonData();
+
+            foreach (var task in tasks)
+                TaskUpdater.UpdateStatusForLoaded(task);
         }
 
         private static void AddDeleteButtons()

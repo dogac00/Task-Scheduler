@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TaskScheduler
 {
@@ -13,8 +11,7 @@ namespace TaskScheduler
             switch (task.Period.Property)
             {
                 case StartProperty.Once:
-                    TaskRunner.RunTask(task);
-                    TaskUpdater.UpdateStatusEverySeconds(task);
+                    StartTaskOnce(task);
                     break;
 
                 case StartProperty.Periodically:
@@ -27,6 +24,12 @@ namespace TaskScheduler
             }
         }
 
+        public static void StartTaskOnce(Task task)
+        {
+            TaskRunner.RunTask(task);
+            TaskUpdater.UpdateStatusEverySeconds(task);
+        }
+
         public static void StartTaskPeriodically(Task task)
         {
             TaskRunner.RunTaskPeriodically(task);
@@ -36,45 +39,45 @@ namespace TaskScheduler
         public static void StartTaskConsecutively(Task task)
         {
             TaskRunner.RunTask(task);
-            TaskUpdater.UpdateStatusConsecutively(task, 3);
+            TaskUpdater.UpdateStatusConsecutively(task);
             TaskUpdater.UpdateStatusEverySeconds(task);
         }
 
-        public static void StartNotificationTimer(Task task, int everySeconds,
-            TimeSpan dontRunLongerThan)
+        public static void StartNotificationTimer(Task task)
         {
             var taskStartingDate = task.Period.StartDate;
-            TimeSpan startTimeSpan = new TimeSpan(taskStartingDate.Ticks - DateTime.Now.Ticks);
+            var dontRunLongerThanValue = Form1.Form.GetDontRunLongerThanValue();
 
-            if (startTimeSpan < TimeSpan.Zero) startTimeSpan = TimeSpan.Zero;
+            var dueTime = TimeSpanUtils.GetMillisecondsFromNow(taskStartingDate);
 
-            var periodTimeSpan = TimeSpan.FromSeconds(everySeconds);
+            if (dueTime < 0) dueTime = 0;
 
-            bool isEmailSent = false;
+            bool tryToSend = false;
+
             System.Threading.Timer timer = null;
 
             timer = new System.Threading.Timer((e) =>
             {
 
-                if (task == null || JsonUtils.IsTaskNull(task))
+                if (TaskUtils.IsNull(task))
                 {
                     TimerUtils.DisposeTimer(timer);
                     return;
                 }
 
                 if (TimeSpanUtils
-                .GetDifference(DateTime.Now, taskStartingDate) > dontRunLongerThan)
+                .GetDifference(DateTime.Now, taskStartingDate) > dontRunLongerThanValue)
                 {
-                    if (!isEmailSent && TaskRunner.IsTaskRunning(task))
+                    if (!tryToSend && TaskRunner.IsTaskRunning(task))
                     {
-                        isEmailSent = true;
-                        EmailUtils.SendEmail(task.Name, dontRunLongerThan);
+                        tryToSend = true;
+                        EmailUtils.RedirectToSendEmail(task.Name, dontRunLongerThanValue);
                     }
 
                     TimerUtils.DisposeTimer(timer);
                 }
 
-            }, null, startTimeSpan, periodTimeSpan);
+            }, null, dueTime, 3000);
 
             Form1.Form.Timers.Add(timer);
         }

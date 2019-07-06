@@ -58,6 +58,7 @@ namespace TaskScheduler
                 return false;
             }
         }
+
         public static bool IsTaskRunning(Task task)
         {
             if (TaskUtils.IsNull(task))

@@ -17,6 +17,7 @@ namespace TaskScheduler
         public static long GetMillisecondsFromNow(DateTime date)
         {
             var difference = new TimeSpan(date.Ticks - DateTime.Now.Ticks);
+
             return (long) difference.TotalMilliseconds;
         }
 

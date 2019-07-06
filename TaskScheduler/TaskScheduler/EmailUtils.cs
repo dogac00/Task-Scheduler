@@ -6,7 +6,7 @@ using FRUtility;
 
 namespace TaskScheduler
 {
-    class EmailUtils
+    static class EmailUtils
     {
         public static EmailInfo SetEmailInfo()
         {
@@ -65,18 +65,13 @@ namespace TaskScheduler
             }
         }
 
-        public static bool SendEmail(string taskName, TimeSpan dontRunLongerThan)
+        private static bool SendEmail(string [] emails, string body)
         {
             EmailService emailService = new EmailService();
 
-            string [] emails = GetTextBoxEmailsArray();
-
-            string mailBody = $"Task named \"{ taskName }\" run longer than you expected.\n" +
-                $"Task is running longer than : { dontRunLongerThan.ToString() }";
-
             try
             {
-                if (emailService.SendEmail(emails, mailBody))
+                if (emailService.SendEmail(emails, body))
                 {
                     MessageBox.Show("email sent successfully.");
                     return true;
@@ -86,12 +81,23 @@ namespace TaskScheduler
                     MessageBox.Show("email could not be sent.");
                     return false;
                 }
-                
-            } catch (Exception e)
+
+            }
+            catch (Exception e)
             {
                 MessageBox.Show(e.Message);
                 return false;
             }
+        }
+
+        public static bool RedirectToSendEmail(string taskName, TimeSpan dontRunLongerThan)
+        {
+            string [] emails = GetTextBoxEmailsArray();
+
+            string mailBody = $"Task named \"{ taskName }\" run longer than you expected.\n" +
+                $"Task is running longer than : { dontRunLongerThan.ToString() }";
+
+            return SendEmail(emails, mailBody);
         }
 
         private static Interval GetSelectedRunsLongerThanInterval()
