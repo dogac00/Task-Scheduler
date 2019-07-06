@@ -32,9 +32,7 @@ namespace TaskScheduler
             timer = new System.Threading.Timer((e) =>
             {
 
-                Form1.Form.Invoke(new Action(() => {
-                    UpdateGrid();
-                }));
+                Form1.Form.InvokeIfRequired(UpdateGrid);
 
             }, null, startTimeSpan, periodTimeSpan);
 

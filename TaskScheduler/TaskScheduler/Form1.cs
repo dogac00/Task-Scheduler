@@ -9,13 +9,12 @@ namespace TaskScheduler
 {
     public partial class Form1 : Form
     {
-        private static Form1 _form;
+        private readonly static Form1 _form = new Form1();
         private static volatile object _lock = new object();
         public List<System.Threading.Timer> Timers;
 
-        public Form1()
+        private Form1()
         {
-            _form = this;
             Timers = new List<System.Threading.Timer>();
             InitializeComponent();
         }
@@ -23,7 +22,7 @@ namespace TaskScheduler
         private void Form1_Load(object sender, EventArgs e)
         {
             GridUtils.OnLoadUpdate();
-            // GridUtils.SetGridTimer();
+            GridUtils.SetGridTimer();
         }
 
         public static Form1 Form { get { lock (_lock) { return _form; } } }

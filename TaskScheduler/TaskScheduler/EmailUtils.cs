@@ -71,7 +71,7 @@ namespace TaskScheduler
 
             string [] emails = GetTextBoxEmailsArray();
 
-            string mailBody = $"Task Named \"{ taskName }\" run longer than you expected." +
+            string mailBody = $"Task named \"{ taskName }\" run longer than you expected.\n" +
                 $"Task is running longer than : { dontRunLongerThan.ToString() }";
 
             try
