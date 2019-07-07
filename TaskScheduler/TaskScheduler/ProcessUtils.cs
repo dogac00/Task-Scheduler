@@ -11,8 +11,6 @@ namespace TaskScheduler
     {
         public static bool IsProcessRunning(Task task)
         {
-            if (task == null) return false;
-
             return IsProcessRunning(task.ProcessId);
         }
 

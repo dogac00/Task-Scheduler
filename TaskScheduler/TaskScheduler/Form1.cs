@@ -11,11 +11,11 @@ namespace TaskScheduler
     {
         private readonly static Form1 _form = new Form1();
         private static volatile object _lock = new object();
-        public List<System.Threading.Timer> Timers;
+        public List<TaskTimer> Timers;
 
         private Form1()
         {
-            Timers = new List<System.Threading.Timer>();
+            Timers = new List<TaskTimer>();
             InitializeComponent();
         }
 
@@ -51,15 +51,9 @@ namespace TaskScheduler
 
                     var taskId = e.RowIndex;
 
-                    try
-                    {
-                        JsonUtils.DeleteTaskById(taskId);
-                        GridUtils.UpdateGrid();
-                    }
-                    catch
-                    {
-                        MessageBox.Show("Row could not be deleted.");
-                    }
+                    TimerUtils.RemoveTimers(taskId);
+                    JsonUtils.DeleteTaskById(taskId);
+                    GridUtils.UpdateGrid();
                 }
             }
             else if (e.ColumnIndex == tasksDataGrid.Columns["dataGridViewStartButtonColumn"].Index)
@@ -82,7 +76,6 @@ namespace TaskScheduler
 
                 if (TaskRunner.RunTask(task))
                 {
-                    TaskUpdater.UpdateStatusEverySeconds(task);
                     GridUtils.UpdateGrid();
                 }
                 else

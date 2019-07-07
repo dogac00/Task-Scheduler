@@ -32,7 +32,7 @@ namespace TaskScheduler
 
             }, null, startTimeSpan, periodTimeSpan);
 
-            Form1.Form.Timers.Add(timer);
+            TimerUtils.AddTimer(timer, task.Name, "Periodical Runner Timer", startTimeSpan, periodTimeSpan);
         }
 
         public static bool RunTask(Task task)
@@ -64,23 +64,7 @@ namespace TaskScheduler
             if (TaskUtils.IsNull(task))
                 return false;
 
-            if (ProcessUtils.IsProcessRunning(task))
-            {
-                task.IsRunning = true;
-
-                JsonUtils.UpdateTask(task);
-
-                return true;
-            }
-            else
-            {
-                task.IsRunning = false;
-                task.ProcessId = -1;
-
-                JsonUtils.UpdateTask(task);
-
-                return false;
-            }
+            return ProcessUtils.IsProcessRunning(task);
         }
     }
 }

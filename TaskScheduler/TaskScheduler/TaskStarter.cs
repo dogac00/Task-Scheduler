@@ -28,12 +28,14 @@ namespace TaskScheduler
         {
             TaskRunner.RunTask(task);
             TaskUpdater.UpdateStatusEverySeconds(task);
+            StartNotificationTimer(task);
         }
 
         public static void StartTaskPeriodically(Task task)
         {
             TaskRunner.RunTaskPeriodically(task);
             TaskUpdater.UpdateStatusEverySeconds(task);
+            StartNotificationTimer(task);
         }
 
         public static void StartTaskConsecutively(Task task)
@@ -41,16 +43,15 @@ namespace TaskScheduler
             TaskRunner.RunTask(task);
             TaskUpdater.UpdateStatusConsecutively(task);
             TaskUpdater.UpdateStatusEverySeconds(task);
+            StartNotificationTimer(task);
         }
 
-        public static void StartNotificationTimer(Task task)
+        private static void StartNotificationTimer(Task task)
         {
+            if (task.EmailInfo == null) return;
+
             var taskStartingDate = task.Period.StartDate;
             var dontRunLongerThanValue = Form1.Form.GetDontRunLongerThanValue();
-
-            var dueTime = TimeSpanUtils.GetMillisecondsFromNow(taskStartingDate);
-
-            if (dueTime < 0) dueTime = 0;
 
             bool tryToSend = false;
 
@@ -77,9 +78,9 @@ namespace TaskScheduler
                     TimerUtils.DisposeTimer(timer);
                 }
 
-            }, null, dueTime, 3000);
+            }, null, 0, 3000);
 
-            Form1.Form.Timers.Add(timer);
+            TimerUtils.AddTimer(timer, task.Name, "Notification Timer", 0, 3000);
         }
     }
 }

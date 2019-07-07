@@ -76,6 +76,7 @@
     <Compile Include="TaskPeriodUtils.cs" />
     <Compile Include="TaskRunner.cs" />
     <Compile Include="TaskStarter.cs" />
+    <Compile Include="TaskTimer.cs" />
     <Compile Include="TaskUpdater.cs" />
     <Compile Include="TaskUtils.cs" />
     <Compile Include="TimerUtils.cs" />

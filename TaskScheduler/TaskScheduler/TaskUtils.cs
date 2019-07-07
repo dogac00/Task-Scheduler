@@ -46,13 +46,7 @@ namespace TaskScheduler
 
             }, null, delay, System.Threading.Timeout.Infinite);
 
-            Form1.Form.Timers.Add(timer);
-        }
-
-        public static void DisposeIfOnce(System.Threading.Timer timer, Task task)
-        {
-            if (task.Period.Property == StartProperty.Once)
-                TimerUtils.DisposeTimer(timer);
+            TimerUtils.AddTimer(timer, task.Name, "Consecutive Delayer Timer", delay, -1);
         }
 
         public static void SetTaskStartingTimer(Task task)
@@ -73,7 +67,7 @@ namespace TaskScheduler
 
             }, null, dueTime, System.Threading.Timeout.Infinite);
 
-            Form1.Form.Timers.Add(timer);
+            TimerUtils.AddTimer(timer, task.Name, "Task Starting Timer", dueTime, -1);
         }
 
         public static bool IsNull(Task task)

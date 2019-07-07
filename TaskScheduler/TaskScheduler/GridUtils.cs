@@ -33,7 +33,7 @@ namespace TaskScheduler
 
             }, null, 2000, 2000);
 
-            Form1.Form.Timers.Add(timer);
+            TimerUtils.AddTimer(timer, "Grid", "Grid Updater", 2000, 2000);
         }
 
         public static void AddUpdaters()
@@ -46,24 +46,26 @@ namespace TaskScheduler
 
         private static void AddDeleteButtons()
         {
-            var deleteButtonColumn = new DataGridViewButtonColumn();
-
-            deleteButtonColumn.Name = "dataGridViewDeleteButtonColumn";
-            deleteButtonColumn.HeaderText = "Delete";
-            deleteButtonColumn.Text = "Delete";
-            deleteButtonColumn.UseColumnTextForButtonValue = true;
+            var deleteButtonColumn = new DataGridViewButtonColumn
+            {
+                Name = "dataGridViewDeleteButtonColumn",
+                HeaderText = "Delete",
+                Text = "Delete",
+                UseColumnTextForButtonValue = true
+            };
 
             Form1.Form.TasksDataGrid.Columns.Add(deleteButtonColumn);
         }
 
         private static void AddStartButtons()
         {
-            var startButtonColumn = new DataGridViewButtonColumn();
-
-            startButtonColumn.Name = "dataGridViewStartButtonColumn";
-            startButtonColumn.HeaderText = "Start";
-            startButtonColumn.Text = "Start";
-            startButtonColumn.UseColumnTextForButtonValue = true;
+            var startButtonColumn = new DataGridViewButtonColumn
+            {
+                Name = "dataGridViewStartButtonColumn",
+                HeaderText = "Start",
+                Text = "Start",
+                UseColumnTextForButtonValue = true
+            };
 
             Form1.Form.TasksDataGrid.Columns.Add(startButtonColumn);
         }

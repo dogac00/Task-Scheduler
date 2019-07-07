@@ -92,8 +92,6 @@ namespace TaskScheduler
             if (form.NotifyButton.Checked)
             {
                 TaskUtils.UpdateTaskForNotifyEmail(task);
-
-                TaskStarter.StartNotificationTimer(task);
             }
         }
     }
