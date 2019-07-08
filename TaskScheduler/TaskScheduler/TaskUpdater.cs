@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 
 namespace TaskScheduler
 {
@@ -10,20 +10,11 @@ namespace TaskScheduler
     {
         public static void UpdateStatusEverySeconds(Task task)
         {
-            System.Threading.Timer timer = null;
+            Timer timer = null;
 
-            timer = new System.Threading.Timer((e) =>
-            {
-
-                if (TaskUtils.IsNull(task))
-                {
-                    TimerUtils.DisposeTimer(timer);
-                    return;
-                }
-
-                UpdateTask(task);
-
-            }, null, 3000, 3000);
+            timer = TimerUtils.CreateTimer(() => 
+            
+                TaskActions.UpdateTasksRunningStatus(timer, task), 3000, 3000);
 
             TimerUtils.AddTimer(timer, task.Name, "Task Status Updater", 3000, 3000);
         }
@@ -53,44 +44,22 @@ namespace TaskScheduler
 
         public static void UpdateStatusForLoaded(Task task)
         {
-            System.Threading.Timer timer = null;
+            Timer timer = null;
 
-            timer = new System.Threading.Timer((e) =>
-            {
-
-                if (TaskUtils.IsNull(task))
-                {
-                    TimerUtils.DisposeTimer(timer);
-                    return;
-                }
-
-                UpdateTask(task);
-
-            }, null, 3000, 3000);
+            timer = TimerUtils.CreateTimer(() => 
+            
+                    TaskActions.UpdateForLoadedTask(timer, task), 3000, 3000);
 
             TimerUtils.AddTimer(timer, task.Name, "Loaded Task Updater", 3000, 3000);
         }
 
         public static void UpdateStatusConsecutively(Task task)
         {
-            System.Threading.Timer timer = null;
+            Timer timer = null;
 
-            timer = new System.Threading.Timer((e) =>
-            {
+            timer = TimerUtils.CreateTimer(() => 
 
-                if (TaskUtils.IsNull(task))
-                {
-                    TimerUtils.DisposeTimer(timer);
-                    return;
-                }
-
-                if (!TaskRunner.IsTaskRunning(task))
-                {
-                    TaskUtils.StartDelayForConsecutive(task);
-                    TimerUtils.DisposeTimer(timer);
-                }
-
-            }, null, 3000, 3000);
+                TaskActions.UpdateStatusForConsecutiveTask(timer, task), 3000, 3000);
 
             TimerUtils.AddTimer(timer, task.Name, "Consecutive Checker Timer", 3000, 3000);
         }

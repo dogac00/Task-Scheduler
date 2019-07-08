@@ -40,7 +40,7 @@ namespace TaskScheduler
         void TasksDataGrid_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             // If click new row or header
-            if (e.RowIndex == tasksDataGrid.NewRowIndex || e.RowIndex < 0)
+             if (e.RowIndex == tasksDataGrid.NewRowIndex || e.RowIndex < 0)
                 return;
 
             if (e.ColumnIndex == tasksDataGrid.Columns["dataGridViewDeleteButtonColumn"].Index)
@@ -51,7 +51,7 @@ namespace TaskScheduler
 
                     var taskId = e.RowIndex;
 
-                    TimerUtils.RemoveTimers(taskId);
+                    TimerUtils.DisposeTimers(taskId);
                     JsonUtils.DeleteTaskById(taskId);
                     GridUtils.UpdateGrid();
                 }
@@ -74,14 +74,9 @@ namespace TaskScheduler
                     return;
                 }
 
-                if (TaskRunner.RunTask(task))
-                {
-                    GridUtils.UpdateGrid();
-                }
-                else
-                {
-                    MessageBox.Show("There was an error running the task.");
-                }
+                TimerUtils.DisposeTimers(task);
+                TaskStarter.GridStarter(task);
+                GridUtils.UpdateGrid();
             }
         }
 
@@ -177,6 +172,17 @@ namespace TaskScheduler
                     return DateTime.Now;
 
                 return startConsecutivelyDateTimePicker.Value;
+            }
+        }
+
+        private void ChooseFileButton_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog dialog = new OpenFileDialog())
+            {
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    taskExecutablePath.Text = dialog.FileName;
+                }
             }
         }
     }

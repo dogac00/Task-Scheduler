@@ -13,26 +13,16 @@ namespace TaskScheduler
     {
         public static void RunTaskPeriodically(Task task)
         {
-            var startTimeSpan = TimeSpan.Zero;
-            var periodTimeSpan = task.Period.TimeBetween;
+            var dueTime = TimeSpan.Zero;
+            var period = task.Period.TimeBetween;
 
             System.Threading.Timer timer = null;
 
-            timer = new System.Threading.Timer((e) =>
-            {
+            timer = TimerUtils.CreateTimer(() => 
+                    
+                    TaskActions.RunTaskDisposeIfNull(timer, task), dueTime, period);
 
-                if (TaskUtils.IsNull(task))
-                {
-                    TimerUtils.DisposeTimer(timer);
-
-                    return;
-                }
-
-                RunTask(task);
-
-            }, null, startTimeSpan, periodTimeSpan);
-
-            TimerUtils.AddTimer(timer, task.Name, "Periodical Runner Timer", startTimeSpan, periodTimeSpan);
+            TimerUtils.AddTimer(timer, task.Name, "Periodical Runner Timer", dueTime, period);
         }
 
         public static bool RunTask(Task task)

@@ -31,6 +31,12 @@ namespace TaskScheduler
             StartNotificationTimer(task);
         }
 
+        public static void GridStarter(Task task)
+        {
+            TaskRunner.RunTask(task);
+            TaskUpdater.UpdateStatusEverySeconds(task);
+        }
+
         public static void StartTaskPeriodically(Task task)
         {
             TaskRunner.RunTaskPeriodically(task);

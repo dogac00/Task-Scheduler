@@ -24,14 +24,9 @@ namespace TaskScheduler
 
         public static void SetGridTimer()
         {
-            System.Threading.Timer timer = null;
-
-            timer = new System.Threading.Timer((e) =>
-            {
-
-                Form1.Form.InvokeIfRequired(UpdateGrid);
-
-            }, null, 2000, 2000);
+            var timer = TimerUtils.CreateTimer(() => 
+            
+                    GridActions.InvokeFormIfRequired(), 2000, 2000);
 
             TimerUtils.AddTimer(timer, "Grid", "Grid Updater", 2000, 2000);
         }

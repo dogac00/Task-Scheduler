@@ -6,13 +6,6 @@ namespace TaskScheduler
 {
     class TimerUtils
     {
-        private static volatile object _threadLock = new object();
-
-        public static void DisposeTimer(Timer timer)
-        {
-            RemoveTimer(timer);
-        }
-
         public static void AddTimer(Timer timer, string taskName, string description, 
                                         TimeSpan start, TimeSpan period)
         {
@@ -43,69 +36,61 @@ namespace TaskScheduler
             Form1.Form.Timers.Add(_timer);
         }
 
-        private static void RemoveTimer(Timer timer)
+        public static void DisposeTimer(Timer timer)
         {
             Form1.Form.Timers.RemoveAll(t => t.Timer == timer);
-            DisposeTimerCompletely(timer);
+
+            timer.DisposeCompletely();
         }
 
-        private static void DisposeTimerCompletely(Timer timer)
+        public static void DisposeTimers(Task task)
         {
-            timer.Change(Timeout.Infinite, Timeout.Infinite);
+            var timers = Form1.Form.Timers.FindAll(t => t.TaskName == task.Name);
 
-            lock (_threadLock)
-            {
-                if (timer != null)
-                {
-                    ManualResetEvent waitHandle = new ManualResetEvent(false);
+            DisposeTaskTimers(timers);
 
-                    if (timer.Dispose(waitHandle))
-                    {
-                        // Timer has not been disposed by someone else
-                        waitHandle.WaitOne();
-                    }
-
-                    waitHandle.Dispose();   // Only close if Dispose has completed succesful
-
-                    timer = null;
-                }
-            }
+            Form1.Form.Timers.RemoveAll(t => t.TaskName == task.Name);
         }
 
-        public static void RemoveTimers(Task task)
-        {
-            DisposeTimers(task);
-
-            RemoveTimers(task.Name);
-        }
-
-        public static void RemoveTimers(int taskId)
+        public static void DisposeTimers(int taskId)
         {
             var task = JsonUtils.GetTaskById(taskId);
 
             if (task == null) return;
 
-            RemoveTimers(task);
+            DisposeTimers(task);
         }
 
-        private static void RemoveTimers(string taskName)
+        private static void DisposeTaskTimers(List<TaskTimer> taskTimers)
         {
-            Form1.Form.Timers.RemoveAll(t => t.TaskName == taskName);
+            foreach (var taskTimer in taskTimers)
+                taskTimer.Timer.DisposeCompletely();
         }
 
-        private static void DisposeTimers(Task task)
+        public static Timer CreateTimer(Action action, long dueTime, long period)
         {
-            var timers = Form1.Form.Timers.FindAll(t => t.TaskName == task.Name);
-
-            DisposeTimers(timers);
+            return new Timer((state) => action.Invoke(), null, dueTime, period);
         }
 
-        private static void DisposeTimers(List<TaskTimer> timers)
+        public static Timer CreateTimer(Action action, TimeSpan dueTime, TimeSpan period)
         {
-            foreach (var timer in timers)
-            {
-                timer.Timer.Dispose();
-            }
+            return new Timer((state) => action.Invoke(), null, dueTime, period);
         }
+
+        public static Timer CreateTimer(Delegate action, long dueTime, long period)
+        {
+            return new Timer((state) => action.DynamicInvoke(), null, dueTime, period);
+        }
+
+        public static Timer CreateTimer(Delegate action, TimeSpan dueTime, TimeSpan period)
+        {
+            return new Timer((state) => action.DynamicInvoke(), null, dueTime, period);
+        }
+
+        
+
+        
+
+        
     }
 }

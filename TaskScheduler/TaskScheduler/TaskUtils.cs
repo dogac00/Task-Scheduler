@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Windows.Forms;
+using System.Threading;
 
 namespace TaskScheduler
 {
@@ -35,16 +34,11 @@ namespace TaskScheduler
                 .GenerateTimeSpan(startConsecutivelyValue, IntervalUtils.GetInterval())
                 .TotalMilliseconds;
 
-            System.Threading.Timer timer = null;
+            Timer timer = null;
 
-            timer = new System.Threading.Timer((e) =>
-            {
-
-                TaskRunner.RunTask(task);
-                TaskUpdater.UpdateStatusConsecutively(task);
-                TimerUtils.DisposeTimer(timer);
-
-            }, null, delay, System.Threading.Timeout.Infinite);
+            TimerUtils.CreateTimer(() => 
+               
+                TaskActions.RunTaskUpdateTaskDisposeTimer(timer, task), delay, Timeout.Infinite);
 
             TimerUtils.AddTimer(timer, task.Name, "Consecutive Delayer Timer", delay, -1);
         }
@@ -53,19 +47,11 @@ namespace TaskScheduler
         {
             var dueTime = TimeSpanUtils.GetMillisecondsFromNow(task.Period.StartDate);
 
-            System.Threading.Timer timer = null;
+            Timer timer = null;
 
-            timer = new System.Threading.Timer((e) =>
-            {
+            timer = TimerUtils.CreateTimer(() =>
 
-                if (!IsNull(task))
-                {
-                    TaskStarter.StartTaskAccordingly(task);
-                }
-
-                TimerUtils.DisposeTimer(timer);
-
-            }, null, dueTime, System.Threading.Timeout.Infinite);
+                    TaskActions.StartTaskDisposeTimer(timer, task), dueTime, Timeout.Infinite);
 
             TimerUtils.AddTimer(timer, task.Name, "Task Starting Timer", dueTime, -1);
         }

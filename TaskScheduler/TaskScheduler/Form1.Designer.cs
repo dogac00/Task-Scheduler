@@ -82,6 +82,8 @@ namespace TaskScheduler
             this.taskName = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.taskNameLabel = new System.Windows.Forms.Label();
+            this.chooseFileButton = new System.Windows.Forms.Button();
+            this.orLabel = new System.Windows.Forms.Label();
             this.tabControl.SuspendLayout();
             this.allTasksPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tasksDataGrid)).BeginInit();
@@ -140,6 +142,8 @@ namespace TaskScheduler
             // 
             // addTaskPage
             // 
+            this.addTaskPage.Controls.Add(this.orLabel);
+            this.addTaskPage.Controls.Add(this.chooseFileButton);
             this.addTaskPage.Controls.Add(this.runsLongerThanEvery);
             this.addTaskPage.Controls.Add(this.notifyButton);
             this.addTaskPage.Controls.Add(this.startConsecutivelyPanel);
@@ -622,7 +626,7 @@ namespace TaskScheduler
             // 
             this.taskExecutablePath.Location = new System.Drawing.Point(195, 45);
             this.taskExecutablePath.Name = "taskExecutablePath";
-            this.taskExecutablePath.Size = new System.Drawing.Size(235, 20);
+            this.taskExecutablePath.Size = new System.Drawing.Size(274, 20);
             this.taskExecutablePath.TabIndex = 3;
             // 
             // taskName
@@ -654,6 +658,25 @@ namespace TaskScheduler
             this.taskNameLabel.Size = new System.Drawing.Size(77, 15);
             this.taskNameLabel.TabIndex = 0;
             this.taskNameLabel.Text = "Task Name:";
+            // 
+            // chooseFileButton
+            // 
+            this.chooseFileButton.Location = new System.Drawing.Point(588, 43);
+            this.chooseFileButton.Name = "chooseFileButton";
+            this.chooseFileButton.Size = new System.Drawing.Size(118, 23);
+            this.chooseFileButton.TabIndex = 52;
+            this.chooseFileButton.Text = "Choose File";
+            this.chooseFileButton.UseVisualStyleBackColor = true;
+            this.chooseFileButton.Click += new System.EventHandler(this.ChooseFileButton_Click);
+            // 
+            // orLabel
+            // 
+            this.orLabel.AutoSize = true;
+            this.orLabel.Location = new System.Drawing.Point(516, 49);
+            this.orLabel.Name = "orLabel";
+            this.orLabel.Size = new System.Drawing.Size(18, 13);
+            this.orLabel.TabIndex = 53;
+            this.orLabel.Text = "Or";
             // 
             // Form1
             // 
@@ -749,6 +772,8 @@ namespace TaskScheduler
         private NumericUpDown runsLongerThanEvery;
         private NumericUpDown startPeriodicallyEvery;
         private DataGridView tasksDataGrid;
+        private Label orLabel;
+        private Button chooseFileButton;
 
         public DataGridView TasksDataGrid { get => tasksDataGrid; set => tasksDataGrid = value; }
         public TextBox TaskName { get => taskName; set => taskName = value; }
