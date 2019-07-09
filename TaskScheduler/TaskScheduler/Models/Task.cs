@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace TaskScheduler
 {
-    class Task
+    public class Task
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -18,7 +18,7 @@ namespace TaskScheduler
         public EmailInfo EmailInfo { get; set; }
     }
 
-    class TaskPeriod
+    public class TaskPeriod
     {
         public StartProperty Property { get; set; }
         public DateTime StartDate { get; set; }

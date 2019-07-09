@@ -8,7 +8,7 @@ namespace TaskScheduler
 {
     static class Validation
     {
-        private static readonly Form1 form = Form1.Form;
+        private static readonly Form1 Form = Form1.Form;
 
         public static bool IsValid
         {
@@ -29,8 +29,8 @@ namespace TaskScheduler
 
         private static bool IsValidForNonClick()
         {
-            if (form.StartOnceButton.Checked || form.StartPeriodicallyButton.Checked
-                || form.StartConsecutivelyButton.Checked)
+            if (Form.StartOnceButton.Checked || Form.StartPeriodicallyButton.Checked
+                || Form.StartConsecutivelyButton.Checked)
             {
                 return true;
             }
@@ -43,7 +43,7 @@ namespace TaskScheduler
 
         private static bool IsValidForNames()
         {
-            if (form.TaskName.Text == "" || form.TaskExecutablePath.Text == "")
+            if (Form.TaskName.Text == "" || Form.TaskExecutablePath.Text == "")
             {
                 MessageBox.Show("Please enter task name and task exe path.");
                 return false;
@@ -54,10 +54,10 @@ namespace TaskScheduler
 
         private static bool IsValidForExePath()
         {
-            if (System.IO.File.Exists(form.TaskExecutablePath.Text))
+            if (System.IO.File.Exists(Form.TaskExecutablePath.Text))
                 return true;
 
-            if (IsValidURL(form.TaskExecutablePath.Text))
+            if (IsValidURL(Form.TaskExecutablePath.Text))
                 return true;
 
             MessageBox.Show("Executable path is invalid.");
@@ -67,9 +67,9 @@ namespace TaskScheduler
 
         private static bool IsValidForEmail()
         {
-            if (form.NotifyButton.Checked)
+            if (Form.NotifyButton.Checked)
             {
-                var emailTextBox = form.EmailAddressTextBox.Text;
+                var emailTextBox = Form.EmailAddressTextBox.Text;
 
                 if (emailTextBox == "")
                 {
@@ -125,7 +125,7 @@ namespace TaskScheduler
 
         private static bool ArePeriodsOrDelaysValid()
         {
-            if (form.StartPeriodicallyButton.Checked || form.StartConsecutivelyButton.Checked)
+            if (Form.StartPeriodicallyButton.Checked || Form.StartConsecutivelyButton.Checked)
             {
                 var periodBetween = TaskPeriodUtils.SetPeriod().TimeBetween;
 
@@ -147,9 +147,9 @@ namespace TaskScheduler
 
         private static bool IsNotifyLongerThanValid()
         {
-            if (form.NotifyButton.Checked)
+            if (Form.NotifyButton.Checked)
             {
-                var dontRunLongerThan = form.GetDontRunLongerThanValue();
+                var dontRunLongerThan = Form.GetDontRunLongerThanValue();
 
                 if (IsTimeSpanExceedingLimit(dontRunLongerThan))
                 {
@@ -162,20 +162,20 @@ namespace TaskScheduler
 
         private static bool IsValidNumericUpDown()
         {
-            if (form.StartPeriodicallyButton.Checked && 
-                form.StartPeriodicallyEvery.Value == 0M)
+            if (Form.StartPeriodicallyButton.Checked && 
+                Form.StartPeriodicallyEvery.Value == 0M)
             {
                 MessageBox.Show("Period value cannot be zero.");
                 return false;
             }
-            else if (form.StartConsecutivelyButton.Checked &&
-                    form.StartConsecutivelyDelay.Value == 0M)
+            else if (Form.StartConsecutivelyButton.Checked &&
+                    Form.StartConsecutivelyDelay.Value == 0M)
             {
                 MessageBox.Show("Delay value cannot be zero.");
                 return false;
             }
-            else if (form.NotifyButton.Checked &&
-                    form.RunsLongerThanEvery.Value == 0M)
+            else if (Form.NotifyButton.Checked &&
+                    Form.RunsLongerThanEvery.Value == 0M)
             {
                 MessageBox.Show("Longer than value cannot be zero.");
                 return false;
@@ -186,7 +186,7 @@ namespace TaskScheduler
 
         private static bool IsTaskNameValid()
         {
-            if (JsonUtils.GetTaskByName(form.TaskName.Text) != null)
+            if (Form.Repository.GetTaskByName(Form.TaskName.Text) != null)
             {
                 MessageBox.Show("Task name exists. Please select another name.");
                 return false;
@@ -202,23 +202,23 @@ namespace TaskScheduler
 
         private static bool IsValidForDateTimePickers()
         {
-            if (form.StartOnceButton.Checked && form.StartOnceSelectDateButton.Checked)
+            if (Form.StartOnceButton.Checked && Form.StartOnceSelectDateButton.Checked)
             {
-                if (!IsDateValid(form.StartOnceDateTimePicker.Value)) return false;
+                if (!IsDateValid(Form.StartOnceDateTimePicker.Value)) return false;
 
-                if (!IsDateTimeSpanValid(form.StartOnceDateTimePicker.Value)) return false;
+                if (!IsDateTimeSpanValid(Form.StartOnceDateTimePicker.Value)) return false;
             }
-            else if (form.StartPeriodicallyButton.Checked && form.StartPeriodicallySelectDateButton.Checked)
+            else if (Form.StartPeriodicallyButton.Checked && Form.StartPeriodicallySelectDateButton.Checked)
             {
-                if (!IsDateValid(form.StartPeriodicallyDateTimePicker.Value)) return false;
+                if (!IsDateValid(Form.StartPeriodicallyDateTimePicker.Value)) return false;
 
-                if (!IsDateTimeSpanValid(form.StartPeriodicallyDateTimePicker.Value)) return false;
+                if (!IsDateTimeSpanValid(Form.StartPeriodicallyDateTimePicker.Value)) return false;
             }
-            else if (form.StartConsecutivelyButton.Checked && form.StartConsecutivelySelectDateButton.Checked)
+            else if (Form.StartConsecutivelyButton.Checked && Form.StartConsecutivelySelectDateButton.Checked)
             {
-                if (!IsDateValid(form.StartConsecutivelyDateTimePicker.Value)) return false;
+                if (!IsDateValid(Form.StartConsecutivelyDateTimePicker.Value)) return false;
 
-                if (!IsDateTimeSpanValid(form.StartConsecutivelyDateTimePicker.Value)) return false;
+                if (!IsDateTimeSpanValid(Form.StartConsecutivelyDateTimePicker.Value)) return false;
             }
 
             return true;

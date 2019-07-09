@@ -1,21 +1,22 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Net;
-using System.Net.Mail;
 using System.Windows.Forms;
 
 namespace TaskScheduler
 {
     public partial class Form1 : Form
     {
-        private readonly static Form1 _form = new Form1();
-        private static volatile object _lock = new object();
+        private static Form1 _form;
+        private static volatile object _lock;
         public List<TaskTimer> Timers;
 
-        private Form1()
+        public Form1(IRepository repository)
         {
+            _form = this;
+            _lock = new object();
             Timers = new List<TaskTimer>();
+            Repository = repository;
+
             InitializeComponent();
         }
 
@@ -28,11 +29,13 @@ namespace TaskScheduler
 
         public static Form1 Form { get { lock (_lock) { return _form; } } }
 
+        public IRepository Repository { get; }
+
         private void AddTaskButton_Click(object sender, EventArgs e)
         {
             if (!Validation.IsValid) return;
 
-            var task = JsonUtils.AddTask(TaskUtils.CreateTask());
+            var task = Repository.AddTask(TaskUtils.CreateTask());
 
             FieldChecker.CheckFields(task);
         }
@@ -52,7 +55,7 @@ namespace TaskScheduler
                     var taskId = e.RowIndex;
 
                     TimerUtils.DisposeTimers(taskId);
-                    JsonUtils.DeleteTaskById(taskId);
+                    Repository.DeleteTaskById(taskId);
                     GridUtils.UpdateGrid();
                 }
             }
@@ -60,7 +63,7 @@ namespace TaskScheduler
             {
                 var taskId = e.RowIndex;
 
-                var task = JsonUtils.GetTaskById(taskId);
+                var task = Repository.GetTaskById(taskId);
 
                 if (task == null)
                 {

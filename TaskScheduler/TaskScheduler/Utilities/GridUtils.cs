@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace TaskScheduler
 {
-    static class GridUtils
+    class GridUtils
     {
         public static void OnLoadUpdate()
         {
@@ -33,7 +33,7 @@ namespace TaskScheduler
 
         public static void AddUpdaters()
         {
-            List<Task> tasks = JsonUtils.FetchJsonData();
+            List<Task> tasks = Form1.Form.Repository.FetchAllData();
 
             foreach (var task in tasks)
                 TaskUpdater.UpdateStatusForLoaded(task);
@@ -67,7 +67,7 @@ namespace TaskScheduler
 
         private static void FetchRowsFromJson()
         {
-            List<Task> tasks = JsonUtils.FetchJsonData();
+            List<Task> tasks = Form1.Form.Repository.FetchAllData();
             List<GridTask> gridTasks = PopulateGridTaskList(tasks);
 
             var list = new BindingList<GridTask>(gridTasks);

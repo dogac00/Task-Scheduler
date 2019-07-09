@@ -10,12 +10,12 @@ using System.Windows.Forms;
 
 namespace TaskScheduler
 {
-    static class JsonUtils
+    class JsonRepository : IRepository
     {
-        private static readonly string jsonFilePath = @"..\..\tasks.json";
-        private static volatile ReaderWriterLockSlim locker = new ReaderWriterLockSlim();
+        private readonly string jsonFilePath = @"..\..\tasks.json";
+        private volatile ReaderWriterLockSlim locker = new ReaderWriterLockSlim();
 
-        private static string GetAllText()
+        private string GetAllText()
         {
             locker.EnterReadLock();
 
@@ -26,7 +26,7 @@ namespace TaskScheduler
             return jsonData;
         }
 
-        private static void WriteAllText(string data)
+        private void WriteAllText(string data)
         {
             locker.EnterWriteLock();
 
@@ -35,7 +35,7 @@ namespace TaskScheduler
             locker.ExitWriteLock();
         }
 
-        public static Task AddTask(Task task)
+        public Task AddTask(Task task)
         {
             FileUtils.CheckIfFileExists(jsonFilePath);
 
@@ -63,17 +63,17 @@ namespace TaskScheduler
             return GetTaskByName(task.Name);
         }
 
-        public static bool IsTaskNull(Task task)
+        public bool IsTaskNull(Task task)
         {
             return GetTaskByName(task.Name) == null;
         }
 
-        public static void DeleteTask(Task task)
+        public void DeleteTask(Task task)
         {
             DeleteTaskByName(task.Name);
         }
 
-        private static void DeleteTaskByName(string name)
+        public void DeleteTaskByName(string name)
         {
             string jsonData = GetAllText();
 
@@ -95,7 +95,7 @@ namespace TaskScheduler
             OrderById();
         }
 
-        public static void DeleteTaskById(int id)
+        public void DeleteTaskById(int id)
         {
             string jsonData = GetAllText();
 
@@ -117,7 +117,7 @@ namespace TaskScheduler
             OrderById();
         }
 
-        public static void OrderById()
+        public void OrderById()
         {
             string jsonData = GetAllText();
 
@@ -133,7 +133,7 @@ namespace TaskScheduler
             WriteAllText(jsonData);
         }
 
-        public static List<Task> FetchJsonData()
+        public List<Task> FetchAllData()
         {
             FileUtils.CheckIfFileExists(jsonFilePath);
 
@@ -147,7 +147,7 @@ namespace TaskScheduler
             return tasks;
         }
 
-        public static void UpdateTask(Task task)
+        public void UpdateTask(Task task)
         {
             FileUtils.CheckIfFileExists(jsonFilePath);
 
@@ -174,12 +174,12 @@ namespace TaskScheduler
             WriteAllText(jsonData);
         }
 
-        public static Task GetTask(Task task)
+        public Task GetTask(Task task)
         {
             return GetTaskByName(task.Name);
         }
 
-        public static Task GetTaskByName(string taskName)
+        public Task GetTaskByName(string taskName)
         {
             FileUtils.CheckIfFileExists(jsonFilePath);
 
@@ -198,7 +198,7 @@ namespace TaskScheduler
             return null;
         }
 
-        public static Task GetTaskById(int id)
+        public Task GetTaskById(int id)
         {
             FileUtils.CheckIfFileExists(jsonFilePath);
 
@@ -217,7 +217,7 @@ namespace TaskScheduler
             return null;
         }
 
-        private static List<Task> DeserializeTasks(string jsonData)
+        private List<Task> DeserializeTasks(string jsonData)
         {
             try { return JsonConvert.DeserializeObject<List<Task>>(jsonData) ?? new List<Task>(); }
             catch { return new List<Task>(); }

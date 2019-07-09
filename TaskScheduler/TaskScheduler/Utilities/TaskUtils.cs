@@ -58,7 +58,7 @@ namespace TaskScheduler
 
         public static bool IsNull(Task task)
         {
-            return task == null || JsonUtils.IsTaskNull(task);
+            return task == null || form.Repository.IsTaskNull(task);
         }
 
         public static void UpdateTaskForNotifyEmail(Task task)
@@ -71,7 +71,7 @@ namespace TaskScheduler
 
             task.EmailInfo = emailInfo;
 
-            JsonUtils.UpdateTask(task);
+            form.Repository.UpdateTask(task);
         }
 
         public static string GetTaskTimeBetween(Task task)

@@ -4,8 +4,10 @@ using System.Threading;
 
 namespace TaskScheduler
 {
-    class TimerUtils
+    static class TimerUtils
     {
+        private static readonly Form1 Form = Form1.Form;
+
         public static void AddTimer(Timer timer, string taskName, string description, 
                                         TimeSpan start, TimeSpan period)
         {
@@ -54,7 +56,7 @@ namespace TaskScheduler
 
         public static void DisposeTimers(int taskId)
         {
-            var task = JsonUtils.GetTaskById(taskId);
+            var task = Form.Repository.GetTaskById(taskId);
 
             if (task == null) return;
 

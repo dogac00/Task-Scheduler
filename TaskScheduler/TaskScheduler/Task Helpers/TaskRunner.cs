@@ -11,6 +11,8 @@ namespace TaskScheduler
 {
     static class TaskRunner
     {
+        private static readonly Form1 Form = Form1.Form;
+
         public static void RunTaskPeriodically(Task task)
         {
             var dueTime = TimeSpan.Zero;
@@ -35,7 +37,7 @@ namespace TaskScheduler
                 task.ProcessId = Process.Start(task.ExecutablePath).Id;
                 task.IsRunning = true;
 
-                JsonUtils.UpdateTask(task);
+                Form.Repository.UpdateTask(task);
 
                 return true;
             }
@@ -43,7 +45,7 @@ namespace TaskScheduler
             {
 
                 MessageBox.Show("Invalid executable path.");
-                JsonUtils.DeleteTask(task);
+                Form.Repository.DeleteTask(task);
 
                 return false;
             }

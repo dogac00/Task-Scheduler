@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace TaskScheduler
 {
-    class EmailInfo
+    public class EmailInfo
     {
         public EmailInfo(bool isToBeNotified, List<string> emailAddresses, TimeSpan noLongerthan)
         {

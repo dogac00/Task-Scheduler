@@ -8,6 +8,8 @@ namespace TaskScheduler
 {
     static class TaskUpdater
     {
+        private static readonly Form1 Form = Form1.Form;
+
         public static void UpdateStatusEverySeconds(Task task)
         {
             Timer timer = null;
@@ -27,7 +29,7 @@ namespace TaskScheduler
                 {
                     task.IsRunning = true;
 
-                    JsonUtils.UpdateTask(task);
+                    Form.Repository.UpdateTask(task);
                 }
             }
             else
@@ -37,7 +39,7 @@ namespace TaskScheduler
                     task.IsRunning = false;
                     task.ProcessId = -1;
 
-                    JsonUtils.UpdateTask(task);
+                    Form.Repository.UpdateTask(task);
                 }
             }
         }
