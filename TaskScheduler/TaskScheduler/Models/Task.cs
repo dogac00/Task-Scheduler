@@ -16,6 +16,11 @@ namespace TaskScheduler
         public int ProcessId { get; set; }
         public TaskPeriod Period { get; set; }
         public EmailInfo EmailInfo { get; set; }
+
+        public override string ToString()
+        {
+            return $"Name : {Name}, Exe Path: {ExecutablePath}";
+        }
     }
 
     public class TaskPeriod
@@ -23,6 +28,12 @@ namespace TaskScheduler
         public StartProperty Property { get; set; }
         public DateTime StartDate { get; set; }
         public TimeSpan TimeBetween { get; set; }
+
+        public override string ToString()
+        {
+            return $"Property : {Property.ToString()}, " +
+                $"Start Date : {StartDate}, Time Between : {TimeBetween}";
+        }
     }
 
     public enum StartProperty

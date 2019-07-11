@@ -18,5 +18,10 @@ namespace TaskScheduler
         public bool IsToBeNotified { get; set; }
         public List<string> EmailAddresses { get; set; }
         public TimeSpan NoLongerThan { get; set; }
+
+        public override string ToString()
+        {
+            return $"Is notified : {IsToBeNotified}, Email address : {EmailAddresses}";
+        }
     }
 }

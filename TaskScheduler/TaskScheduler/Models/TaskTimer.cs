@@ -10,5 +10,10 @@ namespace TaskScheduler
         public string Description { get; set; }
         public DateTime StartTime { get; set; }
         public TimeSpan PeriodTime { get; set; }
+
+        public override string ToString()
+        {
+            return $"Task : {TaskName}, Start : {StartTime}, Period : {PeriodTime}";
+        }
     }
 }

@@ -10,7 +10,7 @@ namespace TaskScheduler
     {
         public static void InvokeFormIfRequired()
         {
-            Form1.Form.InvokeIfRequired(GridUtils.UpdateGrid);
+            MainForm.Form.InvokeIfRequired(GridUtils.UpdateGrid);
         }
     }
 }

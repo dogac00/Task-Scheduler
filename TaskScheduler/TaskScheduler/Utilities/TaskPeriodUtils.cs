@@ -13,21 +13,21 @@ namespace TaskScheduler
         {
             TaskPeriod period;
 
-            if (Form1.Form.StartOnceButton.Checked)
+            if (MainForm.Form.StartOnceButton.Checked)
             {
                 period = new TaskPeriod
                 {
                     Property = StartProperty.Once,
-                    StartDate = Form1.Form.GetStartDate(StartProperty.Once),
+                    StartDate = MainForm.Form.GetStartDate(StartProperty.Once),
                     TimeBetween = TimeSpan.FromSeconds(0)
                 };
             }
-            else if (Form1.Form.StartPeriodicallyButton.Checked)
+            else if (MainForm.Form.StartPeriodicallyButton.Checked)
             {
                 period = new TaskPeriod
                 {
                     Property = StartProperty.Periodically,
-                    StartDate = Form1.Form.GetStartDate(StartProperty.Periodically),
+                    StartDate = MainForm.Form.GetStartDate(StartProperty.Periodically),
                     TimeBetween = GetTimeBetween(StartProperty.Periodically)
                 };
             }
@@ -36,7 +36,7 @@ namespace TaskScheduler
                 period = new TaskPeriod
                 {
                     Property = StartProperty.Consecutively,
-                    StartDate = Form1.Form.GetStartDate(StartProperty.Consecutively),
+                    StartDate = MainForm.Form.GetStartDate(StartProperty.Consecutively),
                     TimeBetween = GetTimeBetween(StartProperty.Consecutively)
                 };
             }
@@ -51,12 +51,12 @@ namespace TaskScheduler
 
             if (prop == StartProperty.Periodically)
             {
-                every = (float) Form1.Form.StartPeriodicallyEvery.Value;
+                every = (float) MainForm.Form.StartPeriodicallyEvery.Value;
                 interval = IntervalUtils.GetInterval();
             }
             else
             {
-                every = (float) Form1.Form.StartConsecutivelyDelay.Value;
+                every = (float) MainForm.Form.StartConsecutivelyDelay.Value;
                 interval = IntervalUtils.GetInterval();
             }
 

@@ -33,7 +33,7 @@ namespace TaskScheduler
 
         public static void AddUpdaters()
         {
-            List<Task> tasks = Form1.Form.Repository.FetchAllData();
+            List<Task> tasks = MainForm.Form.Repository.FetchAllData();
 
             foreach (var task in tasks)
                 TaskUpdater.UpdateStatusForLoaded(task);
@@ -49,7 +49,7 @@ namespace TaskScheduler
                 UseColumnTextForButtonValue = true
             };
 
-            Form1.Form.TasksDataGrid.Columns.Add(deleteButtonColumn);
+            MainForm.Form.TasksDataGrid.Columns.Add(deleteButtonColumn);
         }
 
         private static void AddStartButtons()
@@ -62,18 +62,18 @@ namespace TaskScheduler
                 UseColumnTextForButtonValue = true
             };
 
-            Form1.Form.TasksDataGrid.Columns.Add(startButtonColumn);
+            MainForm.Form.TasksDataGrid.Columns.Add(startButtonColumn);
         }
 
         private static void FetchRowsFromJson()
         {
-            List<Task> tasks = Form1.Form.Repository.FetchAllData();
+            List<Task> tasks = MainForm.Form.Repository.FetchAllData();
             List<GridTask> gridTasks = PopulateGridTaskList(tasks);
 
             var list = new BindingList<GridTask>(gridTasks);
             var source = new BindingSource(list, null);
 
-            try { Form1.Form.TasksDataGrid.DataSource = source; }
+            try { MainForm.Form.TasksDataGrid.DataSource = source; }
             catch { MessageBox.Show("Something went wrong while fetching JSON."); }
         }
 

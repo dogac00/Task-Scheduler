@@ -8,7 +8,7 @@ namespace TaskScheduler
 {
     static class IntervalUtils
     {
-        private static readonly Form1 form = Form1.Form;
+        private static readonly MainForm form = MainForm.Form;
 
         public static Interval GetDontRunLongerThanInterval()
         {

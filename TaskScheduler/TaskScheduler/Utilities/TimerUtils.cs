@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 
 namespace TaskScheduler
 {
     static class TimerUtils
     {
-        private static readonly Form1 Form = Form1.Form;
+        private static readonly MainForm Form = MainForm.Form;
 
         public static void AddTimer(Timer timer, string taskName, string description, 
                                         TimeSpan start, TimeSpan period)
@@ -20,7 +21,7 @@ namespace TaskScheduler
                 PeriodTime = period
             };
 
-            Form1.Form.Timers.Add(_timer);
+            MainForm.Form.Timers.Add(_timer);
         }
 
         public static void AddTimer(Timer timer, string taskName, string description, 
@@ -35,23 +36,23 @@ namespace TaskScheduler
                 PeriodTime = TimeSpan.FromMilliseconds(period)
             };
 
-            Form1.Form.Timers.Add(_timer);
+            MainForm.Form.Timers.Add(_timer);
         }
 
         public static void DisposeTimer(Timer timer)
         {
-            Form1.Form.Timers.RemoveAll(t => t.Timer == timer);
+            MainForm.Form.Timers.RemoveAll(t => t.Timer == timer);
 
-            timer.DisposeCompletely();
+            timer.DisposeTimer();
         }
 
         public static void DisposeTimers(Task task)
         {
-            var timers = Form1.Form.Timers.FindAll(t => t.TaskName == task.Name);
+            var timers = MainForm.Form.Timers.FindAll(t => t.TaskName == task.Name);
 
-            DisposeTaskTimers(timers);
+            DisposeTimers(timers.Select(t => t.Timer));
 
-            Form1.Form.Timers.RemoveAll(t => t.TaskName == task.Name);
+            MainForm.Form.Timers.RemoveAll(t => t.TaskName == task.Name);
         }
 
         public static void DisposeTimers(int taskId)
@@ -63,10 +64,10 @@ namespace TaskScheduler
             DisposeTimers(task);
         }
 
-        private static void DisposeTaskTimers(List<TaskTimer> taskTimers)
+        private static void DisposeTimers(IEnumerable<Timer> timers)
         {
-            foreach (var taskTimer in taskTimers)
-                taskTimer.Timer.DisposeCompletely();
+            foreach (var timer in timers)
+                timer.DisposeTimer();
         }
 
         public static Timer CreateTimer(Action action, long dueTime, long period)
@@ -78,21 +79,5 @@ namespace TaskScheduler
         {
             return new Timer((state) => action.Invoke(), null, dueTime, period);
         }
-
-        public static Timer CreateTimer(Delegate action, long dueTime, long period)
-        {
-            return new Timer((state) => action.DynamicInvoke(), null, dueTime, period);
-        }
-
-        public static Timer CreateTimer(Delegate action, TimeSpan dueTime, TimeSpan period)
-        {
-            return new Timer((state) => action.DynamicInvoke(), null, dueTime, period);
-        }
-
-        
-
-        
-
-        
     }
 }

@@ -57,7 +57,7 @@ namespace TaskScheduler
             if (task.EmailInfo == null) return;
 
             var taskStartingDate = task.Period.StartDate;
-            var dontRunLongerThanValue = Form1.Form.GetDontRunLongerThanValue();
+            var dontRunLongerThanValue = MainForm.Form.GetDontRunLongerThanValue();
 
             bool tryToSend = false;
 

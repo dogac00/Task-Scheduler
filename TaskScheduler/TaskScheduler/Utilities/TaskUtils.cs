@@ -7,7 +7,7 @@ namespace TaskScheduler
 {
     static class TaskUtils
     {
-        private static readonly Form1 form = Form1.Form;
+        private static readonly MainForm form = MainForm.Form;
 
         public static Task CreateTask()
         {
@@ -51,7 +51,7 @@ namespace TaskScheduler
 
             timer = TimerUtils.CreateTimer(() =>
 
-                    TaskActions.StartTaskDisposeTimer(timer, task), dueTime, Timeout.Infinite);
+                    TaskActions.StartTaskThenDisposeTimer(timer, task), dueTime, Timeout.Infinite);
 
             TimerUtils.AddTimer(timer, task.Name, "Task Starting Timer", dueTime, -1);
         }

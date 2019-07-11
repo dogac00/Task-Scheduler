@@ -8,8 +8,11 @@ namespace TaskScheduler
     {
         private static volatile object _threadLock = new object();
 
-        public static void DisposeCompletely(this Timer timer)
+        public static void DisposeAllResources(this Timer timer)
         {
+            // You must be careful if you're going to use this.
+            // It blocks the UI thread and can freeze the application.
+
             timer.Change(Timeout.Infinite, Timeout.Infinite);
 
             lock (_threadLock)
@@ -28,6 +31,21 @@ namespace TaskScheduler
 
                     timer = null;
                 }
+            }
+        }
+
+        public static void DisposeTimer(this Timer timer)
+        {
+            try
+            {
+                timer.Change(Timeout.Infinite, Timeout.Infinite);
+
+                timer.Dispose();
+            }
+            catch
+            {
+                // It can throw object disposed exception
+                // Since we cannot prevent a few callbacks after disposal
             }
         }
     }

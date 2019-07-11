@@ -10,9 +10,9 @@ namespace TaskScheduler
     {
         public static EmailInfo SetEmailInfo()
         {
-            if (Form1.Form.NotifyButton.Checked)
+            if (MainForm.Form.NotifyButton.Checked)
             {
-                float every = (float) Form1.Form.RunsLongerThanEvery.Value;
+                float every = (float) MainForm.Form.RunsLongerThanEvery.Value;
                 var interval = GetSelectedRunsLongerThanInterval();
 
                 EmailInfo emailInfo = new EmailInfo
@@ -32,12 +32,12 @@ namespace TaskScheduler
 
         public static List<string> GetTextBoxEmailsList()
         {
-            return Form1.Form.EmailAddressTextBox.Text.Split(',').ToList();
+            return MainForm.Form.EmailAddressTextBox.Text.Split(',').ToList();
         }
 
         public static string [] GetTextBoxEmailsArray()
         {
-            return Form1.Form.EmailAddressTextBox.Text.Split(',');
+            return MainForm.Form.EmailAddressTextBox.Text.Split(',');
         }
 
         public static string ConvertEmailsToString(Task task)
@@ -102,11 +102,11 @@ namespace TaskScheduler
 
         private static Interval GetSelectedRunsLongerThanInterval()
         {
-            if (Form1.Form.RunsLongerThanWeek.Checked)
+            if (MainForm.Form.RunsLongerThanWeek.Checked)
                 return Interval.Week;
-            else if (Form1.Form.RunsLongerThanDay.Checked)
+            else if (MainForm.Form.RunsLongerThanDay.Checked)
                 return Interval.Day;
-            else if (Form1.Form.RunsLongerThanHour.Checked)
+            else if (MainForm.Form.RunsLongerThanHour.Checked)
                 return Interval.Hour;
             else
                 return Interval.Min;

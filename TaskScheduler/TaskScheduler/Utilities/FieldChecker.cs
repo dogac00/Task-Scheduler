@@ -9,7 +9,7 @@ namespace TaskScheduler
 {
     static class FieldChecker
     {
-        private static readonly Form1 form = Form1.Form;
+        private static readonly MainForm form = MainForm.Form;
 
         public static void CheckFields(Task task)
         {

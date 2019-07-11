@@ -4,13 +4,15 @@ using System.Windows.Forms;
 
 namespace TaskScheduler
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
-        private static Form1 _form;
+        private static MainForm _form;
         private static volatile object _lock;
-        public List<TaskTimer> Timers;
 
-        public Form1(IRepository repository)
+        public IRepository Repository { get; }
+        public List<TaskTimer> Timers { get; }
+
+        public MainForm(IRepository repository)
         {
             _form = this;
             _lock = new object();
@@ -23,13 +25,11 @@ namespace TaskScheduler
         private void Form1_Load(object sender, EventArgs e)
         {
             GridUtils.OnLoadUpdate();
-            GridUtils.SetGridTimer();
-            GridUtils.AddUpdaters();
+            //GridUtils.SetGridTimer();
+            //GridUtils.AddUpdaters();
         }
 
-        public static Form1 Form { get { lock (_lock) { return _form; } } }
-
-        public IRepository Repository { get; }
+        public static MainForm Form { get { lock (_lock) { return _form; } } }
 
         private void AddTaskButton_Click(object sender, EventArgs e)
         {
@@ -43,7 +43,7 @@ namespace TaskScheduler
         void TasksDataGrid_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             // If click new row or header
-             if (e.RowIndex == tasksDataGrid.NewRowIndex || e.RowIndex < 0)
+            if (e.RowIndex == tasksDataGrid.NewRowIndex || e.RowIndex < 0)
                 return;
 
             if (e.ColumnIndex == tasksDataGrid.Columns["dataGridViewDeleteButtonColumn"].Index)

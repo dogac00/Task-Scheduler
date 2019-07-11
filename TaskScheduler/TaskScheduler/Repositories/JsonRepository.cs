@@ -3,16 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+using System.Configuration;
 
 namespace TaskScheduler
 {
     class JsonRepository : IRepository
     {
-        private readonly string jsonFilePath = @"..\..\tasks.json";
+        private readonly string jsonFilePath = ConfigurationManager.AppSettings["jsonPath"];
         private volatile ReaderWriterLockSlim locker = new ReaderWriterLockSlim();
 
         private string GetAllText()

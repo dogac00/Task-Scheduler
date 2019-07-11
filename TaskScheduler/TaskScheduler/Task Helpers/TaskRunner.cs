@@ -11,7 +11,7 @@ namespace TaskScheduler
 {
     static class TaskRunner
     {
-        private static readonly Form1 Form = Form1.Form;
+        private static readonly MainForm Form = MainForm.Form;
 
         public static void RunTaskPeriodically(Task task)
         {
@@ -29,26 +29,18 @@ namespace TaskScheduler
 
         public static bool RunTask(Task task)
         {
-            if (task == null)
-                return false;
+            if (task == null) return false;
 
-            try
-            {
-                task.ProcessId = Process.Start(task.ExecutablePath).Id;
-                task.IsRunning = true;
+            Process process = Process.Start(task.ExecutablePath);
 
-                Form.Repository.UpdateTask(task);
+            if (process == null) return false;
 
-                return true;
-            }
-            catch (System.ComponentModel.Win32Exception)
-            {
+            task.ProcessId = process.Id;
+            task.IsRunning = true;
 
-                MessageBox.Show("Invalid executable path.");
-                Form.Repository.DeleteTask(task);
+            Form.Repository.UpdateTask(task);
 
-                return false;
-            }
+            return true;
         }
 
         public static bool IsTaskRunning(Task task)

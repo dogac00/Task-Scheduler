@@ -13,5 +13,10 @@ namespace TaskScheduler
         public DateTime StartDate { get; set; }
         public string TimeBetween { get; set; }
         public string EmailAddress { get; set; }
+
+        public override string ToString()
+        {
+            return $"Name : {Name}, Path : {ExecutablePath}";
+        }
     }
 }

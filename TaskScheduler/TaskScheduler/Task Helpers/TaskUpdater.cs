@@ -8,7 +8,7 @@ namespace TaskScheduler
 {
     static class TaskUpdater
     {
-        private static readonly Form1 Form = Form1.Form;
+        private static readonly MainForm Form = MainForm.Form;
 
         public static void UpdateStatusEverySeconds(Task task)
         {

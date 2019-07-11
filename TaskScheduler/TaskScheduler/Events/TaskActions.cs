@@ -13,7 +13,6 @@ namespace TaskScheduler
             if (TaskUtils.IsNull(task))
             {
                 TimerUtils.DisposeTimer(timer);
-
                 return;
             }
 
@@ -71,7 +70,7 @@ namespace TaskScheduler
             TimerUtils.DisposeTimer(timer);
         }
 
-        public static void StartTaskDisposeTimer(Timer timer, Task task)
+        public static void StartTaskThenDisposeTimer(Timer timer, Task task)
         {
             if (!TaskUtils.IsNull(task))
             {

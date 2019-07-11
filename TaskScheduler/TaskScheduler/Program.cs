@@ -10,14 +10,11 @@ namespace TaskScheduler
 
         private static void Bootstrap()
         {
-            // Create the container as usual.
             container = new Container();
 
-            // Register your types, for instance:
             container.Register<IRepository, JsonRepository>(Lifestyle.Singleton);
-            container.Register<Form1>(Lifestyle.Singleton);
+            container.Register<MainForm>(Lifestyle.Singleton);
 
-            // Optionally verify the container.
             container.Verify();
         }
 
@@ -30,7 +27,7 @@ namespace TaskScheduler
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Bootstrap();
-            Application.Run(container.GetInstance<Form1>());
+            Application.Run(container.GetInstance<MainForm>());
         }
     }
 }
