@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -8,8 +9,10 @@ using System.Windows.Forms;
 
 namespace TaskScheduler
 {
-    class GridUtils
+    static class GridUtils
     {
+        private static readonly Logger logger = LogManager.GetCurrentClassLogger();
+
         public static void OnLoadUpdate()
         {
             FetchRowsFromJson();
@@ -28,7 +31,9 @@ namespace TaskScheduler
             
                     GridActions.InvokeFormIfRequired(), 2000, 2000);
 
-            TimerUtils.AddTimer(timer, "Grid", "Grid Updater", 2000, 2000);
+            var taskTimer = TimerUtils.AddTimer(timer, "Grid", "Grid Updater", 2000, 2000);
+
+            logger.Info($"{taskTimer} is added.");
         }
 
         public static void AddUpdaters()
@@ -67,14 +72,20 @@ namespace TaskScheduler
 
         private static void FetchRowsFromJson()
         {
-            List<Task> tasks = MainForm.Form.Repository.FetchAllData();
-            List<GridTask> gridTasks = PopulateGridTaskList(tasks);
+            try
+            {
+                List<Task> tasks = MainForm.Form.Repository.FetchAllData();
+                List<GridTask> gridTasks = PopulateGridTaskList(tasks);
 
-            var list = new BindingList<GridTask>(gridTasks);
-            var source = new BindingSource(list, null);
+                var list = new BindingList<GridTask>(gridTasks);
+                var source = new BindingSource(list, null);
 
-            try { MainForm.Form.TasksDataGrid.DataSource = source; }
-            catch { MessageBox.Show("Something went wrong while fetching JSON."); }
+                MainForm.Form.TasksDataGrid.DataSource = source;
+            }
+            catch (Exception e)
+            {
+                logger.Error(e.Message);
+            }
         }
 
         public static List<GridTask> PopulateGridTaskList(List<Task> tasks)

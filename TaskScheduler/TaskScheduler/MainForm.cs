@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
@@ -8,12 +9,14 @@ namespace TaskScheduler
     {
         private static MainForm _form;
         private static volatile object _lock;
+        private static Logger logger;
 
         public IRepository Repository { get; }
         public List<TaskTimer> Timers { get; }
 
         public MainForm(IRepository repository)
         {
+            logger = LogManager.GetCurrentClassLogger();
             _form = this;
             _lock = new object();
             Timers = new List<TaskTimer>();
@@ -24,9 +27,11 @@ namespace TaskScheduler
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            logger.Info("Form loaded.");
+
             GridUtils.OnLoadUpdate();
-            //GridUtils.SetGridTimer();
-            //GridUtils.AddUpdaters();
+            GridUtils.SetGridTimer();
+            GridUtils.AddUpdaters();
         }
 
         public static MainForm Form { get { lock (_lock) { return _form; } } }
@@ -51,7 +56,6 @@ namespace TaskScheduler
                 if (MessageBox.Show("Are you sure you want to delete this task?", "Message",
                     MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
-
                     var taskId = e.RowIndex;
 
                     TimerUtils.DisposeTimers(taskId);

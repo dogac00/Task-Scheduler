@@ -1,0 +1,27 @@
+2019-07-12 01:39:35.3843|INFO|TaskScheduler.MainForm|Form loaded.
+2019-07-12 02:15:31.4772|INFO|TaskScheduler.MainForm|Form loaded.
+2019-07-12 02:15:31.8334|INFO|TaskScheduler.TaskLogger|Timer : Task : Grid, Start : 7/12/2019 2:15:33 AM, Period : 00:00:02 is added.
+2019-07-12 02:15:52.0493|INFO|TaskScheduler.TaskLogger|Task named : gtask is stopping...
+2019-07-12 02:33:00.5438|INFO|TaskScheduler.MainForm|Form loaded.
+2019-07-12 02:33:00.8011|INFO|TaskScheduler.GridUtils|Task : Grid, Description : Grid Updater, Start : 7/12/2019 2:33:02 AM, Period : 00:00:02 is added.
+2019-07-12 02:33:00.8480|INFO|TaskScheduler.TaskUpdater|Task : gtask, Description : Loaded Task Updater, Start : 7/12/2019 2:33:03 AM, Period : 00:00:03 is added.
+2019-07-12 02:33:38.9523|INFO|TaskScheduler.TaskUtils|Task : are-you-really, Description : Task Starting Timer, Start : 7/12/2019 2:34:28 AM, Period : -00:00:00.0010000
+2019-07-12 02:34:29.0000|INFO|TaskScheduler.TaskStarter|Name : are-you-really, Exe Path: C:\Users\ndaky\Desktop\ram-ssd.txt is starting accordingly.
+2019-07-12 02:34:29.2750|INFO|TaskScheduler.TaskRunner|Task Name : are-you-really, Exe Path: C:\Users\ndaky\Desktop\ram-ssd.txt is setting to running.
+2019-07-12 02:34:29.3284|INFO|TaskScheduler.TimerUtils|Disposing Task : are-you-really, Description : Task Starting Timer, Start : 7/12/2019 2:34:28 AM, Period : -00:00:00.0010000
+2019-07-12 02:35:08.4212|INFO|TaskScheduler.TaskUpdater|Name : are-you-really, Exe Path: C:\Users\ndaky\Desktop\ram-ssd.txt is stopping.
+2019-07-12 02:37:13.1240|INFO|TaskScheduler.MainForm|Form loaded.
+2019-07-12 02:37:13.3474|INFO|TaskScheduler.GridUtils|Task : Grid, Description : Grid Updater, Start : 7/12/2019 2:37:15 AM, Period : 00:00:02 is added.
+2019-07-12 02:37:13.3653|INFO|TaskScheduler.TaskUpdater|Task : are-you-really, Description : Loaded Task Updater, Start : 7/12/2019 2:37:16 AM, Period : 00:00:03 is added.
+2019-07-12 02:37:15.3720|INFO|TaskScheduler.GridActions|Current timer count : 2
+2019-07-12 02:37:17.3758|INFO|TaskScheduler.GridActions|Current timer count : 2
+2019-07-12 02:37:19.3725|INFO|TaskScheduler.GridActions|Current timer count : 2
+2019-07-12 02:37:21.3728|INFO|TaskScheduler.GridActions|Current timer count : 2
+2019-07-12 02:37:23.3859|INFO|TaskScheduler.GridActions|Current timer count : 2
+2019-07-12 02:37:25.3872|INFO|TaskScheduler.GridActions|Current timer count : 2
+2019-07-12 02:37:27.3912|INFO|TaskScheduler.GridActions|Current timer count : 2
+2019-07-12 02:37:29.3932|INFO|TaskScheduler.GridActions|Current timer count : 1
+2019-07-12 02:37:31.3893|INFO|TaskScheduler.GridActions|Current timer count : 1
+2019-07-12 02:37:33.3879|INFO|TaskScheduler.GridActions|Current timer count : 1
+2019-07-12 02:37:35.3885|INFO|TaskScheduler.GridActions|Current timer count : 1
+2019-07-12 02:37:37.3898|INFO|TaskScheduler.GridActions|Current timer count : 1

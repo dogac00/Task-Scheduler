@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 
@@ -7,6 +8,7 @@ namespace TaskScheduler
     static class TimerExtensions
     {
         private static volatile object _threadLock = new object();
+        private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
         public static void DisposeAllResources(this Timer timer)
         {
@@ -34,7 +36,7 @@ namespace TaskScheduler
             }
         }
 
-        public static void DisposeTimer(this Timer timer)
+        public static void StopAndDisposeTimer(this Timer timer)
         {
             try
             {
@@ -42,8 +44,10 @@ namespace TaskScheduler
 
                 timer.Dispose();
             }
-            catch
+            catch (Exception e)
             {
+                logger.Error(e.Message);
+
                 // It can throw object disposed exception
                 // Since we cannot prevent a few callbacks after disposal
             }

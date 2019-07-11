@@ -13,7 +13,7 @@ namespace TaskScheduler
 
         public override string ToString()
         {
-            return $"Task : {TaskName}, Start : {StartTime}, Period : {PeriodTime}";
+            return $"Task : {TaskName}, Description : {Description}, Start : {StartTime}, Period : {PeriodTime}";
         }
     }
 }

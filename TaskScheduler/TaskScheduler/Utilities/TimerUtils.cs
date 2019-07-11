@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -8,8 +9,9 @@ namespace TaskScheduler
     static class TimerUtils
     {
         private static readonly MainForm Form = MainForm.Form;
+        private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
-        public static void AddTimer(Timer timer, string taskName, string description, 
+        public static TaskTimer AddTimer(Timer timer, string taskName, string description, 
                                         TimeSpan start, TimeSpan period)
         {
             TaskTimer _timer = new TaskTimer
@@ -22,9 +24,11 @@ namespace TaskScheduler
             };
 
             MainForm.Form.Timers.Add(_timer);
+
+            return _timer;
         }
 
-        public static void AddTimer(Timer timer, string taskName, string description, 
+        public static TaskTimer AddTimer(Timer timer, string taskName, string description, 
                                         long start, long period)
         {
             TaskTimer _timer = new TaskTimer
@@ -37,13 +41,20 @@ namespace TaskScheduler
             };
 
             MainForm.Form.Timers.Add(_timer);
+
+            return _timer;
         }
 
         public static void DisposeTimer(Timer timer)
         {
+            var taskTimers = MainForm.Form.Timers.FindAll(t => t.Timer == timer);
+
+            foreach (var t in taskTimers)
+                logger.Info($"Disposing {t}");
+
             MainForm.Form.Timers.RemoveAll(t => t.Timer == timer);
 
-            timer.DisposeTimer();
+            timer.StopAndDisposeTimer();
         }
 
         public static void DisposeTimers(Task task)
@@ -67,7 +78,7 @@ namespace TaskScheduler
         private static void DisposeTimers(IEnumerable<Timer> timers)
         {
             foreach (var timer in timers)
-                timer.DisposeTimer();
+                timer.StopAndDisposeTimer();
         }
 
         public static Timer CreateTimer(Action action, long dueTime, long period)

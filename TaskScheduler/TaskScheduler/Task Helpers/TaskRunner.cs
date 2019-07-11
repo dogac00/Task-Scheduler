@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -12,6 +13,7 @@ namespace TaskScheduler
     static class TaskRunner
     {
         private static readonly MainForm Form = MainForm.Form;
+        private static Logger logger = LogManager.GetCurrentClassLogger();
 
         public static void RunTaskPeriodically(Task task)
         {
@@ -20,11 +22,13 @@ namespace TaskScheduler
 
             System.Threading.Timer timer = null;
 
-            timer = TimerUtils.CreateTimer(() => 
-                    
+            timer = TimerUtils.CreateTimer(() =>
+
                     TaskActions.RunTaskDisposeIfNull(timer, task), dueTime, period);
 
-            TimerUtils.AddTimer(timer, task.Name, "Periodical Runner Timer", dueTime, period);
+            var taskTimer = TimerUtils.AddTimer(timer, task.Name, "Periodical Runner Timer", dueTime, period);
+
+            logger.Info($"{taskTimer} is added.");
         }
 
         public static bool RunTask(Task task)
@@ -33,10 +37,17 @@ namespace TaskScheduler
 
             Process process = Process.Start(task.ExecutablePath);
 
-            if (process == null) return false;
+            if (process == null)
+            {
+                logger.Warn($"Process with Id : {process.Id} get returned null.");
+
+                return false;
+            }
 
             task.ProcessId = process.Id;
             task.IsRunning = true;
+
+            logger.Info($"Task {task} is setting to running.");
 
             Form.Repository.UpdateTask(task);
 

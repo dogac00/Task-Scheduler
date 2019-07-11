@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,7 @@ namespace TaskScheduler
     static class FieldChecker
     {
         private static readonly MainForm form = MainForm.Form;
+        private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
         public static void CheckFields(Task task)
         {
@@ -21,25 +23,13 @@ namespace TaskScheduler
                 CheckForNotifyEmail(task);
 
                 CheckForSuccess(task);
-
-                //System.Threading.Tasks.Task.Factory.StartNew(() =>
-                //{
-                //    Thread.Sleep(5000);
-                //    form.Invoke(new Action(() => PressF5()));
-                //});
             }
             catch (Exception e)
             {
+                logger.Error(e.Message);
+
                 MessageBox.Show(e.Message);
             }
-        }
-
-        private static void PressF5()
-        {
-            MouseOperations.SetCursorPosition(700, 300);
-            MouseOperations.MouseEvent(MouseOperations.MouseEventFlags.LeftDown);
-            MouseOperations.MouseEvent(MouseOperations.MouseEventFlags.LeftUp);
-            SendKeys.Send("{F5}");
         }
 
         private static void CheckForSuccess(Task task)

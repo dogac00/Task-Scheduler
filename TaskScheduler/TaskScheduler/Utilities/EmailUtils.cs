@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using FRUtility;
+using NLog;
 
 namespace TaskScheduler
 {
     static class EmailUtils
     {
+        private static readonly Logger logger = LogManager.GetCurrentClassLogger();
+
         public static EmailInfo SetEmailInfo()
         {
             if (MainForm.Form.NotifyButton.Checked)
@@ -73,19 +76,22 @@ namespace TaskScheduler
             {
                 if (emailService.SendEmail(emails, body))
                 {
-                    MessageBox.Show("email sent successfully.");
+                    logger.Info($"Email sent successfully to : {emails}");
+
                     return true;
                 }
                 else
                 {
-                    MessageBox.Show("email could not be sent.");
+                    logger.Error($"Email could not be sent to : {emails}");
+
                     return false;
                 }
 
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.Message);
+                logger.Error(e.Message);
+
                 return false;
             }
         }

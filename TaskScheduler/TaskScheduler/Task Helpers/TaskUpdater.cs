@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,7 @@ namespace TaskScheduler
     static class TaskUpdater
     {
         private static readonly MainForm Form = MainForm.Form;
+        private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
         public static void UpdateStatusEverySeconds(Task task)
         {
@@ -27,6 +29,8 @@ namespace TaskScheduler
             {
                 if (task.IsRunning == false)
                 {
+                    logger.Info($"{task} is starting.");
+
                     task.IsRunning = true;
 
                     Form.Repository.UpdateTask(task);
@@ -36,6 +40,8 @@ namespace TaskScheduler
             {
                 if (task.IsRunning == true)
                 {
+                    logger.Info($"{task} is stopping.");
+
                     task.IsRunning = false;
                     task.ProcessId = -1;
 
@@ -52,7 +58,9 @@ namespace TaskScheduler
             
                     TaskActions.UpdateForLoadedTask(timer, task), 3000, 3000);
 
-            TimerUtils.AddTimer(timer, task.Name, "Loaded Task Updater", 3000, 3000);
+            var taskTimer = TimerUtils.AddTimer(timer, task.Name, "Loaded Task Updater", 3000, 3000);
+
+            logger.Info($"{taskTimer} is added.");
         }
 
         public static void UpdateStatusConsecutively(Task task)
@@ -63,7 +71,9 @@ namespace TaskScheduler
 
                 TaskActions.UpdateStatusForConsecutiveTask(timer, task), 3000, 3000);
 
-            TimerUtils.AddTimer(timer, task.Name, "Consecutive Checker Timer", 3000, 3000);
+            var taskTimer = TimerUtils.AddTimer(timer, task.Name, "Consecutive Checker Timer", 3000, 3000);
+
+            logger.Info($"{taskTimer} is added.");
         }
     }
 }

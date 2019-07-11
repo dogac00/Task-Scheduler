@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -6,8 +7,12 @@ namespace TaskScheduler
 {
     static class TaskStarter
     {
+        private static readonly Logger logger = LogManager.GetCurrentClassLogger();
+
         public static void StartTaskAccordingly(Task task)
         {
+            logger.Info($"{task} is starting accordingly.");
+
             switch (task.Period.Property)
             {
                 case StartProperty.Once:
@@ -86,7 +91,9 @@ namespace TaskScheduler
 
             }, null, 0, 3000);
 
-            TimerUtils.AddTimer(timer, task.Name, "Notification Timer", 0, 3000);
+            var taskTimer = TimerUtils.AddTimer(timer, task.Name, "Notification Timer", 0, 3000);
+
+            logger.Info($"{taskTimer} is added.");
         }
     }
 }
