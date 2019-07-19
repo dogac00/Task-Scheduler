@@ -10,7 +10,14 @@ namespace TaskScheduler
     {
         public static void InvokeFormIfRequired()
         {
-            MainForm.Form.InvokeIfRequired(GridUtils.UpdateGrid);
+            try
+            {
+                MainForm.Form.InvokeIfRequired(GridUtils.UpdateGrid);
+            }
+            catch (ObjectDisposedException)
+            {
+                // Simply ignore it.
+            }
         }
     }
 }

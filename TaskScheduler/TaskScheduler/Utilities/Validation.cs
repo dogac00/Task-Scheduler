@@ -22,6 +22,7 @@ namespace TaskScheduler
                 if (!IsValidForDates()) return false;
                 if (!IsValidForTimeBetween()) return false;
                 if (!IsValidForExePath()) return false;
+                if (IsImage()) WarnForImage();
 
                 return true;
             }
@@ -266,6 +267,28 @@ namespace TaskScheduler
         private static bool IsValidEmail(string source)
         {
             return new EmailAddressAttribute().IsValid(source);
+        }
+
+        private static void WarnForImage()
+        {
+            MessageBox.Show("Images already uses dllhost.exe to host the Windows Image Viewer");
+        }
+
+        private static bool IsImage()
+        {
+            var path = Form.TaskExecutablePath.Text;
+
+            var lastThree = path.Substring(path.Length - 3);
+            var lastFour = path.Substring(path.Length - 4);
+
+            if (lastThree == "png")
+                return true;
+            else if (lastThree == "jpg")
+                return true;
+            else if (lastFour == "jpeg")
+                return true;
+
+            return false;
         }
     }
 }

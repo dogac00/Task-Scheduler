@@ -38,7 +38,7 @@ namespace TaskScheduler
 
         private void AddTaskButton_Click(object sender, EventArgs e)
         {
-            if (!Validation.IsValid) return;
+            if (!Form.IsValid) return;
 
             var task = Repository.AddTask(TaskUtils.CreateTask());
 
@@ -86,6 +86,8 @@ namespace TaskScheduler
                 GridUtils.UpdateGrid();
             }
         }
+
+        private bool IsValid => Validation.IsValid;
 
         private void StartOnceNowButton_CheckedChanged(object sender, EventArgs e)
         {

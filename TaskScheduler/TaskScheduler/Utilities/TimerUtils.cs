@@ -25,6 +25,8 @@ namespace TaskScheduler
 
             MainForm.Form.Timers.Add(_timer);
 
+            LogAddedTimer(_timer);
+
             return _timer;
         }
 
@@ -42,6 +44,8 @@ namespace TaskScheduler
 
             MainForm.Form.Timers.Add(_timer);
 
+            LogAddedTimer(_timer);
+
             return _timer;
         }
 
@@ -49,10 +53,9 @@ namespace TaskScheduler
         {
             var taskTimers = MainForm.Form.Timers.FindAll(t => t.Timer == timer);
 
-            foreach (var t in taskTimers)
-                logger.Info($"Disposing {t}");
-
             MainForm.Form.Timers.RemoveAll(t => t.Timer == timer);
+
+            LogDisposingTimers(taskTimers);
 
             timer.StopAndDisposeTimer();
         }
@@ -64,6 +67,31 @@ namespace TaskScheduler
             DisposeTimers(timers.Select(t => t.Timer));
 
             MainForm.Form.Timers.RemoveAll(t => t.TaskName == task.Name);
+
+            LogDisposingTimers(timers);
+        }
+
+        private static void LogDisposingTimers(IEnumerable<TaskTimer> timers)
+        {
+            foreach (var timer in timers)
+                logger.Info($"Timer [{timer}] is disposing.");
+
+            LogAllTimers();
+        }
+
+        private static void LogAddedTimer(TaskTimer timer)
+        {
+            logger.Info($"Timer [{timer}] is added.");
+        }
+
+        private static void LogAllTimers()
+        {
+            logger.Info($"Total timer count is now : {Form.Timers.Count}");
+
+            logger.Info("Working timers are following...");
+
+            foreach (var timer in MainForm.Form.Timers)
+                logger.Info($"Timer [{timer}]");
         }
 
         public static void DisposeTimers(int taskId)

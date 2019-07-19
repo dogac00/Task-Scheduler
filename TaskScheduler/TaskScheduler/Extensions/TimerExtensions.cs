@@ -46,7 +46,9 @@ namespace TaskScheduler
             }
             catch (Exception e)
             {
-                logger.Error(e.Message);
+                logger.Warn(e.Message);
+
+                // We ignore it because the timer is already disposed or deleted
 
                 // It can throw object disposed exception
                 // Since we cannot prevent a few callbacks after disposal

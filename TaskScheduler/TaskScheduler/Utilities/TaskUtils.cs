@@ -9,7 +9,6 @@ namespace TaskScheduler
     static class TaskUtils
     {
         private static readonly MainForm form = MainForm.Form;
-        private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
         public static Task CreateTask()
         {
@@ -43,8 +42,6 @@ namespace TaskScheduler
                 TaskActions.RunTaskUpdateTaskDisposeTimer(timer, task), delay, Timeout.Infinite);
 
             var taskTimer = TimerUtils.AddTimer(timer, task.Name, "Consecutive Delayer Timer", delay, -1);
-
-            logger.Info($"{taskTimer} is added.");
         }
 
         public static void SetTaskStartingTimer(Task task)
@@ -58,8 +55,6 @@ namespace TaskScheduler
                     TaskActions.StartTaskThenDisposeTimer(timer, task), dueTime, Timeout.Infinite);
 
             var taskTimer = TimerUtils.AddTimer(timer, task.Name, "Task Starting Timer", dueTime, -1);
-
-            logger.Info($"{taskTimer}");
         }
 
         public static bool IsNull(Task task)

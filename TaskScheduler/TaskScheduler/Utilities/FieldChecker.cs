@@ -15,21 +15,12 @@ namespace TaskScheduler
 
         public static void CheckFields(Task task)
         {
-            try
-            {
-                CheckForStartOnce(task);
-                CheckForStartPeriodically(task);
-                CheckForStartConsecutively(task);
-                CheckForNotifyEmail(task);
+            CheckForStartOnce(task);
+            CheckForStartPeriodically(task);
+            CheckForStartConsecutively(task);
+            CheckForNotifyEmail(task);
 
-                CheckForSuccess(task);
-            }
-            catch (Exception e)
-            {
-                logger.Error(e.Message);
-
-                MessageBox.Show(e.Message);
-            }
+            CheckForSuccess(task);
         }
 
         private static void CheckForSuccess(Task task)

@@ -32,8 +32,6 @@ namespace TaskScheduler
                     GridActions.InvokeFormIfRequired(), 2000, 2000);
 
             var taskTimer = TimerUtils.AddTimer(timer, "Grid", "Grid Updater", 2000, 2000);
-
-            logger.Info($"{taskTimer} is added.");
         }
 
         public static void AddUpdaters()

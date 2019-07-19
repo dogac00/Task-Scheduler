@@ -59,8 +59,6 @@ namespace TaskScheduler
                     TaskActions.UpdateForLoadedTask(timer, task), 3000, 3000);
 
             var taskTimer = TimerUtils.AddTimer(timer, task.Name, "Loaded Task Updater", 3000, 3000);
-
-            logger.Info($"{taskTimer} is added.");
         }
 
         public static void UpdateStatusConsecutively(Task task)
@@ -72,8 +70,6 @@ namespace TaskScheduler
                 TaskActions.UpdateStatusForConsecutiveTask(timer, task), 3000, 3000);
 
             var taskTimer = TimerUtils.AddTimer(timer, task.Name, "Consecutive Checker Timer", 3000, 3000);
-
-            logger.Info($"{taskTimer} is added.");
         }
     }
 }

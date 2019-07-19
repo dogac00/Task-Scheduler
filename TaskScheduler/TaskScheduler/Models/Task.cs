@@ -19,7 +19,7 @@ namespace TaskScheduler
 
         public override string ToString()
         {
-            return $"Name : {Name}, Exe Path: {ExecutablePath}";
+            return $"Name : {Name}, Process Id : {ProcessId}";
         }
     }
 

@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Configuration;
+using NLog;
 
 namespace TaskScheduler
 {
@@ -12,6 +13,7 @@ namespace TaskScheduler
     {
         private readonly string jsonFilePath = ConfigurationManager.AppSettings["jsonPath"];
         private volatile ReaderWriterLockSlim locker = new ReaderWriterLockSlim();
+        private readonly Logger logger = LogManager.GetCurrentClassLogger();
 
         private string GetAllText()
         {
@@ -56,6 +58,8 @@ namespace TaskScheduler
 
             WriteAllText(jsonData);
 
+            logger.Info($"Task [{task.Name}] is added to json.");
+
             OrderById();
 
             return GetTaskByName(task.Name);
@@ -90,6 +94,8 @@ namespace TaskScheduler
 
             WriteAllText(jsonData);
 
+            logger.Info($"Task named : {name} is deleted by name from json.");
+
             OrderById();
         }
 
@@ -112,6 +118,8 @@ namespace TaskScheduler
 
             WriteAllText(jsonData);
 
+            logger.Info($"Task with Id : {id} is deleted by id from json.");
+
             OrderById();
         }
 
@@ -129,6 +137,8 @@ namespace TaskScheduler
             jsonData = JsonConvert.SerializeObject(tasksList);
 
             WriteAllText(jsonData);
+
+            logger.Info("Json is reordered by id.");
         }
 
         public List<Task> FetchAllData()
@@ -170,6 +180,8 @@ namespace TaskScheduler
             jsonData = JsonConvert.SerializeObject(tasksList);
 
             WriteAllText(jsonData);
+
+            logger.Info($"Task {task} is updated in json.");
         }
 
         public Task GetTask(Task task)

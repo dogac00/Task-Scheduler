@@ -39,7 +39,7 @@ namespace TaskScheduler
 
             if (process == null)
             {
-                logger.Warn($"Process with Id : {process.Id} get returned null.");
+                logger.Error($"{task.Name} process did not start or it is already started.");
 
                 return false;
             }
