@@ -78,7 +78,6 @@
     <Compile Include="Models\EmailInfo.cs" />
     <Compile Include="Utilities\EmailUtils.cs" />
     <Compile Include="Utilities\FieldChecker.cs" />
-    <Compile Include="Utilities\FileUtils.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

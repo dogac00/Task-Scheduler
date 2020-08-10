@@ -37,7 +37,8 @@ namespace TaskScheduler
 
         public Task AddTask(Task task)
         {
-            FileUtils.CheckIfFileExists(jsonFilePath);
+            if (File.Exists(jsonFilePath))
+                File.WriteAllText(jsonFilePath, "{}");
 
             string jsonData = GetAllText();
 
@@ -143,7 +144,8 @@ namespace TaskScheduler
 
         public List<Task> FetchAllData()
         {
-            FileUtils.CheckIfFileExists(jsonFilePath);
+            if (File.Exists(jsonFilePath))
+                File.WriteAllText(jsonFilePath, "{}");
 
             string jsonData = GetAllText();
             
@@ -157,7 +159,8 @@ namespace TaskScheduler
 
         public void UpdateTask(Task task)
         {
-            FileUtils.CheckIfFileExists(jsonFilePath);
+            if (File.Exists(jsonFilePath))
+                File.WriteAllText(jsonFilePath, "{}");
 
             string jsonData = GetAllText();
 
@@ -191,7 +194,8 @@ namespace TaskScheduler
 
         public Task GetTaskByName(string taskName)
         {
-            FileUtils.CheckIfFileExists(jsonFilePath);
+            if (File.Exists(jsonFilePath))
+                File.WriteAllText(jsonFilePath, "{}");
 
             string jsonData = GetAllText();
 
@@ -210,7 +214,8 @@ namespace TaskScheduler
 
         public Task GetTaskById(int id)
         {
-            FileUtils.CheckIfFileExists(jsonFilePath);
+            if (File.Exists(jsonFilePath))
+                File.WriteAllText(jsonFilePath, "{}");
 
             string jsonData = GetAllText();
 
